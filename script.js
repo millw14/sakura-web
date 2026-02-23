@@ -145,7 +145,6 @@
     heroBadge.style.opacity = Math.max(0, 1 - p2 * 3);
     heroSubtitle.style.opacity = Math.max(0, 1 - p2 * 2);
     heroCta.style.opacity = Math.max(0, 1 - p2 * 3);
-    scrollIndicator.style.opacity = Math.max(0, 1 - p1 * 5);
   }
 
   // ========== DEEP PARALLAX ENGINE ==========
