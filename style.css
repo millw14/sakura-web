@@ -498,38 +498,7 @@ body {
   will-change: transform, opacity;
 }
 
-.scroll-indicator {
-  position: absolute;
-  bottom: 36px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  color: var(--text-muted);
-  font-family: var(--font-tech);
-  font-size: 10px;
-  letter-spacing: 2px;
-  opacity: 0.5;
-}
 
-.scroll-arrow {
-  animation: scrollBob 2.5s ease-in-out infinite;
-}
-
-@keyframes scrollBob {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(5px);
-  }
-}
 
 /* ========== 3D SECTION REVEAL ========== */
 .section {

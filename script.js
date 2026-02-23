@@ -121,7 +121,6 @@
   const heroTagline = document.getElementById('heroTagline');
   const heroSubtitle = document.getElementById('heroSubtitle');
   const heroCta = document.getElementById('heroCta');
-  const scrollIndicator = document.getElementById('scrollIndicator');
 
   function updateHero() {
     const rect = heroContainer.getBoundingClientRect();
