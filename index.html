@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sakura — Read. Collect. Own.</title>
+  <meta name="description"
+    content="Sakura is a reading platform where your milestones live on-chain. Portable identity. Verifiable progress. Built on Solana." />
+  <link rel="icon" type="image/png" href="sakuraicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- Petal Canvas -->
+  <canvas id="petalCanvas" aria-hidden="true"></canvas>
+
+  <!-- Cursor glow -->
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <!-- ========== NAV ========== -->
+  <nav class="nav" id="mainNav">
+    <a href="#hero" class="nav-brand">
+      <img src="sakuraicon.png" alt="Sakura" class="nav-logo" />
+      <div class="nav-brand-text">
+        <span class="nav-jp">桜</span>
+        <span class="nav-en">SAKURA</span>
+      </div>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="#about" class="nav-link">About</a>
+      <a href="#onchain" class="nav-link">On-Chain</a>
+      <a href="#features" class="nav-link">Features</a>
+      <a href="#download" class="nav-link">Download</a>
+    </div>
+    <div class="nav-actions">
+      <a href="https://x.com/millw11488" target="_blank" rel="noopener noreferrer" class="nav-social"
+        aria-label="Twitter">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+        </svg>
+      </a>
+      <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ========== HERO — SCROLL-LOCKED CINEMATIC ========== -->
+  <div class="hero-scroll-container" id="heroContainer">
+    <section class="hero" id="hero">
+      <div class="hero-bg-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-mascot-wrap" id="heroMascot">
+          <img src="sakura.png" alt="Sakura" class="hero-mascot" />
+        </div>
+        <div class="hero-badge" id="heroBadge">
+          <span class="badge-dot"></span>
+          BUILT ON SOLANA
+        </div>
+        <h1 class="hero-title" id="heroTitle">
+          <span class="char">桜</span>
+        </h1>
+        <p class="hero-tagline" id="heroTagline">SAKURA</p>
+        <p class="hero-subtitle" id="heroSubtitle">
+          Read. Collect. Own.<br />
+          Your reading journey, permanently yours.
+        </p>
+        <div class="hero-cta" id="heroCta">
+          <a href="#download" class="btn btn-glow">Get Sakura</a>
+          <a href="#onchain" class="btn btn-ghost">Explore Ino</a>
+        </div>
+      </div>
+      <div class="scroll-indicator" id="scrollIndicator">
+        <span>Scroll to explore</span>
+        <div class="scroll-arrow">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14M5 12l7 7 7-7" />
+          </svg>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ========== ABOUT ========== -->
+  <section class="section" id="about">
+    <div class="section-inner">
+      <div class="parallax-layer parallax-back">
+        <div class="section-header">
+          <span class="section-tag scramble-text" data-text="THE MISSION">THE MISSION</span>
+          <h2 class="section-title split-text">Reading is the first step toward ownership</h2>
+          <p class="section-subtitle fade-in-text">
+            Sakura isn't just a reader. It's an engine that translates your curiosity into verifiable milestones.
+            Collect chapters, unlock exclusive art, and own your reading journey.
+          </p>
+        </div>
+      </div>
+
+      <div class="parallax-layer parallax-mid">
+        <div class="about-grid">
+          <div class="about-card reveal-card">
+            <div class="card-shine"></div>
+            <div class="about-card-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z" />
+                <path d="M8 7h6" />
+                <path d="M8 11h8" />
+              </svg>
+            </div>
+            <h3>Atomic Reading</h3>
+            <p>Every page turned is a step. Every chapter completed is a record. Verification starts with the first
+              word.</p>
+          </div>
+          <div class="about-card reveal-card">
+            <div class="card-shine"></div>
+            <div class="about-card-icon">
+              <svg width="24" height="24" viewBox="0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path
+                  d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+              </svg>
+            </div>
+            <h3>Digital Artifacts</h3>
+            <p>Unlock limited edition cover art and hidden pages that reside permanently in your collection.</p>
+          </div>
+          <div class="about-card reveal-card">
+            <div class="card-shine"></div>
+            <div class="about-card-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+              </svg>
+            </div>
+            <h3>Verifiable Proof</h3>
+            <p>Your progress is tied to the Solana ledger. Hard milestones that no one can take away from you.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ON-CHAIN (INO) ========== -->
+  <section class="section section-dark" id="onchain">
+    <div class="section-inner">
+      <div class="parallax-layer parallax-back">
+        <div class="section-header">
+          <span class="section-tag scramble-text" data-text="ON-CHAIN MILESTONES">ON-CHAIN MILESTONES</span>
+          <h2 class="section-title split-text">Immortalize Your Progress</h2>
+          <p class="section-subtitle fade-in-text">
+            Ino is a Solana program that records verifiable milestones of reader participation -- tied permanently to
+            a wallet. If it's not a milestone, it doesn't go on-chain.
+          </p>
+        </div>
+      </div>
+
+      <div class="parallax-layer parallax-mid">
+        <div class="tabs reveal-card">
+          <div class="tab-nav">
+            <button class="tab-btn active" data-tab="unlocks">Chapter Unlocks</button>
+            <button class="tab-btn" data-tab="completion">Completion</button>
+            <button class="tab-btn" data-tab="badges">Early Badges</button>
+            <button class="tab-btn" data-tab="support">Support Tiers</button>
+          </div>
+
+          <div class="tab-panels">
+            <!-- Chapter Unlocks -->
+            <div class="tab-panel active" id="tab-unlocks">
+              <div class="tab-content">
+                <div class="tab-info">
+                  <h3>Chapter Unlock Records</h3>
+                  <p>When you unlock a chapter using $SAKURA, a PDA (Program Derived Address) is created on Solana,
+                    proving you were there from Day 1.</p>
+                  <ul class="tab-list">
+                    <li>Immutable timestamp of unlock</li>
+                    <li>Verifiable reader address</li>
+                    <li>Cryptographic proof of access</li>
+                  </ul>
+                </div>
+                <div class="tab-code">
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span>
+                      <span class="code-label">solana_program</span>
+                    </div>
+                    <pre><code>// PDA structure for Chapter
+pub struct ChapterRecord {
+    pub reader: Pubkey,
+    pub chapter_id: u32,
+    pub timestamp: i64,
+    pub seed_bump: u8,
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Completion (Placeholder content) -->
+            <div class="tab-panel" id="tab-completion">
+              <div class="tab-content">
+                <div class="tab-info">
+                  <h3>Mastery Verification</h3>
+                  <p>Finish a volume to mint a non-transferable achievement record. Your library is your reputation.</p>
+                  <ul class="tab-list">
+                    <li>100% Completion Badge</li>
+                    <li>On-chain reading analytics</li>
+                    <li>Exclusive community access</li>
+                  </ul>
+                </div>
+                <div class="tab-code">
+                  <div class="code-block">
+                    <div class="code-header">
+                      <span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span>
+                      <span class="code-label">completion_mint</span>
+                    </div>
+                    <pre><code>pub fn mint_completion(
+    ctx: Context&lt;MintCompletion&gt;
+) -> Result&lt;()&gt; {
+    // Logic for sovereign achievement
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-panel" id="tab-badges">
+              <div class="tab-content">
+                <div class="tab-info">
+                  <h3>First 1,000 Reader Badges</h3>
+                  <p>When a chapter drops, Ino tracks a global counter. If you're among the first 1,000 readers to
+                    unlock
+                    it, you earn a verifiable Early Reader badge.</p>
+                  <ul class="tab-list">
+                    <li>Global unlock counter per chapter</li>
+                    <li>Automatic badge minting</li>
+                    <li>"I was here day one" -- provable</li>
+                  </ul>
+                </div>
+                <div class="tab-code">
+                  <div class="code-block">
+                    <div class="code-header"><span class="code-dot"></span><span class="code-dot"></span><span
+                        class="code-dot"></span><span class="code-label">UserBadgePDA</span></div>
+                    <pre><code>{
+  user_pubkey: "7xKXt...",
+  series_id:   "sakura_001",
+  chapter_id:  1,
+  badge_type:  "EarlyReader",
+  awarded_at:  1740268800
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-panel" id="tab-support">
+              <div class="tab-content">
+                <div class="tab-info">
+                  <h3>Support Tier History</h3>
+                  <p>When a reader tips or supports a creator, it becomes on-chain reputation. Visible participation.
+                    Portable across any app that reads the program.</p>
+                  <ul class="tab-list">
+                    <li>Track total support per creator</li>
+                    <li>Automatic tier calculation</li>
+                    <li>Portable creator reputation</li>
+                  </ul>
+                </div>
+                <div class="tab-code">
+                  <div class="code-block">
+                    <div class="code-header"><span class="code-dot"></span><span class="code-dot"></span><span
+                        class="code-dot"></span><span class="code-label">UserSupportPDA</span></div>
+                    <pre><code>{
+  user_pubkey:      "7xKXt...",
+  creator_pubkey:   "3pZm9...",
+  total_supported:  2.5,
+  tier_level:       "Gold"
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="parallax-layer parallax-front">
+        <div class="ino-cta reveal-card">
+          <a href="https://github.com/millw14/ino-sakura-registry" target="_blank" rel="noopener noreferrer"
+            class="btn btn-ghost">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+            </svg>
+            View Ino on GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FEATURES — HORIZONTAL SCROLL ========== -->
+  <section class="section" id="features">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-tag scramble-text" data-text="WHY ON-CHAIN">WHY ON-CHAIN</span>
+        <h2 class="section-title split-text">Because milestones become identity</h2>
+        <p class="section-subtitle fade-in-text">
+          You don't put everything on-chain. You put the things that mean something.
+        </p>
+      </div>
+    </div>
+
+    <div class="horiz-scroll-wrap" id="horizScroll">
+      <div class="horiz-track">
+        <div class="feature-card horiz-card">
+          <div class="card-shine"></div>
+          <div class="feature-num">01</div>
+          <div class="feature-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          </div>
+          <h3>Portable Identity</h3>
+          <p>Your reading achievements travel with your wallet. No lock-in. No silos. Cross-platform by default.</p>
+        </div>
+
+        <div class="feature-card horiz-card">
+          <div class="card-shine"></div>
+          <div class="feature-num">02</div>
+          <div class="feature-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+          </div>
+          <h3>Cross-App Recognition</h3>
+          <p>Any front-end can read your progress. Your milestones are not trapped in one app -- they're visible
+            everywhere.</p>
+        </div>
+
+        <div class="feature-card horiz-card">
+          <div class="card-shine"></div>
+          <div class="feature-num">03</div>
+          <div class="feature-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              <path d="m9 12 2 2 4-4" />
+            </svg>
+          </div>
+          <h3>Creator Transparency</h3>
+          <p>Real engagement numbers, not inflated analytics. Verifiable support metrics that creators can trust.</p>
+        </div>
+
+        <div class="feature-card horiz-card">
+          <div class="card-shine"></div>
+          <div class="feature-num">04</div>
+          <div class="feature-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="4" width="20" height="16" rx="2" />
+              <path d="M7 15h0M2 9.5h20" />
+            </svg>
+          </div>
+          <h3>Composability</h3>
+          <p>Other programs can gate rewards, airdrops, or access based on milestones. Your reading unlocks real value.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ARCHITECTURE ========== -->
+  <section class="section section-dark" id="architecture">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-tag scramble-text" data-text="ARCHITECTURE">ARCHITECTURE</span>
+        <h2 class="section-title split-text">How It Works</h2>
+      </div>
+
+      <div class="arch-flow reveal-card">
+        <div class="arch-node">
+          <div class="arch-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+              <line x1="12" y1="18" x2="12.01" y2="18" />
+            </svg>
+          </div>
+          <span class="arch-label">Client App</span>
+          <span class="arch-desc">Web / Mobile</span>
+        </div>
+        <div class="arch-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5l0 14M19 12l-7 7-7-7" />
+          </svg>
+          <span>RPC</span>
+        </div>
+        <div class="arch-node arch-node-primary">
+          <div class="arch-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 2L2 7l10 5 10-5-10-5z" />
+              <path d="M2 17l10 5 10-5" />
+              <path d="M2 12l10 5 10-5" />
+            </svg>
+          </div>
+          <span class="arch-label">Ino Program</span>
+          <span class="arch-desc">Solana Smart Contract</span>
+        </div>
+        <div class="arch-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5l0 14M19 12l-7 7-7-7" />
+          </svg>
+          <span>PDAs</span>
+        </div>
+        <div class="arch-node">
+          <div class="arch-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <ellipse cx="12" cy="5" rx="9" ry="3" />
+              <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+              <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+            </svg>
+          </div>
+          <span class="arch-label">Solana Ledger</span>
+          <span class="arch-desc">Deterministic PDAs</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== DOWNLOAD ========== -->
+  <section class="section" id="download">
+    <div class="section-inner">
+      <div class="download-wrap reveal-card">
+        <div class="download-glow"></div>
+        <div class="download-content">
+          <h2 class="download-title">Get Sakura</h2>
+          <p class="download-sub">Your reading journey starts here.</p>
+          <div class="download-btns">
+            <button class="btn btn-glow btn-lg" id="downloadBtn">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              Download Now
+            </button>
+          </div>
+          <div class="download-platforms">
+            <span>Android</span>
+            <span class="dot-sep"></span>
+            <span>Solana Seeker</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="sakuraicon.png" alt="Sakura" class="footer-logo" />
+        <div>
+          <span class="footer-jp">桜 Sakura</span>
+          <span class="footer-copy">&copy; 2026 Sakura. All rights reserved.</span>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/millw14/ino-sakura-registry" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://x.com/millw11488" target="_blank" rel="noopener noreferrer">Twitter</a>
+      </div>
+      <div class="footer-sol">
+        <svg width="20" height="20" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="solGrad" x1="0" y1="0" x2="128" y2="128" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#00FFA3" />
+              <stop offset="1" stop-color="#DC1FFF" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M25.7 97.8a4.3 4.3 0 0 1 3-1.3h91a2.2 2.2 0 0 1 1.5 3.7l-17.5 17.5a4.3 4.3 0 0 1-3 1.3h-91a2.2 2.2 0 0 1-1.5-3.7l17.5-17.5z"
+            fill="url(#solGrad)" />
+          <path
+            d="M25.7 10.3A4.4 4.4 0 0 1 28.7 9h91a2.2 2.2 0 0 1 1.5 3.7L103.7 30.2a4.3 4.3 0 0 1-3 1.3h-91a2.2 2.2 0 0 1-1.5-3.7L25.7 10.3z"
+            fill="url(#solGrad)" />
+          <path
+            d="M103.7 53.8a4.3 4.3 0 0 0-3-1.3h-91a2.2 2.2 0 0 0-1.5 3.7l17.5 17.5a4.3 4.3 0 0 0 3 1.3h91a2.2 2.2 0 0 0 1.5-3.7L103.7 53.8z"
+            fill="url(#solGrad)" />
+        </svg>
+        <span>Built on Solana</span>
+      </div>
+      <div class="footer-dev">
+        Built by <a href="https://x.com/millw11488" target="_blank" rel="noopener noreferrer">@millw11488</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== COMING SOON MODAL ========== -->
+  <div class="modal-overlay" id="comingSoonModal">
+    <div class="modal">
+      <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+      <div class="modal-icon">
+        <img src="sakuraicon.png" alt="Sakura" />
+      </div>
+      <h2 class="modal-title">Coming Soon</h2>
+      <p class="modal-text">Sakura is being crafted with care.<br />Join the journey early.</p>
+      <div class="modal-action">
+        <a href="https://x.com/millw11488" target="_blank" rel="noopener noreferrer" class="btn btn-glow">
+          Follow for Updates
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
