@@ -72,30 +72,43 @@
   <!-- ========== HERO — SCROLL-LOCKED CINEMATIC ========== -->
   <div class="hero-scroll-container" id="heroContainer">
     <section class="hero" id="hero">
-      <div class="hero-bg-orbs">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
+
+      <div class="hero-hud hero-hud-left">
+        <span class="hud-item">ON-CHAIN 2026</span>
+        <span class="hud-sep"></span>
+        <span class="hud-item">TERMINAL_0.1</span>
       </div>
-      <div class="hero-content">
-        <div class="hero-mascot-wrap" id="heroMascot">
-          <img src="sakura.png" alt="Sakura" class="hero-mascot" />
+
+      <div class="hero-hud hero-hud-right">
+        <span class="hud-item">BUILT ON SOLANA</span>
+        <span class="hud-sep"></span>
+        <span class="hud-item">V25_FLASHBACK</span>
+      </div>
+
+      <div class="hero-split-layout">
+        <div class="hero-left" id="heroLeft">
+          <div class="hero-badge" id="heroBadge">
+            <span class="badge-dot"></span>
+            ACTIVE NETWORK
+          </div>
+          <h1 class="hero-title" id="heroTitle">
+            <span class="jp-title">桜</span>
+            <span class="en-title">SAKURA</span>
+          </h1>
+          <p class="hero-subtitle" id="heroSubtitle">
+            Read. Collect. Own.<br />
+            Your reading journey, permanently yours.
+          </p>
+          <div class="hero-cta" id="heroCta">
+            <a href="#download" class="btn btn-glow modal-trigger" id="heroDownload">Get Sakura</a>
+            <a href="#onchain" class="btn btn-ghost">Explore Ino</a>
+          </div>
         </div>
-        <div class="hero-badge" id="heroBadge">
-          <span class="badge-dot"></span>
-          BUILT ON SOLANA
-        </div>
-        <h1 class="hero-title" id="heroTitle">
-          <span class="char">桜</span>
-        </h1>
-        <p class="hero-tagline" id="heroTagline">SAKURA</p>
-        <p class="hero-subtitle" id="heroSubtitle">
-          Read. Collect. Own.<br />
-          Your reading journey, permanently yours.
-        </p>
-        <div class="hero-cta" id="heroCta">
-          <a href="#download" class="btn btn-glow">Get Sakura</a>
-          <a href="#onchain" class="btn btn-ghost">Explore Ino</a>
+
+        <div class="hero-right" id="heroRight">
+          <div class="hero-mascot-mask">
+            <img src="sakuraphone.png" alt="Sakura" class="hero-mascot" />
+          </div>
         </div>
       </div>
 
@@ -121,11 +134,7 @@
           <div class="about-card reveal-card">
             <div class="card-shine"></div>
             <div class="about-card-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z" />
-                <path d="M8 7h6" />
-                <path d="M8 11h8" />
-              </svg>
+              <img src="icon-atomic.png" alt="Atomic Reading" class="feature-asset" />
             </div>
             <h3>Atomic Reading</h3>
             <p>Every page turned is a step. Every chapter completed is a record. Verification starts with the first
@@ -134,10 +143,7 @@
           <div class="about-card reveal-card">
             <div class="card-shine"></div>
             <div class="about-card-icon">
-              <svg width="24" height="24" viewBox="0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path
-                  d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
-              </svg>
+              <img src="icon-digital.png" alt="Digital Artifacts" class="feature-asset" />
             </div>
             <h3>Digital Artifacts</h3>
             <p>Unlock limited edition cover art and hidden pages that reside permanently in your collection.</p>
@@ -145,9 +151,7 @@
           <div class="about-card reveal-card">
             <div class="card-shine"></div>
             <div class="about-card-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
-              </svg>
+              <img src="icon-verifiable.png" alt="Verifiable Proof" class="feature-asset" />
             </div>
             <h3>Verifiable Proof</h3>
             <p>Your progress is tied to the Solana ledger. Hard milestones that no one can take away from you.</p>
@@ -456,7 +460,7 @@ pub struct ChapterRecord {
           <h2 class="download-title">Get Sakura</h2>
           <p class="download-sub">Your reading journey starts here.</p>
           <div class="download-btns">
-            <button class="btn btn-glow btn-lg" id="downloadBtn">
+            <button class="btn btn-glow btn-lg modal-trigger" id="downloadBtn">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -524,7 +528,7 @@ pub struct ChapterRecord {
         <img src="sakuraicon.png" alt="Sakura" />
       </div>
       <h2 class="modal-title">Coming Soon</h2>
-      <p class="modal-text">Sakura is being crafted with care.<br />Join the journey early.</p>
+      <p class="modal-text">Sakura is being crafted for <strong>Solana Seeker</strong>.<br />Join the journey early.</p>
       <div class="modal-action">
         <a href="https://x.com/millw11488" target="_blank" rel="noopener noreferrer" class="btn btn-glow">
           Follow for Updates
@@ -533,6 +537,8 @@ pub struct ChapterRecord {
     </div>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="script.js"></script>
 </body>
 
