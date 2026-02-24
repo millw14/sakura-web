@@ -105,8 +105,8 @@
   });
 
   heroScrollTL
-    .to('.hero-left', { y: -100, opacity: 0, filter: 'blur(8px)', duration: 1 }, 0)
-    .to('.hero-right', { y: -80, scale: 1.05, opacity: 0, filter: 'blur(4px)', duration: 1 }, 0)
+    .to('.hero-left', { y: -100, opacity: 0, duration: 1 }, 0)
+    .to('.hero-right', { y: -80, scale: 1.05, opacity: 0, duration: 1 }, 0)
     .to('.hero-hud', { opacity: 0, duration: 0.5 }, 0);
 
   // ========== SECTION LOGIC ==========
@@ -154,7 +154,8 @@
       onUpdate: (self) => {
         const p = self.progress;
         const dist = Math.abs(p - 0.5) * 2;
-        const blurAmount = gsap.utils.clamp(0, 10, (dist - 0.8) * 50);
+        // Adjust focus zone: current section is sharpest (0 blur) between 0.1 and 0.9 progress
+        const blurAmount = gsap.utils.clamp(0, 8, (dist - 0.8) * 40);
         gsap.set(inner, { filter: `blur(${blurAmount}px)` });
       }
     });
@@ -167,9 +168,10 @@
   function openModal(e) {
     if (e) e.preventDefault();
     if (!modal) return;
+    modal.style.display = 'flex';
     modal.classList.add('active');
-    gsap.fromTo(modal, { opacity: 0 }, { opacity: 1, duration: 0.4, display: 'flex' });
-    gsap.fromTo('.modal', { scale: 0.9, y: 30 }, { scale: 1, y: 0, duration: 0.5, ease: 'back.out(1.5)' });
+    gsap.fromTo(modal, { opacity: 0 }, { opacity: 1, duration: 0.4 });
+    gsap.fromTo('.modal', { scale: 0.85, y: 40, opacity: 0 }, { scale: 1, y: 0, opacity: 1, duration: 0.6, ease: 'back.out(1.7)' });
     document.body.style.overflow = 'hidden';
   }
 
@@ -209,9 +211,10 @@
       btn.classList.add('active');
       document.querySelectorAll('.tab-panel').forEach(p => {
         if (p.id === `tab-${target}`) {
-          gsap.fromTo(p, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4, display: 'block' });
+          p.classList.add('active');
+          gsap.fromTo(p, { opacity: 0, scale: 0.98 }, { opacity: 1, scale: 1, duration: 0.4 });
         } else {
-          gsap.set(p, { display: 'none' });
+          p.classList.remove('active');
         }
       });
     });
@@ -233,5 +236,49 @@
       }
     });
   });
+
+  // ========== PUBLIC BETA COUNTDOWN ==========
+  function initCountdown() {
+    const targetDate = new Date('March 1, 2026 00:00:00').getTime();
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+    const minsEl = document.getElementById('minutes');
+    const secsEl = document.getElementById('seconds');
+    const progressFill = document.querySelector('.hud-progress-fill');
+
+    if (!daysEl) return;
+
+    function update() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance < 0) {
+        document.getElementById('betaCountdown').innerHTML = '<div class="hud-status">PUBLIC BETA LIVE</div>';
+        return;
+      }
+
+      const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+      daysEl.textContent = d.toString().padStart(2, '0');
+      hoursEl.textContent = h.toString().padStart(2, '0');
+      minsEl.textContent = m.toString().padStart(2, '0');
+      secsEl.textContent = s.toString().padStart(2, '0');
+
+      // Subtle progress bar animation (simulating prep status)
+      if (progressFill) {
+        const totalDuration = targetDate - new Date('Feb 24, 2026 00:00:00').getTime();
+        const elapsed = now - new Date('Feb 24, 2026 00:00:00').getTime();
+        const pct = Math.min(100, Math.max(0, (elapsed / totalDuration) * 100));
+        progressFill.style.width = pct + '%';
+      }
+    }
+
+    update();
+    setInterval(update, 1000);
+  }
+  initCountdown();
 
 })();
