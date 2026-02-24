@@ -1144,7 +1144,10 @@ body {
 
 .modal-overlay {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   z-index: 10000;
   background: rgba(10, 10, 18, 0.9);
   backdrop-filter: blur(25px) saturate(180%);
@@ -1153,6 +1156,7 @@ body {
   justify-content: center;
   opacity: 0;
   transition: opacity 0.4s var(--ease-out-expo);
+  overflow: hidden;
 }
 
 .modal-overlay.active {

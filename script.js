@@ -166,12 +166,22 @@
   const modalClose = document.getElementById('modalClose');
 
   function openModal(e) {
-    if (e) e.preventDefault();
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     if (!modal) return;
+
+    // Reset state before showing
+    gsap.killTweensOf([modal, '.modal']);
     modal.style.display = 'flex';
     modal.classList.add('active');
+
     gsap.fromTo(modal, { opacity: 0 }, { opacity: 1, duration: 0.4 });
-    gsap.fromTo('.modal', { scale: 0.85, y: 40, opacity: 0 }, { scale: 1, y: 0, opacity: 1, duration: 0.6, ease: 'back.out(1.7)' });
+    gsap.fromTo('.modal',
+      { scale: 0.85, y: 40, opacity: 0 },
+      { scale: 1, y: 0, opacity: 1, duration: 0.6, ease: 'back.out(1.7)' }
+    );
     document.body.style.overflow = 'hidden';
   }
 
@@ -181,8 +191,10 @@
     document.body.style.overflow = '';
   }
 
-  const triggers = document.querySelectorAll('[href="#download"], #downloadBtn, .modal-trigger');
-  triggers.forEach(t => {
+  const triggerList = document.querySelectorAll('[href="#download"], #downloadBtn, .modal-trigger');
+
+  triggerList.forEach(t => {
+    // Passive: false is critical for preventDefault to work on some mobile browsers
     t.addEventListener('click', openModal);
     t.addEventListener('touchstart', openModal, { passive: false });
   });
