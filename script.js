@@ -184,12 +184,12 @@
   const triggers = document.querySelectorAll('[href="#download"], #downloadBtn, .modal-trigger');
   triggers.forEach(t => {
     t.addEventListener('click', openModal);
-    t.addEventListener('touchstart', openModal, { passive: true });
+    t.addEventListener('touchstart', openModal, { passive: false });
   });
   modalClose?.addEventListener('click', closeModal);
-  modalClose?.addEventListener('touchstart', closeModal, { passive: true });
+  modalClose?.addEventListener('touchstart', closeModal, { passive: false });
   modal?.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-  modal?.addEventListener('touchstart', e => { if (e.target === modal) closeModal(); }, { passive: true });
+  modal?.addEventListener('touchstart', e => { if (e.target === modal) closeModal(); }, { passive: false });
 
   // ========== CARDS & TABS ==========
   const tiltCards = document.querySelectorAll('.about-card, .tab-panels');
