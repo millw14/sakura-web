@@ -182,9 +182,14 @@
   }
 
   const triggers = document.querySelectorAll('[href="#download"], #downloadBtn, .modal-trigger');
-  triggers.forEach(t => t.addEventListener('click', openModal));
+  triggers.forEach(t => {
+    t.addEventListener('click', openModal);
+    t.addEventListener('touchstart', openModal, { passive: true });
+  });
   modalClose?.addEventListener('click', closeModal);
+  modalClose?.addEventListener('touchstart', closeModal, { passive: true });
   modal?.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  modal?.addEventListener('touchstart', e => { if (e.target === modal) closeModal(); }, { passive: true });
 
   // ========== CARDS & TABS ==========
   const tiltCards = document.querySelectorAll('.about-card, .tab-panels');
@@ -205,7 +210,8 @@
   });
 
   document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
+    const handleTab = (e) => {
+      if (e.type === 'touchstart') e.preventDefault();
       const target = btn.dataset.tab;
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
@@ -217,7 +223,9 @@
           p.classList.remove('active');
         }
       });
-    });
+    };
+    btn.addEventListener('click', handleTab);
+    btn.addEventListener('touchstart', handleTab, { passive: false });
   });
 
   // SCRAMBLE TEXT

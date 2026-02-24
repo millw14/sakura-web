@@ -849,7 +849,7 @@ body {
   /* Firefox */
   -ms-overflow-style: none;
   /* IE 10+ */
-  pointer-events: all;
+  pointer-events: auto;
 }
 
 .tab-nav::-webkit-scrollbar {
@@ -871,6 +871,7 @@ body {
   border-radius: 10px;
   transition: all 0.35s var(--ease-out-expo);
   letter-spacing: 0.5px;
+  pointer-events: auto !important;
 }
 
 .tab-btn:hover {
@@ -895,7 +896,7 @@ body {
   animation: tabIn 0.5s var(--ease-out-expo);
 }
 
-Broadway @keyframes tabIn {
+@keyframes tabIn {
   from {
     opacity: 0;
     transform: translateY(12px) scale(0.99);
@@ -1456,6 +1457,23 @@ Broadway @keyframes tabIn {
 
   .nav-hamburger {
     display: flex;
+  }
+
+  /* FLATTEN FOR TOUCH */
+  .hero-scroll-container,
+  .hero,
+  .section,
+  .section-inner,
+  .hero-split-layout,
+  .hero-left,
+  .hero-right,
+  .hero-mascot-mask,
+  .parallax-layer,
+  .tabs,
+  .tab-panels {
+    perspective: none !important;
+    transform-style: flat !important;
+    transform: none !important;
   }
 
   .hero-mascot {
