@@ -103,6 +103,37 @@
             <a href="#download" class="btn btn-glow modal-trigger" id="heroDownload">Get Sakura</a>
             <a href="#onchain" class="btn btn-ghost">Explore Ino</a>
           </div>
+
+          <!-- Public Beta Countdown HUD -->
+          <div class="beta-countdown-hud" id="betaCountdown">
+            <div class="hud-header">
+              <span class="hud-status">PUBLIC BETA INITIALIZING</span>
+              <span class="hud-date">MARCH 1, 2026</span>
+            </div>
+            <div class="countdown-grid">
+              <div class="countdown-item">
+                <span class="count-value" id="days">00</span>
+                <span class="count-label">DAYS</span>
+              </div>
+              <div class="countdown-item">
+                <span class="count-value" id="hours">00</span>
+                <span class="count-label">HRS</span>
+              </div>
+              <div class="countdown-item">
+                <span class="count-value" id="minutes">00</span>
+                <span class="count-label">MIN</span>
+              </div>
+              <div class="countdown-item">
+                <span class="count-value" id="seconds">00</span>
+                <span class="count-label">SEC</span>
+              </div>
+            </div>
+            <div class="hud-footer">
+              <div class="hud-progress-bar">
+                <div class="hud-progress-fill"></div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="hero-right" id="heroRight">
@@ -524,11 +555,11 @@ pub struct ChapterRecord {
   <div class="modal-overlay" id="comingSoonModal">
     <div class="modal">
       <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
-      <div class="modal-icon">
-        <img src="sakuraicon.png" alt="Sakura" />
+      <div class="modal-mascot">
+        <img src="sad.png" alt="Sad Sakura" class="mascot-sad" />
       </div>
       <h2 class="modal-title">Coming Soon</h2>
-      <p class="modal-text">Sakura is being crafted for <strong>Solana Seeker</strong>.<br />Join the journey early.</p>
+      <p class="modal-text">hey reader-san, it's not out yet.<br />can you wait a bit please?</p>
       <div class="modal-action">
         <a href="https://x.com/millw11488" target="_blank" rel="noopener noreferrer" class="btn btn-glow">
           Follow for Updates
