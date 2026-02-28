@@ -259,7 +259,8 @@
 
   // ========== PUBLIC BETA COUNTDOWN ==========
   function initCountdown() {
-    const targetDate = new Date('March 1, 2026 00:00:00').getTime();
+    // Delayed by 2.5 hours
+    const targetDate = new Date('March 1, 2026 02:30:00').getTime();
     const daysEl = document.getElementById('days');
     const hoursEl = document.getElementById('hours');
     const minsEl = document.getElementById('minutes');
