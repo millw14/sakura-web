@@ -107,8 +107,8 @@
           <!-- Public Beta Countdown HUD -->
           <div class="beta-countdown-hud" id="betaCountdown">
             <div class="hud-header">
-              <span class="hud-status">PUBLIC BETA INITIALIZING</span>
-              <span class="hud-date">MARCH 1, 2026</span>
+              <span class="hud-status" id="hudStatusText">PUBLIC BETA INITIALIZING</span>
+              <span class="hud-date" id="hudDateText">MARCH 1, 2026</span>
             </div>
             <div class="countdown-grid">
               <div class="countdown-item">
@@ -128,6 +128,21 @@
                 <span class="count-label">SEC</span>
               </div>
             </div>
+
+            <!-- Ready State (Hidden by default) -->
+            <div class="download-ready-state" id="downloadReady" style="display: none;">
+              <a href="https://github.com/millw14/sakura-web/releases/latest" target="_blank"
+                class="btn btn-glow btn-download-ready">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Download Sakura v1.0
+              </a>
+            </div>
+
             <div class="hud-footer">
               <div class="hud-progress-bar">
                 <div class="hud-progress-fill"></div>

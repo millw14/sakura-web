@@ -622,6 +622,35 @@ body {
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   margin-bottom: 12px;
+  animation: tabIn 0.5s var(--ease-out-expo);
+}
+
+.download-ready-state {
+  display: flex;
+  /* controlled by JS */
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  animation: tabIn 0.5s var(--ease-out-expo);
+}
+
+.btn-download-ready {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.1rem;
+  padding: 14px 32px;
+  background: rgba(255, 107, 157, 0.15);
+  border: 1px solid rgba(255, 107, 157, 0.4);
+  color: #fff;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.btn-download-ready:hover {
+  background: var(--sakura-pink);
+  box-shadow: 0 0 30px rgba(255, 107, 157, 0.6);
+  transform: translateY(-2px);
 }
 
 .countdown-item {

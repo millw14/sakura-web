@@ -269,12 +269,34 @@
 
     if (!daysEl) return;
 
+    let countdownInterval; // Declare countdownInterval here
+
     function update() {
       const now = new Date().getTime();
       const distance = targetDate - now;
 
-      if (distance < 0) {
-        document.getElementById('betaCountdown').innerHTML = '<div class="hud-status">PUBLIC BETA LIVE</div>';
+      if (distance <= 0) {
+        clearInterval(countdownInterval);
+
+        const grid = document.querySelector('.countdown-grid');
+        if (grid) grid.style.display = 'none';
+
+        const downloadReady = document.getElementById('downloadReady');
+        if (downloadReady) downloadReady.style.display = 'flex';
+
+        const hudStatus = document.getElementById('hudStatusText');
+        if (hudStatus) hudStatus.textContent = "PUBLIC BETA LIVE";
+
+        const hudDate = document.getElementById('hudDateText');
+        if (hudDate) {
+          hudDate.textContent = "AVAILABLE NOW";
+          hudDate.style.color = "var(--sakura-pink)";
+          hudDate.style.textShadow = "0 0 10px rgba(255, 107, 157, 0.5)";
+        }
+
+        const progress = document.querySelector('.hud-progress-fill');
+        if (progress) progress.style.width = '100%';
+
         return;
       }
 
@@ -298,7 +320,7 @@
     }
 
     update();
-    setInterval(update, 1000);
+    countdownInterval = setInterval(update, 1000);
   }
   initCountdown();
 
