@@ -304,36 +304,18 @@ body {
   font-size: 16px;
 }
 
-/* ========== HERO — SCROLL LOCKED ========== */
-.hero-scroll-container {
-  height: 280vh;
-  position: relative;
-}
+/* ========== HERO — SCROLL LOCKED REMOVED ========== */
 
-.hero {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  transform-style: preserve-3d;
-}
 
 /* ========== HERO — CLEAN LAYOUT ========== */
 .hero-scroll-container {
-  height: 250vh;
   position: relative;
   background: var(--bg-deep);
 }
 
 .hero {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  height: 100vh;
+  position: relative;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -743,13 +725,6 @@ body {
 
 .split-text .char-inner {
   display: inline-block;
-  transform: translateY(115%) rotateX(-40deg);
-  transition: transform 0.5s var(--ease-out-expo);
-  transform-origin: bottom;
-}
-
-.split-text.revealed .char-inner {
-  transform: translateY(0) rotateX(0deg);
 }
 
 /* Scramble */
@@ -759,14 +734,7 @@ body {
 
 /* Fade in */
 .fade-in-text {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 1s var(--ease-smooth), transform 1s var(--ease-out-expo);
-}
-
-.fade-in-text.revealed {
   opacity: 1;
-  transform: translateY(0);
 }
 
 /* ========== ABOUT ========== */
@@ -784,15 +752,8 @@ body {
   border-radius: var(--radius-lg);
   backdrop-filter: blur(12px);
   overflow: hidden;
-  transform: translateY(40px) scale(0.95);
-  opacity: 0;
   transition: transform 0.7s var(--ease-out-expo), opacity 0.6s var(--ease-smooth),
     border-color 0.4s ease, box-shadow 0.4s ease;
-}
-
-.about-card.revealed {
-  transform: translateY(0) scale(1);
-  opacity: 1;
 }
 
 .about-card:hover {

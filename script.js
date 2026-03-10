@@ -93,22 +93,6 @@
       .from('.hero-hud', { opacity: 0, duration: 1 }, '-=0.8');
   }
 
-  // Hero Scroll Parallax
-  const heroScrollTL = gsap.timeline({
-    scrollTrigger: {
-      trigger: '#heroContainer',
-      start: 'top top',
-      end: 'bottom bottom',
-      scrub: 1,
-      invalidateOnRefresh: true
-    }
-  });
-
-  heroScrollTL
-    .to('.hero-left', { y: -100, opacity: 0, duration: 1 }, 0)
-    .to('.hero-right', { y: -80, scale: 1.05, opacity: 0, duration: 1 }, 0)
-    .to('.hero-hud', { opacity: 0, duration: 0.5 }, 0);
-
   // ========== SECTION LOGIC ==========
   const sections = document.querySelectorAll('.section');
   sections.forEach(section => {
@@ -124,16 +108,16 @@
       scrollTrigger: {
         trigger: section,
         start: 'top 85%',
-        toggleActions: 'play none none reverse'
+        toggleActions: 'play none none none'
       }
     });
 
     // Subtler Parallax
     layers.forEach(layer => {
       let speed = 0;
-      if (layer.classList.contains('parallax-back')) speed = -60;
-      if (layer.classList.contains('parallax-mid')) speed = 30;
-      if (layer.classList.contains('parallax-front')) speed = 80;
+      if (layer.classList.contains('parallax-back')) speed = -30;
+      if (layer.classList.contains('parallax-mid')) speed = 15;
+      if (layer.classList.contains('parallax-front')) speed = 40;
 
       gsap.to(layer, {
         y: speed,
@@ -144,20 +128,6 @@
           scrub: true
         }
       });
-    });
-
-    // Depth-of-Field Blur (Sharp focus zone)
-    ScrollTrigger.create({
-      trigger: section,
-      start: 'top bottom',
-      end: 'bottom top',
-      onUpdate: (self) => {
-        const p = self.progress;
-        const dist = Math.abs(p - 0.5) * 2;
-        // Adjust focus zone: current section is sharpest (0 blur) between 0.1 and 0.9 progress
-        const blurAmount = gsap.utils.clamp(0, 8, (dist - 0.8) * 40);
-        gsap.set(inner, { filter: `blur(${blurAmount}px)` });
-      }
     });
   });
 
