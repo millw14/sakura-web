@@ -161,7 +161,7 @@
     document.body.style.overflow = '';
   }
 
-  const triggerList = document.querySelectorAll('[href="#download"], #downloadBtn, .modal-trigger');
+  const triggerList = document.querySelectorAll('.modal-trigger');
 
   triggerList.forEach(t => {
     // Passive: false is critical for preventDefault to work on some mobile browsers

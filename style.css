@@ -482,6 +482,100 @@ body {
   gap: 20px;
 }
 
+/* CA Note Box */
+.ca-note-box {
+  margin-top: 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: rgba(255, 107, 157, 0.05);
+  border: 1px solid rgba(255, 107, 157, 0.2);
+  border-radius: 14px;
+  padding: 16px 20px;
+  backdrop-filter: blur(10px);
+  max-width: 440px;
+  position: relative;
+  overflow: hidden;
+}
+
+.ca-note-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at top left, rgba(255, 107, 157, 0.1), transparent 70%);
+  pointer-events: none;
+}
+
+.ca-note-icon {
+  color: var(--sakura-pink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+  filter: drop-shadow(0 0 8px rgba(255, 107, 157, 0.5));
+}
+
+.ca-note-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ca-note-title {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.ca-address-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 107, 157, 0.15);
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ca-address-wrapper:hover {
+  background: rgba(0, 0, 0, 0.7);
+  border-color: rgba(255, 107, 157, 0.4);
+  box-shadow: 0 0 15px rgba(255, 107, 157, 0.15);
+}
+
+.ca-address {
+  font-family: var(--font-tech);
+  font-size: 11px;
+  color: var(--sakura-soft);
+  letter-spacing: 0.5px;
+  word-break: break-all;
+}
+
+.ca-copy-btn {
+  background: none;
+  border: none;
+  color: var(--sakura-pink);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  opacity: 0.7;
+  transition: all 0.2s ease;
+}
+
+.ca-address-wrapper:hover .ca-copy-btn {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.ca-address-wrapper:active {
+  transform: scale(0.98);
+}
+
 
 
 /* ========== 3D SECTION REVEAL ========== */
