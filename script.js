@@ -255,7 +255,7 @@
         if (downloadReady) downloadReady.style.display = 'flex';
 
         const hudStatus = document.getElementById('hudStatusText');
-        if (hudStatus) hudStatus.textContent = "PUBLIC BETA LIVE";
+        if (hudStatus) hudStatus.textContent = "RELEASE v1.3.0 LIVE";
 
         const hudDate = document.getElementById('hudDateText');
         if (hudDate) {
