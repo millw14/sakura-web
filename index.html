@@ -54,8 +54,11 @@
       <a href="#onchain" class="nav-link">On-Chain</a>
       <a href="#features" class="nav-link">Features</a>
       <a href="#download" class="nav-link">Download</a>
+      <a href="https://github.com/millw14/sakura-web" target="_blank" rel="noopener noreferrer"
+        class="nav-link nav-link-external">GitHub</a>
     </div>
     <div class="nav-actions">
+      <a href="#download" class="nav-get-app">GET APP</a>
       <a href="https://x.com/millw11488" target="_blank" rel="noopener noreferrer" class="nav-social"
         aria-label="Twitter">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -69,125 +72,118 @@
     </div>
   </nav>
 
-  <!-- ========== HERO — SCROLL-LOCKED CINEMATIC ========== -->
+  <!-- ========== HERO — ANISURGE-STYLE ========== -->
   <div class="hero-scroll-container" id="heroContainer">
-    <section class="hero" id="hero">
-
-      <div class="hero-hud hero-hud-left">
-        <span class="hud-item">ON-CHAIN 2026</span>
-        <span class="hud-sep"></span>
-        <span class="hud-item">TERMINAL_0.1</span>
-      </div>
-
-      <div class="hero-hud hero-hud-right">
-        <span class="hud-item">BUILT ON SOLANA</span>
-        <span class="hud-sep"></span>
-        <span class="hud-item">V25_FLASHBACK</span>
-      </div>
-
+    <section class="hero hero-anisurge" id="hero">
       <div class="hero-split-layout">
         <div class="hero-left" id="heroLeft">
-          <div class="hero-badge" id="heroBadge">
-            <span class="badge-dot"></span>
-            ACTIVE NETWORK
-          </div>
-          <h1 class="hero-title" id="heroTitle">
-            <span class="jp-title">桜</span>
-            <span class="en-title">SAKURA</span>
+          <p class="hero-eyebrow">Free &amp; open source · Solana</p>
+          <h1 class="hero-headline" id="heroTitle">
+            <span class="hero-headline-line">Read. Collect. Own your way</span>
           </h1>
-          <p class="hero-subtitle" id="heroSubtitle">
-            Read. Collect. Own.<br />
-            Your reading journey, permanently yours.
+          <p class="hero-lede" id="heroSubtitle">
+            On-chain milestones, Seeker-native, Ino-backed. Your library, your proofs — without the noise.
           </p>
-          <div class="hero-cta" id="heroCta">
-            <a href="https://github.com/millw14/sakura-web/releases/download/v1.6.3/Sakura-v1.6.3.apk" class="btn btn-glow" id="heroDownload">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <div class="hero-cta-row">
+            <a href="https://github.com/millw14/sakura-web/releases/download/v1.6.3/Sakura-v1.6.3.apk"
+              class="btn-hero-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                 <polyline points="7 10 12 15 17 10" />
                 <line x1="12" y1="15" x2="12" y2="3" />
               </svg>
-              Download v1.6.3
+              Get it now
             </a>
-            <a href="#onchain" class="btn btn-ghost">Explore Ino</a>
-          </div>
-
-          <!-- CA Note Box -->
-          <div class="ca-note-box">
-            <div class="ca-note-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            <a href="#onchain" class="btn-hero-secondary">
+              Ino
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
-            </div>
-            <div class="ca-note-content">
-              <div class="ca-note-title">You might need some sakura to test, get some Oni san</div>
-              <div class="ca-address-wrapper" onclick="navigator.clipboard.writeText('EWiVNxCqNatzV2paBHyfKUwGLnk7WKs9uZTA5jkTpump')">
-                <span class="ca-address">EWiVNxCqNatzV2paBHyfKUwGLnk7WKs9uZTA5jkTpump</span>
-                <button class="ca-copy-btn" aria-label="Copy Address">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Public Release Countdown HUD -->
-          <div class="beta-countdown-hud" id="betaCountdown">
-            <div class="hud-header">
-              <span class="hud-status" id="hudStatusText">RELEASE v1.6.3 INITIALIZING</span>
-              <span class="hud-date" id="hudDateText">MARCH 1, 2026</span>
-            </div>
-            <div class="countdown-grid">
-              <div class="countdown-item">
-                <span class="count-value" id="days">00</span>
-                <span class="count-label">DAYS</span>
-              </div>
-              <div class="countdown-item">
-                <span class="count-value" id="hours">00</span>
-                <span class="count-label">HRS</span>
-              </div>
-              <div class="countdown-item">
-                <span class="count-value" id="minutes">00</span>
-                <span class="count-label">MIN</span>
-              </div>
-              <div class="countdown-item">
-                <span class="count-value" id="seconds">00</span>
-                <span class="count-label">SEC</span>
-              </div>
-            </div>
-
-            <!-- Ready State (Hidden by default) -->
-            <div class="download-ready-state" id="downloadReady" style="display: none;">
-              <a href="https://github.com/millw14/sakura-web/releases/download/v1.6.3/Sakura-v1.6.3.apk"
-                class="btn btn-glow btn-download-ready">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path>
-                  <polyline points="7 10 12 15 17 10"></polyline>
-                  <line x1="12" y1="15" x2="12" y2="3"></line>
-                </svg>
-                Download Sakura v1.6.3
-              </a>
-            </div>
-
-            <div class="hud-footer">
-              <div class="hud-progress-bar">
-                <div class="hud-progress-fill"></div>
-              </div>
-            </div>
+            </a>
           </div>
         </div>
 
-        <div class="hero-right" id="heroRight">
-          <div class="hero-mascot-mask">
-            <img src="pic.png" alt="Sakura" class="hero-mascot" />
+        <div class="hero-right" id="heroRight" data-hero-gallery>
+          <figure class="hero-device-main">
+            <img id="heroGalleryMain" src="ss/hero-home.png" alt="Sakura app: home" class="hero-shot" width="360"
+              height="640" loading="eager" decoding="async" />
+          </figure>
+          <div class="hero-device-thumbs" role="tablist" aria-label="App screens">
+            <button type="button" class="hero-thumb is-active" data-src="ss/hero-home.png"
+              data-alt="Sakura app: home screen" aria-selected="true">
+              <span class="hero-thumb-frame"><img src="ss/hero-home.png" alt="" width="120" height="213" loading="lazy"
+                  decoding="async" /></span>
+              <span class="hero-thumb-label">Home</span>
+            </button>
+            <button type="button" class="hero-thumb" data-src="ss/preview-1.png" data-alt="Sakura app: library"
+              aria-selected="false">
+              <span class="hero-thumb-frame"><img src="ss/preview-1.png" alt="" width="120" height="213" loading="lazy"
+                  decoding="async" /></span>
+              <span class="hero-thumb-label">Library</span>
+            </button>
+            <button type="button" class="hero-thumb" data-src="ss/preview-2.png" data-alt="Sakura app: reader"
+              aria-selected="false">
+              <span class="hero-thumb-frame"><img src="ss/preview-2.png" alt="" width="120" height="213" loading="lazy"
+                  decoding="async" /></span>
+              <span class="hero-thumb-label">Reader</span>
+            </button>
+            <button type="button" class="hero-thumb" data-src="ss/preview-3.png" data-alt="Sakura app: search"
+              aria-selected="false">
+              <span class="hero-thumb-frame"><img src="ss/preview-3.png" alt="" width="120" height="213" loading="lazy"
+                  decoding="async" /></span>
+              <span class="hero-thumb-label">Search</span>
+            </button>
           </div>
         </div>
       </div>
 
+      <div class="hero-below">
+        <ul class="hero-feature-pills">
+          <li><span class="hero-pill-dot"></span> On-chain</li>
+          <li><span class="hero-pill-dot"></span> Solana</li>
+          <li><span class="hero-pill-dot"></span> Seeker</li>
+          <li><span class="hero-pill-dot"></span> Ino</li>
+          <li><span class="hero-pill-dot"></span> Milestones</li>
+          <li><span class="hero-pill-dot"></span> Portable ID</li>
+          <li><span class="hero-pill-dot"></span> Creator proof</li>
+          <li><span class="hero-pill-dot"></span> Open source</li>
+        </ul>
+        <div class="hero-available">
+          <span class="hero-available-label">Available on</span>
+          <div class="hero-available-icons">
+            <span class="hero-platform">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85-.29-.15-.65-.06-.83.22l-1.88 3.24a11.43 11.43 0 0 0-8.45 0L5.5 5.67c-.19-.29-.58-.38-.87-.22-.3.16-.42.54-.26.85l1.84 3.18C3.81 10.92 2.5 12.9 2.5 15h19c0-2.1-1.31-4.08-3.9-5.52zM7 14.25c-.41 0-.75-.34-.75-.75s.34-.75.75-.75.75.34.75.75-.34.75-.75.75zm10 0c-.41 0-.75-.34-.75-.75s.34-.75.75-.75.75.34.75.75-.34.75-.75.75z" />
+              </svg>
+              Android
+            </span>
+            <span class="hero-platform">
+              <svg width="20" height="20" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true">
+                <defs>
+                  <linearGradient id="heroSolGrad" x1="0" y1="0" x2="128" y2="128" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#00FFA3" />
+                    <stop offset="1" stop-color="#DC1FFF" />
+                  </linearGradient>
+                </defs>
+                <path
+                  d="M25.7 97.8a4.3 4.3 0 0 1 3-1.3h91a2.2 2.2 0 0 1 1.5 3.7l-17.5 17.5a4.3 4.3 0 0 1-3 1.3h-91a2.2 2.2 0 0 1-1.5-3.7l17.5-17.5z"
+                  fill="url(#heroSolGrad)" />
+                <path
+                  d="M25.7 10.3A4.4 4.4 0 0 1 28.7 9h91a2.2 2.2 0 0 1 1.5 3.7L103.7 30.2a4.3 4.3 0 0 1-3 1.3h-91a2.2 2.2 0 0 1-1.5-3.7L25.7 10.3z"
+                  fill="url(#heroSolGrad)" />
+                <path
+                  d="M103.7 53.8a4.3 4.3 0 0 0-3-1.3h-91a2.2 2.2 0 0 0-1.5 3.7l17.5 17.5a4.3 4.3 0 0 0 3 1.3h91a2.2 2.2 0 0 0 1.5-3.7L103.7 53.8z"
+                  fill="url(#heroSolGrad)" />
+              </svg>
+              Solana Seeker
+            </span>
+          </div>
+        </div>
+      </div>
     </section>
   </div>
 
@@ -535,6 +531,62 @@ pub struct ChapterRecord {
         <div class="download-content">
           <h2 class="download-title">Get Sakura</h2>
           <p class="download-sub">Your reading journey starts here.</p>
+
+          <div class="ca-note-box download-ca">
+            <div class="ca-note-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+              </svg>
+            </div>
+            <div class="ca-note-content">
+              <div class="ca-note-title">You might need some sakura to test, get some Oni san</div>
+              <div class="ca-address-wrapper"
+                onclick="navigator.clipboard.writeText('EWiVNxCqNatzV2paBHyfKUwGLnk7WKs9uZTA5jkTpump')">
+                <span class="ca-address">EWiVNxCqNatzV2paBHyfKUwGLnk7WKs9uZTA5jkTpump</span>
+                <button type="button" class="ca-copy-btn" aria-label="Copy Address">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="beta-countdown-hud download-countdown" id="betaCountdown">
+            <div class="hud-header">
+              <span class="hud-status" id="hudStatusText">RELEASE v1.6.3 INITIALIZING</span>
+              <span class="hud-date" id="hudDateText">MARCH 1, 2026</span>
+            </div>
+            <div class="countdown-grid">
+              <div class="countdown-item">
+                <span class="count-value" id="days">00</span>
+                <span class="count-label">DAYS</span>
+              </div>
+              <div class="countdown-item">
+                <span class="count-value" id="hours">00</span>
+                <span class="count-label">HRS</span>
+              </div>
+              <div class="countdown-item">
+                <span class="count-value" id="minutes">00</span>
+                <span class="count-label">MIN</span>
+              </div>
+              <div class="countdown-item">
+                <span class="count-value" id="seconds">00</span>
+                <span class="count-label">SEC</span>
+              </div>
+            </div>
+            <div class="hud-footer">
+              <div class="hud-progress-bar">
+                <div class="hud-progress-fill"></div>
+              </div>
+            </div>
+          </div>
+
           <div class="download-btns">
             <a href="https://github.com/millw14/sakura-web/releases/download/v1.6.3/Sakura-v1.6.3.apk" class="btn btn-glow btn-lg" id="downloadBtn">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"

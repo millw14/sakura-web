@@ -6,59 +6,61 @@
   // Register GSAP Plugins
   gsap.registerPlugin(ScrollTrigger);
 
-  // ========== PETAL PARTICLES ==========
+  // ========== PETAL PARTICLES (skipped when canvas absent / hidden) ==========
   const petalCanvas = document.getElementById('petalCanvas');
-  const ctx = petalCanvas.getContext('2d');
-  function resizeCanvas() {
-    petalCanvas.width = window.innerWidth;
-    petalCanvas.height = window.innerHeight;
-  }
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
+  const ctx = petalCanvas?.getContext?.('2d');
+  if (petalCanvas && ctx) {
+    function resizeCanvas() {
+      petalCanvas.width = window.innerWidth;
+      petalCanvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
-  class Petal {
-    constructor() { this.reset(); }
-    reset() {
-      this.x = Math.random() * petalCanvas.width;
-      this.y = -20 - Math.random() * 80;
-      this.size = 4 + Math.random() * 7;
-      this.speedY = 0.2 + Math.random() * 0.5;
-      this.speedX = -0.1 + Math.random() * 0.25;
-      this.rotation = Math.random() * Math.PI * 2;
-      this.rotSpeed = -0.01 + Math.random() * 0.02;
-      this.opacity = 0.1 + Math.random() * 0.3;
-      this.wobble = Math.random() * Math.PI * 2;
-      this.wobbleSpeed = 0.005 + Math.random() * 0.01;
+    class Petal {
+      constructor() { this.reset(); }
+      reset() {
+        this.x = Math.random() * petalCanvas.width;
+        this.y = -20 - Math.random() * 80;
+        this.size = 4 + Math.random() * 7;
+        this.speedY = 0.2 + Math.random() * 0.5;
+        this.speedX = -0.1 + Math.random() * 0.25;
+        this.rotation = Math.random() * Math.PI * 2;
+        this.rotSpeed = -0.01 + Math.random() * 0.02;
+        this.opacity = 0.1 + Math.random() * 0.3;
+        this.wobble = Math.random() * Math.PI * 2;
+        this.wobbleSpeed = 0.005 + Math.random() * 0.01;
+      }
+      update() {
+        this.y += this.speedY;
+        this.wobble += this.wobbleSpeed;
+        this.x += this.speedX + Math.sin(this.wobble) * 0.2;
+        this.rotation += this.rotSpeed;
+        if (this.y > petalCanvas.height + 20) this.reset();
+      }
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        ctx.globalAlpha = this.opacity;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.bezierCurveTo(this.size * 0.4, -this.size * 0.6, this.size, -this.size * 0.3, this.size * 0.5, this.size * 0.2);
+        ctx.bezierCurveTo(this.size * 0.2, this.size * 0.5, -this.size * 0.1, this.size * 0.3, 0, 0);
+        ctx.fillStyle = `hsl(${345 + Math.random() * 15}, 85%, ${75 + Math.random() * 10}%)`;
+        ctx.fill();
+        ctx.restore();
+      }
     }
-    update() {
-      this.y += this.speedY;
-      this.wobble += this.wobbleSpeed;
-      this.x += this.speedX + Math.sin(this.wobble) * 0.2;
-      this.rotation += this.rotSpeed;
-      if (this.y > petalCanvas.height + 20) this.reset();
-    }
-    draw() {
-      ctx.save();
-      ctx.translate(this.x, this.y);
-      ctx.rotate(this.rotation);
-      ctx.globalAlpha = this.opacity;
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.bezierCurveTo(this.size * 0.4, -this.size * 0.6, this.size, -this.size * 0.3, this.size * 0.5, this.size * 0.2);
-      ctx.bezierCurveTo(this.size * 0.2, this.size * 0.5, -this.size * 0.1, this.size * 0.3, 0, 0);
-      ctx.fillStyle = `hsl(${345 + Math.random() * 15}, 85%, ${75 + Math.random() * 10}%)`;
-      ctx.fill();
-      ctx.restore();
-    }
-  }
 
-  const petals = Array.from({ length: 30 }, () => new Petal());
-  function animatePetals() {
-    ctx.clearRect(0, 0, petalCanvas.width, petalCanvas.height);
-    petals.forEach(p => { p.update(); p.draw(); });
-    requestAnimationFrame(animatePetals);
+    const petals = Array.from({ length: 30 }, () => new Petal());
+    function animatePetals() {
+      ctx.clearRect(0, 0, petalCanvas.width, petalCanvas.height);
+      petals.forEach(p => { p.update(); p.draw(); });
+      requestAnimationFrame(animatePetals);
+    }
+    animatePetals();
   }
-  animatePetals();
 
   // ========== CURSOR GLOW ==========
   const cursorGlow = document.getElementById('cursorGlow');
@@ -85,12 +87,45 @@
 
   // ========== HERO INTRO (Clean Targets) ==========
   const introTL = gsap.timeline();
-  // Ensure targets exist before animating
   if (document.querySelector('.hero-left')) {
     introTL
-      .from('.hero-left', { x: -60, opacity: 0, duration: 1.2, ease: 'power3.out' })
-      .from('.hero-right', { x: 60, opacity: 0, scale: 0.95, duration: 1.5, ease: 'expo.out' }, '-=1')
-      .from('.hero-hud', { opacity: 0, duration: 1 }, '-=0.8');
+      .from('.hero-left', { x: -40, opacity: 0, duration: 1, ease: 'power3.out' })
+      .from('.hero-right', { x: 40, opacity: 0, scale: 0.98, duration: 1.2, ease: 'expo.out' }, '-=0.85');
+    if (document.querySelector('.hero-below')) {
+      introTL.from('.hero-below', { y: 24, opacity: 0, duration: 0.75, ease: 'power2.out' }, '-=0.5');
+    }
+  }
+
+  // ========== MOBILE NAV ==========
+  const navHamburger = document.getElementById('navHamburger');
+  const navLinks = document.getElementById('navLinks');
+  if (navHamburger && navLinks) {
+    navHamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach((a) => {
+      a.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+  }
+
+  // ========== HERO DEVICE GALLERY (compact thumbnails) ==========
+  const heroGallery = document.querySelector('[data-hero-gallery]');
+  if (heroGallery) {
+    const mainImg = heroGallery.querySelector('#heroGalleryMain');
+    heroGallery.querySelectorAll('.hero-thumb').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        heroGallery.querySelectorAll('.hero-thumb').forEach((b) => {
+          b.classList.remove('is-active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('is-active');
+        btn.setAttribute('aria-selected', 'true');
+        const src = btn.dataset.src;
+        const alt = btn.dataset.alt || '';
+        if (mainImg && src) {
+          mainImg.src = src;
+          mainImg.alt = alt;
+        }
+      });
+    });
   }
 
   // ========== SECTION LOGIC ==========
@@ -250,9 +285,6 @@
 
         const grid = document.querySelector('.countdown-grid');
         if (grid) grid.style.display = 'none';
-
-        const downloadReady = document.getElementById('downloadReady');
-        if (downloadReady) downloadReady.style.display = 'flex';
 
         const hudStatus = document.getElementById('hudStatusText');
         if (hudStatus) hudStatus.textContent = "RELEASE v1.6.3 LIVE";
