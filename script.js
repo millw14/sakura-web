@@ -106,26 +106,68 @@
     });
   }
 
-  // ========== HERO DEVICE GALLERY (compact thumbnails) ==========
-  const heroGallery = document.querySelector('[data-hero-gallery]');
-  if (heroGallery) {
-    const mainImg = heroGallery.querySelector('#heroGalleryMain');
-    heroGallery.querySelectorAll('.hero-thumb').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        heroGallery.querySelectorAll('.hero-thumb').forEach((b) => {
-          b.classList.remove('is-active');
-          b.setAttribute('aria-selected', 'false');
+  // ========== HERO DUAL PLATFORM GALLERY ==========
+  const heroRight = document.getElementById('heroRight');
+  const heroMainFig = document.getElementById('heroDeviceMainFig');
+  const heroMainImg = document.getElementById('heroGalleryMain');
+  if (heroRight && heroMainImg && heroMainFig) {
+    function syncMainFromPanel(platform) {
+      const panel = heroRight.querySelector(`.hero-device-thumbs[data-platform="${platform}"]`);
+      if (!panel) return;
+      const active = panel.querySelector('.hero-thumb.is-active');
+      if (active && active.dataset.src) {
+        heroMainImg.src = active.dataset.src;
+        heroMainImg.alt = active.dataset.alt || '';
+      }
+    }
+
+    function setPlatform(platform) {
+      heroRight.dataset.active = platform;
+      heroMainFig.classList.toggle('hero-device-main--desktop', platform === 'pc');
+      heroRight.querySelectorAll('.hero-platform-tab').forEach((tab) => {
+        const on = tab.dataset.platform === platform;
+        tab.classList.toggle('is-active', on);
+        tab.setAttribute('aria-selected', on);
+        tab.setAttribute('tabindex', on ? '0' : '-1');
+      });
+      syncMainFromPanel(platform);
+    }
+
+    function setActiveThumb(panel, btn) {
+      panel.querySelectorAll('.hero-thumb').forEach((b) => {
+        b.classList.remove('is-active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-selected', 'true');
+    }
+
+    heroRight.querySelectorAll('.hero-device-thumbs').forEach((panel) => {
+      panel.querySelectorAll('.hero-thumb').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          if (heroRight.dataset.active !== panel.dataset.platform) return;
+          setActiveThumb(panel, btn);
+          heroMainImg.src = btn.dataset.src;
+          heroMainImg.alt = btn.dataset.alt || '';
         });
-        btn.classList.add('is-active');
-        btn.setAttribute('aria-selected', 'true');
-        const src = btn.dataset.src;
-        const alt = btn.dataset.alt || '';
-        if (mainImg && src) {
-          mainImg.src = src;
-          mainImg.alt = alt;
-        }
       });
     });
+
+    heroRight.querySelectorAll('.hero-platform-tab').forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const platform = tab.dataset.platform;
+        const panel = heroRight.querySelector(`.hero-device-thumbs[data-platform="${platform}"]`);
+        if (panel) {
+          panel.querySelectorAll('.hero-thumb').forEach((b, i) => {
+            b.classList.toggle('is-active', i === 0);
+            b.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+          });
+        }
+        setPlatform(platform);
+      });
+    });
+
+    syncMainFromPanel('android');
   }
 
   // ========== SECTION LOGIC ==========
@@ -287,7 +329,7 @@
         if (grid) grid.style.display = 'none';
 
         const hudStatus = document.getElementById('hudStatusText');
-        if (hudStatus) hudStatus.textContent = "RELEASE v1.6.3 LIVE";
+        if (hudStatus) hudStatus.textContent = "ANDROID v1.6.3 · LIVE";
 
         const hudDate = document.getElementById('hudDateText');
         if (hudDate) {

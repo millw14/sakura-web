@@ -410,11 +410,43 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
-  max-width: min(100%, 280px);
+  gap: 12px;
+  max-width: min(100%, 320px);
   margin-left: auto;
   margin-right: auto;
   z-index: 1;
+}
+
+.hero-platform-tabs {
+  display: inline-flex;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  overflow: hidden;
+  margin-bottom: 2px;
+}
+
+.hero-platform-tab {
+  padding: 7px 14px;
+  font-family: var(--font-tech);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.42);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.hero-platform-tab.is-active {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.hero-platform-tab:focus-visible {
+  outline: 1px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
 }
 
 /* Compact device preview + anisurge-style labeled thumbnails */
@@ -440,6 +472,20 @@ body {
   vertical-align: middle;
 }
 
+.hero-device-main--desktop {
+  max-width: min(100%, 420px);
+  width: 100%;
+}
+
+.hero-device-main--desktop .hero-shot {
+  max-height: min(52vh, 300px);
+  width: 100%;
+}
+
+.hero-right[data-active="pc"] {
+  max-width: min(100%, 460px);
+}
+
 .hero-device-thumbs {
   display: flex;
   flex-wrap: wrap;
@@ -447,6 +493,29 @@ body {
   gap: 8px 10px;
   width: 100%;
   max-width: 280px;
+}
+
+.hero-device-thumbs--pc {
+  display: none;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  overflow-x: auto;
+  max-width: 100%;
+  padding-bottom: 6px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.hero-right[data-active="pc"] .hero-device-thumbs--android {
+  display: none !important;
+}
+
+.hero-right[data-active="pc"] .hero-device-thumbs--pc {
+  display: flex !important;
+}
+
+.hero-right[data-active="android"] .hero-device-thumbs--pc {
+  display: none !important;
 }
 
 .hero-thumb {
@@ -503,6 +572,16 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+.hero-thumb-frame--wide {
+  width: 76px;
+  height: 43px;
+  border-radius: 5px;
+}
+
+.hero-thumb-frame--wide img {
+  object-fit: cover;
 }
 
 .hero-thumb-label {
@@ -580,6 +659,17 @@ body {
 .btn-hero-primary:hover {
   transform: translateY(-1px);
   box-shadow: 0 8px 24px rgba(255, 255, 255, 0.1);
+}
+
+.btn-hero-primary-outline {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+}
+
+.btn-hero-primary-outline:hover {
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: none;
 }
 
 .btn-hero-secondary {
@@ -1718,8 +1808,43 @@ body {
   max-width: 520px;
 }
 
-.download-btns {
-  margin-bottom: 20px;
+.download-platform-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0 auto 24px;
+  max-width: 560px;
+}
+
+.download-platform-card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  padding: 18px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.download-platform-name {
+  font-family: var(--font-tech);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+.download-platform-meta {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.download-platform-btn {
+  width: 100%;
+  justify-content: center;
 }
 
 .download-platforms {
@@ -1890,8 +2015,16 @@ body {
     max-width: min(200px, 46vw);
   }
 
+  .hero-right[data-active="pc"] .hero-device-main--desktop {
+    max-width: min(100%, 400px);
+  }
+
   .hero-shot {
     max-height: min(42vh, 300px);
+  }
+
+  .hero-right[data-active="pc"] .hero-device-main--desktop .hero-shot {
+    max-height: min(44vh, 260px);
   }
 
   .hero-device-thumbs {
@@ -1899,9 +2032,14 @@ body {
     justify-content: center;
   }
 
-  .hero-thumb-frame {
+  .hero-thumb-frame:not(.hero-thumb-frame--wide) {
     width: 48px;
     height: 48px;
+  }
+
+  .hero-thumb-frame--wide {
+    width: 64px;
+    height: 36px;
   }
 
   .hero-below {
@@ -1941,6 +2079,10 @@ body {
 
   .download-wrap {
     padding: 48px 20px;
+  }
+
+  .download-platform-grid {
+    grid-template-columns: 1fr;
   }
 
   .footer-inner {
