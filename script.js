@@ -329,7 +329,7 @@
         if (grid) grid.style.display = 'none';
 
         const hudStatus = document.getElementById('hudStatusText');
-        if (hudStatus) hudStatus.textContent = "ANDROID v1.6.3 · LIVE";
+        if (hudStatus) hudStatus.textContent = "ANDROID v1.6.9 · LIVE";
 
         const hudDate = document.getElementById('hudDateText');
         if (hudDate) {
