@@ -3,8 +3,98 @@
 (() => {
   'use strict';
 
+  /** Filled async from GitHub API for HUD / labels (see initLatestGithubReleases). */
+  let sakuraAndroidTagDisplay = '';
+
   // Register GSAP Plugins
   gsap.registerPlugin(ScrollTrigger);
+
+  async function fetchLatestRelease(repo, pickAsset) {
+    const res = await fetch(`https://api.github.com/repos/${repo}/releases/latest`, {
+      headers: { Accept: 'application/vnd.github+json' },
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const asset = pickAsset(data.assets || []);
+    return {
+      tag: data.tag_name || '',
+      assetUrl: asset?.browser_download_url ?? null,
+      releasePage: data.html_url || '',
+    };
+  }
+
+  function pickAndroidApk(assets) {
+    if (!assets.length) return null;
+    return assets.find(a => /\.apk$/i.test(a.name) && /release/i.test(a.name))
+      || assets.find(a => /\.apk$/i.test(a.name));
+  }
+
+  function pickWindowsExe(assets) {
+    if (!assets.length) return null;
+    return assets.find(a => /\.exe$/i.test(a.name) && /setup/i.test(a.name))
+      || assets.find(a => /\.exe$/i.test(a.name));
+  }
+
+  function formatReleaseTag(tag) {
+    const t = (tag || '').trim();
+    if (!t) return '';
+    return /^v\d/i.test(t) ? t : `v${t}`;
+  }
+
+  function syncAndroidHudInitializing() {
+    const hudStatus = document.getElementById('hudStatusText');
+    if (!hudStatus || !sakuraAndroidTagDisplay || !hudStatus.textContent.includes('INITIALIZING')) return;
+    hudStatus.textContent = `ANDROID ${sakuraAndroidTagDisplay} · INITIALIZING`;
+  }
+
+  function syncAndroidHudLive() {
+    const hudStatus = document.getElementById('hudStatusText');
+    if (!hudStatus || !sakuraAndroidTagDisplay || !hudStatus.textContent.includes('LIVE')) return;
+    hudStatus.textContent = `ANDROID ${sakuraAndroidTagDisplay} · LIVE`;
+  }
+
+  async function initLatestGithubReleases() {
+    const heroApk = document.querySelector('.js-sakura-release-apk');
+    if (!heroApk) return;
+
+    try {
+      const [andro, pc] = await Promise.all([
+        fetchLatestRelease('Sakura-11488/Sakura', pickAndroidApk),
+        fetchLatestRelease('Sakura-11488/Sakura-pc', pickWindowsExe),
+      ]);
+
+      if (andro) {
+        sakuraAndroidTagDisplay = formatReleaseTag(andro.tag);
+        const url = andro.assetUrl || andro.releasePage;
+        document.querySelectorAll('.js-sakura-release-apk').forEach(a => { a.href = url; });
+
+        syncAndroidHudInitializing();
+        syncAndroidHudLive();
+
+        const heroLbl = document.getElementById('heroApkLabel');
+        if (heroLbl && sakuraAndroidTagDisplay) heroLbl.textContent = `Android ${sakuraAndroidTagDisplay}`;
+
+        const metaA = document.getElementById('metaAndroidDl');
+        if (metaA && sakuraAndroidTagDisplay) metaA.textContent = `${sakuraAndroidTagDisplay} · APK`;
+      }
+
+      if (pc) {
+        const pcVer = formatReleaseTag(pc.tag);
+        const url = pc.assetUrl || pc.releasePage;
+        document.querySelectorAll('.js-sakura-release-pc').forEach(a => { a.href = url; });
+
+        const heroPcLbl = document.getElementById('heroPcLabel');
+        if (heroPcLbl && pcVer) heroPcLbl.textContent = `Windows ${pcVer}`;
+
+        const metaP = document.getElementById('metaPcDl');
+        if (metaP && pcVer) metaP.textContent = `${pcVer} · Setup (.exe)`;
+      }
+    } catch (e) {
+      console.warn('[Sakura] Could not refresh latest release links:', e);
+    }
+  }
+
+  void initLatestGithubReleases();
 
   // ========== PETAL PARTICLES (skipped when canvas absent / hidden) ==========
   const petalCanvas = document.getElementById('petalCanvas');
@@ -319,6 +409,8 @@
     let countdownInterval; // Declare countdownInterval here
 
     function update() {
+      syncAndroidHudInitializing();
+
       const now = new Date().getTime();
       const distance = targetDate - now;
 
@@ -329,7 +421,11 @@
         if (grid) grid.style.display = 'none';
 
         const hudStatus = document.getElementById('hudStatusText');
-        if (hudStatus) hudStatus.textContent = "ANDROID v1.6.9 · LIVE";
+        if (hudStatus) {
+          hudStatus.textContent = sakuraAndroidTagDisplay
+            ? `ANDROID ${sakuraAndroidTagDisplay} · LIVE`
+            : 'ANDROID · LIVE';
+        }
 
         const hudDate = document.getElementById('hudDateText');
         if (hudDate) {
