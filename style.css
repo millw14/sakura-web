@@ -1917,6 +1917,7 @@ body {
 
 .footer-links {
   display: flex;
+  flex-wrap: wrap;
   gap: 18px;
 }
 
@@ -1940,6 +1941,17 @@ body {
   font-size: 11px;
   color: var(--text-muted);
   letter-spacing: 1px;
+}
+
+a.footer-sol {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+a.footer-sol:hover {
+  color: var(--sakura-pink);
 }
 
 .footer-dev {
