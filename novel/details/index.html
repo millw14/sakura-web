@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Open novel in Sakura</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: #0a0812;
+      color: #fff;
+      font-family: Inter, system-ui, sans-serif;
+      text-align: center;
+    }
+    section { max-width: 520px; }
+    h1 { font-size: clamp(1.25rem, 4vw, 1.65rem); font-weight: 700; line-height: 1.25; margin: 0 0 12px; }
+    p { color: rgba(255, 255, 255, .7); line-height: 1.6; margin: 0; }
+    .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 24px; }
+    a {
+      padding: 12px 18px;
+      border-radius: 14px;
+      color: #fff;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .primary { background: linear-gradient(135deg, #ff6b9d, #c084fc); }
+    .secondary { border: 1px solid rgba(255, 255, 255, .18); }
+  </style>
+</head>
+<body>
+  <section>
+    <h1>Open this novel in Sakura</h1>
+    <p>This link was shared from Sakura. Open it in the Sakura app for the full reading experience.</p>
+    <div class="actions">
+      <a class="primary" id="openApp" href="#">Open Sakura App</a>
+      <a class="secondary" href="/#download">Download Sakura</a>
+    </div>
+  </section>
+  <script>
+    (function () {
+      var link = document.getElementById("openApp");
+      if (link) link.href = window.location.href;
+    })();
+  </script>
+</body>
+</html>
