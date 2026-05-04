@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sakura — Read. Collect. Own.</title>
   <meta name="description"
-    content="Sakura is a reading platform where your milestones live on-chain. Portable identity. Verifiable progress. Built on Solana." />
+    content="Sakura is a Solana-backed reading platform with on-chain milestones, portable identity—and Sakura AI (beta): wallet-aware chat for picks, swaps, bridges, and more." />
   <link rel="icon" type="image/png" href="sakuraicon.png" />
   <link rel="canonical" href="https://millw14.github.io/sakura-web/" />
 
@@ -14,7 +14,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Sakura — Read. Collect. Own." />
   <meta property="og:description"
-    content="Sakura is a reading platform where your milestones live on-chain. Portable identity. Verifiable progress. Built on Solana." />
+    content="Sakura is a Solana-backed reading platform with on-chain milestones, portable identity—and Sakura AI (beta): wallet-aware chat for picks, swaps, bridges, and more." />
   <meta property="og:image" content="https://millw14.github.io/sakura-web/background.png" />
   <meta property="og:url" content="https://millw14.github.io/sakura-web/" />
 
@@ -22,7 +22,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Sakura — Read. Collect. Own." />
   <meta name="twitter:description"
-    content="Sakura is a reading platform where your milestones live on-chain. Portable identity. Verifiable progress. Built on Solana." />
+    content="Sakura is a Solana-backed reading platform with on-chain milestones, portable identity—and Sakura AI (beta): wallet-aware chat for picks, swaps, bridges, and more." />
   <meta name="twitter:image" content="https://millw14.github.io/sakura-web/background.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -54,6 +54,7 @@
       <a href="#about" class="nav-link">About</a>
       <a href="#onchain" class="nav-link">On-Chain</a>
       <a href="#features" class="nav-link">Features</a>
+      <a href="#sakura-ai" class="nav-link">Sakura AI</a>
       <a href="#architecture" class="nav-link">Architecture</a>
       <a href="#download" class="nav-link">Download</a>
       <a href="https://github.com/Sakura-11488/ino-sakura-registry" target="_blank" rel="noopener noreferrer"
@@ -84,10 +85,10 @@
             <span class="hero-headline-line">Read. Collect. Own your way</span>
           </h1>
           <p class="hero-lede" id="heroSubtitle">
-            On-chain milestones, Seeker-native, Ino-backed. Your library, your proofs — without the noise.
+            On-chain milestones, Seeker-native, Ino-backed—and <strong>Sakura AI</strong> (beta) for picks, swaps, bridges, and more in plain language. Your library, your proofs — without the noise.
           </p>
           <div class="hero-cta-row">
-            <a href="https://github.com/Sakura-11488/Sakura/releases/latest" id="heroApkBtn"
+            <a href="https://github.com/Sakura-11488/Sakura/releases/download/v1.7.8/sakura-1.7.8-release.apk" id="heroApkBtn"
               class="btn-hero-primary js-sakura-release-apk">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -95,7 +96,7 @@
                 <polyline points="7 10 12 15 17 10" />
                 <line x1="12" y1="15" x2="12" y2="3" />
               </svg>
-              <span id="heroApkLabel">Android</span>
+              <span id="heroApkLabel">Android v1.7.8</span>
             </a>
             <a href="https://github.com/Sakura-11488/Sakura-pc/releases/latest" id="heroPcBtn"
               class="btn-hero-primary btn-hero-primary-outline js-sakura-release-pc">
@@ -536,6 +537,31 @@ pub struct ChapterRecord {
     </div>
   </section>
 
+  <!-- ========== SAKURA AI ========== -->
+  <section class="sai-band" id="sakura-ai">
+    <div class="sai-band-inner reveal-card">
+      <div class="sai-band-col sai-band-intro">
+        <span class="section-tag scramble-text" data-text="BETA FEATURE">BETA FEATURE</span>
+        <h2 class="section-title split-text">Sakura AI — chat that knows your stack</h2>
+        <p class="section-subtitle fade-in-text">
+          A pinned launcher on the home feed opens a full-screen assistant tuned for readers <em>and</em> wallets: natural language first, confirmations before anything hits-chain.
+        </p>
+      </div>
+      <div class="sai-band-col sai-band-detail">
+        <p>
+          Ask for something to watch or read tonight, catch up after a hiatus, resume where you stopped, surface recommendations,
+          set price reminders, swap or bridge with quoted routes, tip a creator—you describe it; Sakura AI routes the request through
+          tooling with your wallet context. Chat threads can sync when you&apos;re signed in so you aren&apos;t starting from scratch on a new device.
+        </p>
+        <p>
+          Under the hood, responses use fast inference (including Groq-hosted models with tool routing) tied to Solana portfolio data and DEX quoting,
+          alongside optional alerts and lightweight long-term preferences you control. Unlocking Sakura AI is tied to holding <strong>$SAKURA</strong> in-app;
+          risky actions stay approval-gated in the client—no silent signatures.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- ========== ARCHITECTURE ========== -->
   <section class="section section-dark" id="architecture">
     <div class="section-inner">
@@ -629,7 +655,7 @@ pub struct ChapterRecord {
 
           <div class="beta-countdown-hud download-countdown" id="betaCountdown">
             <div class="hud-header">
-              <span class="hud-status" id="hudStatusText">ANDROID · INITIALIZING</span>
+              <span class="hud-status" id="hudStatusText">ANDROID v1.7.8 · INITIALIZING</span>
               <span class="hud-date" id="hudDateText">MARCH 1, 2026</span>
             </div>
             <div class="countdown-grid">
@@ -674,8 +700,8 @@ pub struct ChapterRecord {
             </div>
             <div class="download-platform-card">
               <span class="download-platform-name">Android</span>
-              <span class="download-platform-meta" id="metaAndroidDl">APK</span>
-              <a href="https://github.com/Sakura-11488/Sakura/releases/latest" id="downloadBtn"
+              <span class="download-platform-meta" id="metaAndroidDl">v1.7.8 · APK</span>
+              <a href="https://github.com/Sakura-11488/Sakura/releases/download/v1.7.8/sakura-1.7.8-release.apk" id="downloadBtn"
                 class="btn btn-glow btn-lg download-platform-btn js-sakura-release-apk">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                   stroke-linecap="round" stroke-linejoin="round">

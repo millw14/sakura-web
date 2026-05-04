@@ -1964,6 +1964,52 @@ a.footer-sol:hover {
   text-decoration: none;
 }
 
+/* ========== SAKURA AI BAND ========== */
+.sai-band {
+  position: relative;
+  z-index: 2;
+  padding: clamp(48px, 10vw, 96px) 24px;
+  border-block: 1px solid rgba(255, 255, 255, 0.04);
+  background:
+    radial-gradient(ellipse 90% 70% at 20% -30%, rgba(255, 107, 157, 0.14), transparent 55%),
+    radial-gradient(ellipse 60% 50% at 90% 20%, rgba(192, 132, 252, 0.08), transparent 50%),
+    linear-gradient(180deg, rgba(11, 8, 20, 0.98), rgba(7, 5, 14, 0.99));
+}
+
+.sai-band-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  gap: clamp(24px, 4vw, 40px);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .sai-band-inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  }
+}
+
+.sai-band-col .section-tag {
+  margin-bottom: 10px;
+}
+
+.sai-band-detail p {
+  font-size: 15px;
+  line-height: 1.72;
+  color: rgba(255, 255, 255, 0.74);
+  margin: 0 0 18px;
+}
+
+.sai-band-detail p:last-child {
+  margin-bottom: 0;
+}
+
+.sai-band-detail strong {
+  color: var(--sakura-pink);
+  font-weight: 600;
+}
+
 /* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
   .nav {

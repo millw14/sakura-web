@@ -4,7 +4,9 @@
   'use strict';
 
   /** Filled async from GitHub API for HUD / labels (see initLatestGithubReleases). */
+  /** GitHub releases/latest tag_display (vX.Y.Z); countdown fallback matches site default APK hint. */
   let sakuraAndroidTagDisplay = '';
+  const FALLBACK_ANDROID_TAG_DISPLAY = 'v1.7.8';
 
   // Register GSAP Plugins
   gsap.registerPlugin(ScrollTrigger);
@@ -43,14 +45,16 @@
 
   function syncAndroidHudInitializing() {
     const hudStatus = document.getElementById('hudStatusText');
-    if (!hudStatus || !sakuraAndroidTagDisplay || !hudStatus.textContent.includes('INITIALIZING')) return;
-    hudStatus.textContent = `ANDROID ${sakuraAndroidTagDisplay} · INITIALIZING`;
+    if (!hudStatus || !hudStatus.textContent.includes('INITIALIZING')) return;
+    const ver = sakuraAndroidTagDisplay || FALLBACK_ANDROID_TAG_DISPLAY;
+    hudStatus.textContent = `ANDROID ${ver} · INITIALIZING`;
   }
 
   function syncAndroidHudLive() {
     const hudStatus = document.getElementById('hudStatusText');
-    if (!hudStatus || !sakuraAndroidTagDisplay || !hudStatus.textContent.includes('LIVE')) return;
-    hudStatus.textContent = `ANDROID ${sakuraAndroidTagDisplay} · LIVE`;
+    if (!hudStatus || !hudStatus.textContent.includes('LIVE')) return;
+    const ver = sakuraAndroidTagDisplay || FALLBACK_ANDROID_TAG_DISPLAY;
+    hudStatus.textContent = `ANDROID ${ver} · LIVE`;
   }
 
   async function initLatestGithubReleases() {
@@ -422,9 +426,8 @@
 
         const hudStatus = document.getElementById('hudStatusText');
         if (hudStatus) {
-          hudStatus.textContent = sakuraAndroidTagDisplay
-            ? `ANDROID ${sakuraAndroidTagDisplay} · LIVE`
-            : 'ANDROID · LIVE';
+          const ver = sakuraAndroidTagDisplay || FALLBACK_ANDROID_TAG_DISPLAY;
+          hudStatus.textContent = `ANDROID ${ver} · LIVE`;
         }
 
         const hudDate = document.getElementById('hudDateText');
