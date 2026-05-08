@@ -3,10 +3,48 @@
 (() => {
   'use strict';
 
-  /** Filled async from GitHub API for HUD / labels (see initLatestGithubReleases). */
-  /** GitHub releases/latest tag_display (vX.Y.Z); countdown fallback matches site default APK hint. */
+  /** When GitHub API fails or is rate-limited, these match the real latest release assets (bump when you ship). */
+  const RELEASE_FALLBACK = {
+    android: {
+      tag: 'v1.7.9',
+      href:
+        'https://github.com/Sakura-11488/Sakura/releases/download/v1.7.9/sakura-1.7.9-release.apk',
+    },
+    pc: {
+      tag: 'v1.5.2',
+      href:
+        'https://github.com/Sakura-11488/Sakura-pc/releases/download/v1.5.2/Sakura-Setup-1.5.2.exe',
+    },
+  };
+
   let sakuraAndroidTagDisplay = '';
-  const FALLBACK_ANDROID_TAG_DISPLAY = 'v1.7.8';
+
+  function androidTagResolved() {
+    return sakuraAndroidTagDisplay || RELEASE_FALLBACK.android.tag;
+  }
+
+  function applyReleaseFallbacks() {
+    if (!document.querySelector('.js-sakura-release-apk')) return;
+
+    const { android, pc } = RELEASE_FALLBACK;
+
+    document.querySelectorAll('.js-sakura-release-apk').forEach((a) => { a.href = android.href; });
+    document.querySelectorAll('.js-sakura-release-pc').forEach((a) => { a.href = pc.href; });
+
+    const heroApkLbl = document.getElementById('heroApkLabel');
+    if (heroApkLbl) heroApkLbl.textContent = `Android ${android.tag}`;
+    const heroPcLbl = document.getElementById('heroPcLabel');
+    if (heroPcLbl) heroPcLbl.textContent = `Windows ${pc.tag}`;
+    const metaA = document.getElementById('metaAndroidDl');
+    if (metaA) metaA.textContent = `${android.tag} · APK`;
+    const metaP = document.getElementById('metaPcDl');
+    if (metaP) metaP.textContent = `${pc.tag} · Setup (.exe)`;
+
+    const hudStatus = document.getElementById('hudStatusText');
+    if (hudStatus && hudStatus.textContent.includes('INITIALIZING')) {
+      hudStatus.textContent = `ANDROID ${android.tag} · INITIALIZING`;
+    }
+  }
 
   // Register GSAP Plugins
   gsap.registerPlugin(ScrollTrigger);
@@ -46,14 +84,14 @@
   function syncAndroidHudInitializing() {
     const hudStatus = document.getElementById('hudStatusText');
     if (!hudStatus || !hudStatus.textContent.includes('INITIALIZING')) return;
-    const ver = sakuraAndroidTagDisplay || FALLBACK_ANDROID_TAG_DISPLAY;
+    const ver = androidTagResolved();
     hudStatus.textContent = `ANDROID ${ver} · INITIALIZING`;
   }
 
   function syncAndroidHudLive() {
     const hudStatus = document.getElementById('hudStatusText');
     if (!hudStatus || !hudStatus.textContent.includes('LIVE')) return;
-    const ver = sakuraAndroidTagDisplay || FALLBACK_ANDROID_TAG_DISPLAY;
+    const ver = androidTagResolved();
     hudStatus.textContent = `ANDROID ${ver} · LIVE`;
   }
 
@@ -98,6 +136,7 @@
     }
   }
 
+  applyReleaseFallbacks();
   void initLatestGithubReleases();
 
   // ========== PETAL PARTICLES (skipped when canvas absent / hidden) ==========
@@ -426,7 +465,7 @@
 
         const hudStatus = document.getElementById('hudStatusText');
         if (hudStatus) {
-          const ver = sakuraAndroidTagDisplay || FALLBACK_ANDROID_TAG_DISPLAY;
+          const ver = androidTagResolved();
           hudStatus.textContent = `ANDROID ${ver} · LIVE`;
         }
 
