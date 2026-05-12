@@ -1,0 +1,2 @@
+# Careers form: holds Supabase publishable URL + anon key (inject via GitHub Secrets in CI — do not commit)
+jobs/supabase-config.js
