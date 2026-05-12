@@ -3,38 +3,39 @@
 
 <head>
   <meta charset="UTF-8" />
+  <!-- Asset paths assume site root at domain apex (sakuraonseeker.com). GitHub Pages /repo/ hosting must change /jobs → /your-repo/jobs prefixes. -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Careers — Sakura</title>
   <meta name="description"
     content="Join the Sakura team: Discord moderation, manga art, voice acting, localization, community, and creative roles shaping the Solana-backed reading platform." />
-  <link rel="icon" type="image/png" href="../sakuraicon.png" />
+  <link rel="icon" type="image/png" href="/sakuraicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="../style.css" />
-  <link rel="stylesheet" href="jobs.css" />
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/jobs/jobs.css" />
 </head>
 
 <body class="jobs-body">
 
   <nav class="nav scrolled" id="mainNav">
-    <a href="../index.html" class="nav-brand">
-      <img src="../sakuraicon.png" alt="Sakura" class="nav-logo" />
+    <a href="/" class="nav-brand">
+      <img src="/sakuraicon.png" alt="Sakura" class="nav-logo" />
       <div class="nav-brand-text">
         <span class="nav-jp">桜</span>
         <span class="nav-en">SAKURA</span>
       </div>
     </a>
     <div class="nav-links" id="navLinks">
-      <a href="../index.html" class="nav-link">Home</a>
-      <a href="../index.html#about" class="nav-link">About</a>
-      <a href="../index.html#download" class="nav-link">Download</a>
-      <a href="index.html" class="nav-link" aria-current="page">Careers</a>
+      <a href="/" class="nav-link">Home</a>
+      <a href="/#about" class="nav-link">About</a>
+      <a href="/#download" class="nav-link">Download</a>
+      <a href="/jobs/" class="nav-link" aria-current="page">Careers</a>
     </div>
     <div class="nav-actions">
-      <a href="../index.html#download" class="nav-get-app">GET APP</a>
+      <a href="/#download" class="nav-get-app">GET APP</a>
       <a href="https://x.com/millw11488" target="_blank" rel="noopener noreferrer" class="nav-social"
         aria-label="Twitter">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -247,7 +248,7 @@
             <label>
               <input type="checkbox" id="agrees_privacy" name="privacy" />
               <span>I agree Sakura may process my application according to the
-                <a href="../privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>, including retention
+                <a href="/privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>, including retention
                 for hiring decisions.</span>
             </label>
           </div>
@@ -282,18 +283,18 @@
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-brand">
-        <img src="../sakuraicon.png" alt="Sakura" class="footer-logo" />
+        <img src="/sakuraicon.png" alt="Sakura" class="footer-logo" />
         <div>
           <span class="footer-jp">桜 Sakura</span>
           <span class="footer-copy">&copy; 2026 Sakura. All rights reserved.</span>
         </div>
       </div>
       <div class="footer-links">
-        <a href="../privacy.html">Privacy</a>
-        <a href="../terms.html">Terms</a>
-        <a href="../index.html#download">Download</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/#download">Download</a>
         <a href="https://github.com/Sakura-11488/Sakura" target="_blank" rel="noopener noreferrer">Android</a>
-        <a href="index.html">Careers</a>
+        <a href="/jobs/">Careers</a>
       </div>
       <a href="https://dappstore.solana.com/" target="_blank" rel="noopener noreferrer" class="footer-sol">
         <svg width="20" height="20" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -321,8 +322,8 @@
   <script>
     window.SAKURA_JOBS_SB = window.SAKURA_JOBS_SB || { url: '', anonKey: '' };
   </script>
-  <script src="supabase-config.js"></script>
-  <script src="jobs-submit.js"></script>
+  <script src="/jobs/supabase-config.js"></script>
+  <script src="/jobs/jobs-submit.js"></script>
   <script>
     (function () {
       const hamburger = document.getElementById('navHamburger');

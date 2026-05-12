@@ -253,12 +253,18 @@
   width: 100%;
   border-radius: var(--radius-sm);
   border: 1px solid rgba(255, 255, 255, 0.09);
-  background: rgba(0, 0, 0, 0.42);
+  background-color: rgba(8, 6, 16, 0.95);
+  background: rgba(8, 6, 16, 0.95);
   color: var(--text-primary);
   font-family: var(--font-body);
   padding: 12px 14px;
   font-size: 15px;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.jobs-field select option {
+  background: #140f1f;
+  color: var(--text-primary);
 }
 
 .jobs-field input:focus-visible,
@@ -403,4 +409,21 @@
 body.jobs-body {
   background: var(--bg-deep);
   perspective: none;
+  color-scheme: dark;
+}
+
+/* Native control fallbacks before careers CSS paints */
+button.jobs-role-card {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  margin: 0;
+  box-sizing: border-box;
+  width: 100%;
+  color: var(--text-primary, #fff);
+  background: linear-gradient(
+    160deg,
+    rgba(24, 16, 40, 0.95),
+    rgba(10, 8, 22, 0.98)
+  );
 }
