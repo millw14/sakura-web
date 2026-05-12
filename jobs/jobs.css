@@ -603,27 +603,26 @@ body.jobs-rebrand .nav-links .nav-link:not([aria-current]) {
 /* Pony-style split postings (pattern only; Sakura palette) */
 
 body.jobs-detail-page {
-  background: #faf9fb;
+  background: linear-gradient(180deg, #fff8fb 0%, #fceaf2 45%, #f3e8ff 100%);
+  min-height: 100vh;
 }
 
 .jobs-split-layout {
   position: relative;
   min-height: calc(100vh - 96px);
-  padding-bottom: 120px;
-}
-
-.jobs-split-layout__ribbon {
-  display: none;
+  padding-bottom: 100px;
 }
 
 .jobs-split-layout__hero {
   display: flex;
   flex-wrap: nowrap;
-  min-height: min(760px, calc(100vh - 76px));
+  align-items: stretch;
+  min-height: calc(100vh - 76px);
 }
 
 .jobs-split-accent {
   flex: 0 0 clamp(260px, 38vw, 520px);
+  min-height: 100%;
   background: linear-gradient(165deg, #ffd6e8 0%, #ff9ec5 52%, #b388ff 120%);
   color: #151018;
   position: relative;
@@ -823,6 +822,35 @@ body.jobs-detail-page {
   .jobs-split-accent__title {
     max-width: none;
   }
+}
+
+/* Split job pages: global footer uses dark-theme link colors — lift contrast on light canvas */
+body.jobs-detail-page .footer {
+  border-top: 1px solid rgba(21, 16, 24, 0.08);
+  background: rgba(255, 252, 254, 0.72);
+  backdrop-filter: blur(14px);
+}
+
+body.jobs-detail-page .footer-copy,
+body.jobs-detail-page .footer-sol {
+  color: rgba(21, 16, 24, 0.52);
+  -webkit-text-fill-color: currentColor;
+}
+
+body.jobs-detail-page .footer-links a {
+  color: rgba(21, 16, 24, 0.62);
+}
+
+body.jobs-detail-page .footer-links a:hover {
+  color: #b83280;
+}
+
+body.jobs-detail-page a.footer-sol {
+  color: rgba(21, 16, 24, 0.52);
+}
+
+body.jobs-detail-page a.footer-sol:hover {
+  color: #b83280;
 }
 
 /* Dedicated apply canvas (Sakura pink field + white card) */
