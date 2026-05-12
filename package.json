@@ -1,0 +1,11 @@
+{
+  "name": "sakura-web",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "node scripts/write-jobs-supabase-config.js",
+    "gen:jobs": "node scripts/generate-job-pages.js"
+  }
+}

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apply — Careers · Sakura</title>
+  <meta name="description" content="Submit your Sakura careers application—remote-first collaborators across moderation, motion, manga, VO, localization, and community." />
+  <link rel="icon" type="image/png" href="/sakuraicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/jobs/jobs.css" />
+</head>
+
+<body class="jobs-body jobs-rebrand jobs-apply-body">
+
+  <a href="/jobs/" class="jobs-apply-close" aria-label="Close and return to careers">✕</a>
+  <div class="jobs-apply-badge" data-apply-role-badge hidden aria-live="polite"></div>
+
+  <main class="jobs-apply-shell">
+    <div class="jobs-apply-card">
+      <p class="jobs-apply-kicker"><a href="/jobs/" class="jobs-apply-crumb">careers</a> / apply</p>
+      <h1 class="jobs-apply-title">apply here</h1>
+
+      <div id="jobs-config-banner" class="jobs-banner jobs-banner--on-light" hidden>
+        <strong>Configuration needed.</strong>
+        <span data-banner-text></span>
+      </div>
+
+      <div id="jobs-success-panel" class="jobs-success jobs-success--on-light" hidden>
+        <h3>Application received</h3>
+        <p>Thank you—we review asynchronously and reach out by email when there is mutual fit.</p>
+      </div>
+
+      <p class="jobs-form-hint jobs-form-hint--apply">Role pre-fills when you arrive from a posting. Add portfolio links—we
+        read text, not mystery attachments.</p>
+
+      <form id="jobs-application-form" autocomplete="on" novalidate>
+        <input type="hidden" id="roleSlugInput" value="" />
+
+        <div class="jobs-field-grid">
+          <div class="jobs-field">
+            <label for="role_slug_select">Role<span class="jobs-opt">&nbsp;(required)</span></label>
+            <select id="role_slug_select" required>
+              <option value="">Choose a role…</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="visually-hidden-abs" aria-hidden="true">
+          <label for="jobs-honeypot">Company site</label>
+          <input type="text" id="jobs-honeypot" name="company_site" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <div class="jobs-field-grid jobs-field-grid--half">
+          <div class="jobs-field">
+            <label for="applicant_full_name">Full legal name<span class="jobs-opt">&nbsp;(required)</span></label>
+            <input required id="applicant_full_name" name="full_name" type="text" maxlength="180" autocomplete="name"
+              placeholder="Ada Lovelace" />
+          </div>
+          <div class="jobs-field">
+            <label for="applicant_email">Professional email<span class="jobs-opt">&nbsp;(required)</span></label>
+            <input required id="applicant_email" name="email" type="email" maxlength="254" autocomplete="email"
+              placeholder="you@domain.com" />
+          </div>
+        </div>
+
+        <div class="jobs-field-grid jobs-field-grid--half">
+          <div class="jobs-field">
+            <label for="discord_handle">Discord<span class="jobs-opt">&nbsp;(optional)</span></label>
+            <input id="discord_handle" name="discord" type="text" maxlength="64" autocomplete="nickname"
+              placeholder="username (#0000 deprecated)" />
+          </div>
+          <div class="jobs-field">
+            <label for="timezone_label">Primary timezone<span class="jobs-opt">&nbsp;(recommended)</span></label>
+            <select id="timezone_label" name="timezone">
+              <option value="">Select…</option>
+              <option>UTC −12 … −8 (Americas offshore)</option>
+              <option>UTC −8 … −5 (Pacific / Eastern)</option>
+              <option>UTC −4 … −3 (Brazil / Atlantic islands)</option>
+              <option>UTC ±0 (UK / EU west)</option>
+              <option>UTC +1 … +3 (EU / Istanbul)</option>
+              <option>UTC +4 … +6 (Gulf / South Asia)</option>
+              <option>UTC +7 … +9 (SEA / KR / JP)</option>
+              <option>UTC +10 … +14 (Oceania)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="jobs-field-grid">
+          <div class="jobs-field">
+            <label for="portfolio_url">Portfolio URL<span class="jobs-opt">&nbsp;(GitHub / ArtStation / VO reel)</span></label>
+            <input id="portfolio_url" name="portfolio" type="url" maxlength="2000" autocomplete="url"
+              placeholder="https://" />
+          </div>
+        </div>
+
+        <div class="jobs-field-grid">
+          <div class="jobs-field">
+            <label for="linkedin_url">Professional profile<span class="jobs-opt">&nbsp;(LinkedIn optional)</span></label>
+            <input id="linkedin_url" name="linkedin" type="url" maxlength="2000"
+              placeholder="https://linkedin.com/in/..." />
+          </div>
+        </div>
+
+        <div class="jobs-field-grid">
+          <div class="jobs-field">
+            <label for="cover_letter">Cover letter<span class="jobs-opt">&nbsp;(≥ 40 chars)</span></label>
+            <textarea required id="cover_letter" name="cover_letter" class="jobs-area-lg" minlength="40"
+              maxlength="12000" spellcheck="true"
+              placeholder="Call out discipline, timelines, comps, tooling, hourly vs retainer posture."></textarea>
+          </div>
+        </div>
+
+        <div class="jobs-field-grid">
+          <div class="jobs-field">
+            <label for="experience_notes">Highlights reel<span class="jobs-opt">&nbsp;(optional bullets)</span></label>
+            <textarea id="experience_notes" name="experience_notes" maxlength="8000"
+              placeholder="Recent wins, moderator hours, VO booth, toolchain, localization stack—concise bullets."></textarea>
+          </div>
+        </div>
+
+        <div class="jobs-field jobs-consent jobs-consent--light" style="margin-top:10px;">
+          <label>
+            <input type="checkbox" id="agrees_privacy" name="privacy" />
+            <span>I agree Sakura may process my application according to the
+              <a href="/privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>, including retention
+              for hiring decisions.</span>
+          </label>
+        </div>
+
+        <div class="jobs-submit-row">
+          <button type="submit" class="btn btn-glow jobs-submit-btn jobs-submit-btn--apply" id="jobs-submit-btn">
+            Submit application
+          </button>
+          <p class="jobs-form-status" id="jobs-form-status" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    window.SAKURA_JOBS_SB = window.SAKURA_JOBS_SB || { url: '', anonKey: '' };
+  </script>
+  <script src="/jobs/roles-meta.js"></script>
+  <script src="/jobs/supabase-config.js"></script>
+  <script src="/jobs/jobs-submit.js"></script>
+</body>
+
+</html>

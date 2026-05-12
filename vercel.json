@@ -1,5 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "node scripts/write-jobs-supabase-config.js",
+  "installCommand": "npm install",
+  "buildCommand": "npm run build",
+  "outputDirectory": ".",
   "trailingSlash": true
 }

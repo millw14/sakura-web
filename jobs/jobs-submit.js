@@ -4,19 +4,24 @@
 (function () {
   'use strict';
 
-  const cfg = typeof window !== 'undefined' ? window.SAKURA_JOBS_SB : null;
+  function getCfg() {
+    return typeof window !== 'undefined' && window.SAKURA_JOBS_SB ? window.SAKURA_JOBS_SB : null;
+  }
 
   function isConfigured() {
+    const cfg = getCfg();
     const u = (cfg?.url || '').trim();
     const k = (cfg?.anonKey || '').trim();
-    return u.startsWith('https://') && k.length > 35;
+    // Supabase anon keys are long JWT-style strings; relaxed floor avoids false negatives.
+    return u.startsWith('https://') && k.length >= 80;
   }
 
   function showBanner(show, message) {
     const el = document.getElementById('jobs-config-banner');
     if (!el) return;
     el.hidden = !show;
-    if (message) el.querySelector('[data-banner-text]').textContent = message;
+    const slot = el.querySelector('[data-banner-text]');
+    if (message && slot) slot.textContent = message;
   }
 
   function qs(id) {
@@ -28,41 +33,133 @@
     return t.length ? t : null;
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    if (!cfg) return;
-
-    const form = qs('jobs-application-form');
-    const submitBtn = qs('jobs-submit-btn');
-    const statusEl = qs('jobs-form-status');
-
-    if (!isConfigured()) {
-      showBanner(true,
-        'This form requires Supabase credentials. Edit jobs/supabase-config.js with your Project URL and publishable anon key after running supabase/migrations/20260208193000_job_applications.sql.');
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.setAttribute('aria-disabled', 'true');
-      }
-      return;
+  function normalizeSlugFromQuery(raw) {
+    if (!raw) return '';
+    if (typeof window.SAKURA_JOBS_META?.normalizeSlugQuery === 'function') {
+      return window.SAKURA_JOBS_META.normalizeSlugQuery(raw);
     }
-    showBanner(false);
+    const t = String(raw).trim().toLowerCase().replace(/-/g, '_');
+    return t;
+  }
 
-    const cards = Array.from(document.querySelectorAll('[data-role-card]'));
+  function populateRoleSelect(selectEl) {
+    if (!selectEl || !Array.isArray(window.SAKURA_JOBS_META)) return;
+    if (selectEl.dataset.rolesPopulated === '1') return;
+    window.SAKURA_JOBS_META.forEach((r) => {
+      if (!r?.slug) return;
+      const o = document.createElement('option');
+      o.value = r.slug;
+      o.textContent = r.title;
+      selectEl.appendChild(o);
+    });
+    selectEl.dataset.rolesPopulated = '1';
+  }
 
-    cards.forEach((card) => {
-      card.addEventListener('click', () => {
-        const slug = card.getAttribute('data-role-slug');
+  function setRoleSlug(slug, pickers) {
+    const hidden = qs('roleSlugInput');
+    const select = qs('role_slug_select');
+    if (hidden) hidden.value = slug || '';
+    if (select && slug) select.value = slug;
+
+    if (pickers && pickers.length) {
+      pickers.forEach((c) => {
+        const s = c.getAttribute('data-role-slug');
+        c.classList.toggle('jobs-row--active', !!slug && s === slug);
+      });
+    }
+  }
+
+  function bindRoleUi() {
+    const pickers = Array.from(document.querySelectorAll('[data-role-picker]'));
+    const select = qs('role_slug_select');
+
+    pickers.forEach((el) => {
+      el.addEventListener('click', () => {
+        const slug = el.getAttribute('data-role-slug');
         if (!slug) return;
-        cards.forEach((c) => c.classList.toggle('jobs-role-card--active', c === card));
-        const hidden = qs('roleSlugInput');
-        if (hidden) hidden.value = slug;
+        setRoleSlug(slug, pickers);
         const anchor = qs('apply');
-        if (anchor && window.matchMedia('(max-width: 640px)').matches) {
+        if (anchor) {
           anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       });
     });
 
-    form?.addEventListener('submit', async (e) => {
+    if (select) {
+      select.addEventListener('change', () => {
+        const v = select.value.trim();
+        setRoleSlug(v, pickers);
+      });
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const fromQuery = normalizeSlugFromQuery(params.get('role') || params.get('slug'));
+    if (fromQuery) {
+      setRoleSlug(fromQuery, pickers);
+      if (window.location.hash !== '#apply') {
+        window.requestAnimationFrame(() => {
+          const apply = qs('apply');
+          if (apply) apply.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      }
+    }
+  }
+
+  function setupApplyBadge() {
+    const el = document.querySelector('[data-apply-role-badge]');
+    if (!el) return;
+    const slug = normalizeSlugFromQuery(new URLSearchParams(window.location.search).get('role'));
+    if (!slug || typeof window.SAKURA_JOBS_META?.bySlug !== 'function') {
+      el.hidden = true;
+      return;
+    }
+    const meta = window.SAKURA_JOBS_META.bySlug(slug);
+    if (!meta) {
+      el.hidden = true;
+      return;
+    }
+    el.textContent = meta.title;
+    el.hidden = false;
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const select = qs('role_slug_select');
+    populateRoleSelect(select);
+
+    bindRoleUi();
+    setupApplyBadge();
+
+    const form = qs('jobs-application-form');
+    const submitBtn = qs('jobs-submit-btn');
+    const statusEl = qs('jobs-form-status');
+
+    if (!form || !submitBtn) return;
+
+    const cfg = getCfg();
+    if (!cfg) {
+      showBanner(true, 'Missing SAKURA_JOBS_SB — load jobs/supabase-config.js before jobs-submit.js.');
+      submitBtn.disabled = true;
+      submitBtn.setAttribute('aria-disabled', 'true');
+      return;
+    }
+
+    if (!isConfigured()) {
+      showBanner(
+        true,
+        'Supabase is not wired for this deploy. On Vercel Project → Settings → Environment Variables, add '
+          + 'SAKURA_SUPABASE_URL plus SAKURA_SUPABASE_ANON_KEY '
+          + '(or SUPABASE_URL / SUPABASE_ANON_KEY, or NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY '
+          + 'if that is what your dashboard exports). '
+          + 'Ensure `npm run build` runs on deploy (see package.json) so jobs/supabase-config.js is generated—then redeploy.',
+      );
+      submitBtn.disabled = true;
+      submitBtn.setAttribute('aria-disabled', 'true');
+      return;
+    }
+
+    showBanner(false);
+
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       statusEl?.removeAttribute('data-tone');
       statusEl.textContent = '';
@@ -73,7 +170,10 @@
         return;
       }
 
-      const slug = qs('roleSlugInput')?.value.trim();
+      let slug = qs('roleSlugInput')?.value.trim();
+      const fromSelect = qs('role_slug_select')?.value.trim();
+      if (fromSelect) slug = fromSelect;
+
       if (!slug) {
         statusEl.setAttribute('data-tone', 'err');
         statusEl.textContent = 'Choose an open role first.';
@@ -105,11 +205,12 @@
       submitBtn.setAttribute('aria-busy', 'true');
 
       try {
-        const res = await fetch(`${cfg.url.replace(/\/$/, '')}/rest/v1/job_applications`, {
+        const sb = getCfg();
+        const res = await fetch(`${sb.url.replace(/\/$/, '')}/rest/v1/job_applications`, {
           method: 'POST',
           headers: {
-            apikey: cfg.anonKey,
-            Authorization: `Bearer ${cfg.anonKey}`,
+            apikey: sb.anonKey,
+            Authorization: `Bearer ${sb.anonKey}`,
             'Content-Type': 'application/json',
             Prefer: 'return=minimal',
           },
@@ -132,11 +233,12 @@
           return;
         }
 
-        qs('jobs-success-panel').hidden = false;
+        const success = qs('jobs-success-panel');
+        if (success) success.hidden = false;
         form.reset();
-        cards.forEach((c) => c.classList.remove('jobs-role-card--active'));
-        if (qs('roleSlugInput')) qs('roleSlugInput').value = '';
-        qs('jobs-success-panel')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const pickers = Array.from(document.querySelectorAll('[data-role-picker]'));
+        setRoleSlug('', pickers);
+        success?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         if (statusEl) {
           statusEl.textContent = '';
           statusEl.removeAttribute('data-tone');

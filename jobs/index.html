@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="/jobs/jobs.css" />
 </head>
 
-<body class="jobs-body">
+<body class="jobs-body jobs-rebrand">
 
   <nav class="nav scrolled" id="mainNav">
     <a href="/" class="nav-brand">
@@ -50,103 +50,117 @@
   </nav>
 
   <main class="jobs-main">
-    <header class="jobs-band">
-      <div class="jobs-band-inner">
-        <span class="jobs-eyebrow">HIRING · REMOTE-FIRST</span>
-        <h1 class="jobs-title">Build the future of on-chain readers</h1>
-        <p class="jobs-intro">
-          Sakura connects manga, anime, novels, wallets, and <strong>Ino-backed milestones</strong>. We hire people who
-          care about craft, moderation, localization, narrative, sound, and creators—whether you're deep in Discord or deep
-          in line weight.
+    <header class="jobs-spot-hero">
+      <div class="jobs-spot-hero__bg" aria-hidden="true">
+        <span class="jobs-spot-hero__mega" aria-hidden="true">join the</span>
+        <span class="jobs-spot-hero__glyph">桜</span>
+        <div class="jobs-spot-hero__orb jobs-spot-hero__orb--a"></div>
+        <div class="jobs-spot-hero__orb jobs-spot-hero__orb--b"></div>
+      </div>
+      <div class="jobs-spot-hero__content">
+        <p class="jobs-spot-hero__kicker">careers · remote-first · solana-backed reading</p>
+        <h1 class="jobs-spot-hero__title">
+          <span class="jobs-spot-hero__title-line jobs-spot-hero__title-line--outline">join the</span>
+          <span class="jobs-spot-hero__title-line jobs-spot-hero__title-line--solid">garden</span>
+        </h1>
+        <p class="jobs-spot-hero__lede">
+          Sakura links manga, novels, wallets, and <strong>Ino milestones</strong>. We collaborate with mods, makers,
+          translators, and motion folks—craft over hype, disclosure before production.
         </p>
-        <div class="jobs-cta-row">
-          <a href="#roles" class="btn btn-glow">View roles</a>
-          <a href="#apply" class="btn btn-ghost">Submit application</a>
+        <div class="jobs-spot-hero__cta">
+          <a href="#roles" class="jobs-spot-link">see open roles</a>
+          <a href="#apply" class="jobs-spot-link jobs-spot-link--ghost">application</a>
         </div>
       </div>
+      <figure class="jobs-spot-strip">
+        <img
+          class="jobs-spot-hero__art"
+          src="/ss/IMG_5027.PNG"
+          alt="Sakura — careers illustration"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </figure>
     </header>
 
-    <div class="jobs-metrics reveal-card">
-      <div class="jobs-stat-card">
-        <div class="jobs-stat-num">CONTRACT • PART-TIME</div>
-        <div class="jobs-stat-label">Most roles begin as compensated collaboration with milestone reviews—we're explicit
-          before you ship real hours.</div>
-      </div>
-      <div class="jobs-stat-card">
-        <div class="jobs-stat-num">DISCLOSURE-FIRST</div>
-        <div class="jobs-stat-label">Voice, art, moderation, &amp; writing touch IP—expect rights &amp; credit discussions
-          on paper before production.</div>
-      </div>
-      <div class="jobs-stat-card">
-        <div class="jobs-stat-num">CRYPTO OPTIONAL</div>
-        <div class="jobs-stat-label">Wallet-native context helps; familiarity with Discord &amp; media pipelines matters
-          more than token trading.</div>
-      </div>
-    </div>
-
-    <section id="roles">
-      <div class="jobs-section-head">
-        <h2 class="jobs-section-title">Open roles</h2>
-        <p class="jobs-section-sub">Tap a lane to cue the form—mixes of creative ops, tooling, moderation, localization,
-          and sonic identity for Sakura.</p>
-      </div>
-
-      <div class="jobs-role-grid" aria-label="Open roles">
-        <button type="button" class="jobs-role-card" data-role-card data-role-slug="discord_moderator">
-          <span class="jobs-role-tag">COMMUNITY OPS</span>
-          <div class="jobs-role-role">Discord moderator</div>
-          <p class="jobs-role-desc">Queue triage for reports, spoilers, raids, escalation playbooks—keep lounges calm for
-            readers onboarding from mobile &amp; web.</p>
-        </button>
-
-        <button type="button" class="jobs-role-card" data-role-card data-role-slug="manga_artist">
-          <span class="jobs-role-tag">VISUAL DESIGN</span>
-          <div class="jobs-role-role">Manga &amp; key art collaborator</div>
-          <p class="jobs-role-desc">Thumbnails, cover variants, typography passes, teaser frames—paired with Sakura pink
-            &amp; Solana-accent gradients brand kit.</p>
-        </button>
-
-        <button type="button" class="jobs-role-card" data-role-card data-role-slug="voice_actor">
-          <span class="jobs-role-tag">AUDIO DRAMATURG</span>
-          <div class="jobs-role-role">Voice actor &amp; announcer reads</div>
-          <p class="jobs-role-desc">Promo VO, scripted cold opens, scripted AI prompt reads—share booth setup, tonal
-            range; union / non-union OK if disclosed.</p>
-        </button>
-
-        <button type="button" class="jobs-role-card" data-role-card data-role-slug="community_manager">
-          <span class="jobs-role-tag">PROGRAMMING</span>
-          <div class="jobs-role-role">Community producer</div>
-          <p class="jobs-role-desc">AMAs, recap threads, bounty briefs alongside creators—instrument OKRs with metrics we
-            can verify on-chain or in Discord.</p>
-        </button>
-
-        <button type="button" class="jobs-role-card" data-role-card data-role-slug="localization_editor">
-          <span class="jobs-role-tag">LOCALIZATION</span>
-          <div class="jobs-role-role">Localization editor</div>
-          <p class="jobs-role-desc">JP ↔ EN fidelity, glossary ownership, glossary sync with subtitles &amp; UI
-            strings—detail obsessed.</p>
-        </button>
-
-        <button type="button" class="jobs-role-card" data-role-card data-role-slug="content_qa">
-          <span class="jobs-role-tag">QUALITY</span>
-          <div class="jobs-role-role">Content QA navigator</div>
-          <p class="jobs-role-desc">Series metadata, spoilers policy, ingestion bugs—coordinate with ingestion pipeline &
-            legal escalations calmly.</p>
-        </button>
-
-        <button type="button" class="jobs-role-card" data-role-card data-role-slug="marketing_creator">
-          <span class="jobs-role-tag">GROWTH</span>
-          <div class="jobs-role-role">Marketing &amp; short-form storyteller</div>
-          <p class="jobs-role-desc">Clips, memes with taste, Threads/X drops—you move fast without trashing licensors or
-            community trust.</p>
-        </button>
-
-        <button type="button" class="jobs-role-card" data-role-card data-role-slug="video_motion">
-          <span class="jobs-role-tag">MOTION</span>
-          <div class="jobs-role-role">Video &amp; motion designer</div>
-          <p class="jobs-role-desc">Landing loops, teaser bumpers for releases, kinetic type—After Effects mastery +
-            sane export pipelines.</p>
-        </button>
+    <section id="roles" class="jobs-rows-section">
+      <div class="jobs-rows-inner">
+        <h2 class="jobs-rows-heading">open roles</h2>
+        <p class="jobs-rows-sub">Open a posting for the full brief—each row links to a Sakura split layout. Use the
+          <a class="jobs-rows-sub__link" href="/jobs/apply/">dedicated apply view</a> when you already picked a lane.</p>
+        <div class="jobs-rows-legend" aria-hidden="true">
+          <span>role</span>
+          <span>base</span>
+          <span>type</span>
+          <span></span>
+        </div>
+        <ul class="jobs-row-list">
+          <li>
+            <a class="jobs-row" href="/jobs/discord-moderator/">
+              <span class="jobs-row__title">Discord moderator</span>
+              <span class="jobs-row__meta">Global</span>
+              <span class="jobs-row__type">Contract</span>
+              <span class="jobs-row__action"><span class="jobs-row__apply">apply</span></span>
+            </a>
+          </li>
+          <li>
+            <a class="jobs-row" href="/jobs/manga-artist/">
+              <span class="jobs-row__title">Manga &amp; key art</span>
+              <span class="jobs-row__meta">Remote-first</span>
+              <span class="jobs-row__type">Contract</span>
+              <span class="jobs-row__action"><span class="jobs-row__apply">apply</span></span>
+            </a>
+          </li>
+          <li>
+            <a class="jobs-row" href="/jobs/voice-actor/">
+              <span class="jobs-row__title">Voice &amp; announcer</span>
+              <span class="jobs-row__meta">Remote-first</span>
+              <span class="jobs-row__type">Project</span>
+              <span class="jobs-row__action"><span class="jobs-row__apply">apply</span></span>
+            </a>
+          </li>
+          <li>
+            <a class="jobs-row" href="/jobs/community-manager/">
+              <span class="jobs-row__title">Community producer</span>
+              <span class="jobs-row__meta">Global</span>
+              <span class="jobs-row__type">Part-time OK</span>
+              <span class="jobs-row__action"><span class="jobs-row__apply">apply</span></span>
+            </a>
+          </li>
+          <li>
+            <a class="jobs-row" href="/jobs/localization-editor/">
+              <span class="jobs-row__title">Localization editor</span>
+              <span class="jobs-row__meta">JP ↔ EN</span>
+              <span class="jobs-row__type">Contract</span>
+              <span class="jobs-row__action"><span class="jobs-row__apply">apply</span></span>
+            </a>
+          </li>
+          <li>
+            <a class="jobs-row" href="/jobs/content-qa/">
+              <span class="jobs-row__title">Content QA</span>
+              <span class="jobs-row__meta">Remote-first</span>
+              <span class="jobs-row__type">Contract</span>
+              <span class="jobs-row__action"><span class="jobs-row__apply">apply</span></span>
+            </a>
+          </li>
+          <li>
+            <a class="jobs-row" href="/jobs/marketing-creator/">
+              <span class="jobs-row__title">Short-form storyteller</span>
+              <span class="jobs-row__meta">Global</span>
+              <span class="jobs-row__type">Contract</span>
+              <span class="jobs-row__action"><span class="jobs-row__apply">apply</span></span>
+            </a>
+          </li>
+          <li>
+            <a class="jobs-row" href="/jobs/video-motion/">
+              <span class="jobs-row__title">Video &amp; motion</span>
+              <span class="jobs-row__meta">Remote-first</span>
+              <span class="jobs-row__type">Contract</span>
+              <span class="jobs-row__action"><span class="jobs-row__apply">apply</span></span>
+            </a>
+          </li>
+        </ul>
       </div>
     </section>
 
@@ -165,11 +179,20 @@
     <section class="jobs-form-wrap" id="apply">
       <div class="jobs-form-card reveal-card">
         <h2 class="jobs-form-title">Application</h2>
-        <p class="jobs-form-hint">Portfolio links trump attachments for now—ensure cover letter cites the role slug you
-          selected plus relevant proof of craft.</p>
+        <p class="jobs-form-hint">Choose the role here or jump in from a posting. Portfolio links beat attachments—cover letter
+          should name discipline, rates, and timelines.</p>
 
         <form id="jobs-application-form" autocomplete="on" novalidate>
           <input type="hidden" id="roleSlugInput" value="" />
+
+          <div class="jobs-field-grid">
+            <div class="jobs-field">
+              <label for="role_slug_select">Role<span class="jobs-opt">&nbsp;(required)</span></label>
+              <select id="role_slug_select" required>
+                <option value="">Choose a role…</option>
+              </select>
+            </div>
+          </div>
 
           <!-- Honeypot anti-spam (leave blank) -->
           <div class="visually-hidden-abs" aria-hidden="true">
@@ -322,6 +345,7 @@
   <script>
     window.SAKURA_JOBS_SB = window.SAKURA_JOBS_SB || { url: '', anonKey: '' };
   </script>
+  <script src="/jobs/roles-meta.js"></script>
   <script src="/jobs/supabase-config.js"></script>
   <script src="/jobs/jobs-submit.js"></script>
   <script>
