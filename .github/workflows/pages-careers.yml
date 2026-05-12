@@ -1,3 +1,5 @@
+# GitHub Pages deployment (optional). Use Vercel + vercel.json + scripts/write-jobs-supabase-config.js instead if that is your host.
+
 name: Deploy GitHub Pages
 
 on:

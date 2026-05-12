@@ -1,2 +1,3 @@
-# Careers form: holds Supabase publishable URL + anon key (inject via GitHub Secrets in CI — do not commit)
+# Careers form: inject at deploy (GitHub Secrets + Pages workflow, OR Vercel env + vercel.json build).
+# Keep real values out of git.
 jobs/supabase-config.js
