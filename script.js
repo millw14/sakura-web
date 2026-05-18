@@ -11,9 +11,9 @@
         'https://github.com/Sakura-11488/Sakura/releases/download/v1.7.9/sakura-1.7.9-release.apk',
     },
     pc: {
-      tag: 'v1.5.2',
+      tag: 'v1.5.3',
       href:
-        'https://github.com/Sakura-11488/Sakura-pc/releases/download/v1.5.2/Sakura-Setup-1.5.2.exe',
+        'https://github.com/Sakura-11488/Sakura-pc/releases/download/v1.5.3/Sakura-Setup-1.5.3.exe',
     },
   };
 
