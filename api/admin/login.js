@@ -28,7 +28,7 @@ module.exports = async function handler(req, res) {
     return sendJson(res, 400, { error: 'Invalid request body' });
   }
 
-  const password = typeof body.password === 'string' ? body.password : '';
+  const password = typeof body.password === 'string' ? body.password.trim() : '';
 
   if (!verifyAdminPassword(password)) {
     await new Promise((r) => setTimeout(r, 400));

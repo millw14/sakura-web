@@ -17,6 +17,13 @@
   const detailTitle = document.getElementById('admin-detail-title');
   const detailBody = document.getElementById('admin-detail-body');
 
+  // Vercel trailingSlash: true — API calls must include trailing slash or POST body can be lost on 308 redirect.
+  const API = {
+    login: '/api/admin/login/',
+    logout: '/api/admin/logout/',
+    applications: '/api/admin/applications/',
+  };
+
   let applications = [];
 
   function roleTitle(slug) {
@@ -164,7 +171,7 @@
     if (filterRole.value) params.set('role', filterRole.value);
     if (filterStatus.value) params.set('status', filterStatus.value);
 
-    const { res, data } = await api(`/api/admin/applications?${params.toString()}`);
+    const { res, data } = await api(`${API.applications}?${params.toString()}`);
 
     refreshBtn.disabled = false;
 
@@ -201,7 +208,7 @@
     loginBtn.disabled = true;
 
     const password = document.getElementById('admin-password')?.value || '';
-    const { res, data } = await api('/api/admin/login', {
+    const { res, data } = await api(API.login, {
       method: 'POST',
       body: JSON.stringify({ password }),
     });
@@ -220,7 +227,7 @@
   });
 
   logoutBtn?.addEventListener('click', async () => {
-    await api('/api/admin/logout', { method: 'POST' });
+    await api(API.logout, { method: 'POST' });
     showLogin();
     applications = [];
     renderTable();
