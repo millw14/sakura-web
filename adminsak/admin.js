@@ -1,6 +1,13 @@
 (() => {
   'use strict';
 
+  const TOKEN_KEY = 'sakura_admin_token';
+  const API = {
+    login: '/api/admin/login/',
+    logout: '/api/admin/logout/',
+    applications: '/api/admin/applications/',
+  };
+
   const loginEl = document.getElementById('admin-login');
   const appEl = document.getElementById('admin-app');
   const loginForm = document.getElementById('admin-login-form');
@@ -13,20 +20,27 @@
   const tableBody = document.getElementById('admin-table-body');
   const countEl = document.getElementById('admin-count');
   const statusEl = document.getElementById('admin-status');
-  const detailDialog = document.getElementById('admin-detail-dialog');
-  const detailTitle = document.getElementById('admin-detail-title');
-  const detailBody = document.getElementById('admin-detail-body');
-
-  // Vercel trailingSlash: true — API calls must include trailing slash or POST body can be lost on 308 redirect.
-  const API = {
-    login: '/api/admin/login/',
-    logout: '/api/admin/logout/',
-    applications: '/api/admin/applications/',
-  };
 
   let applications = [];
-  let loadSeq = 0;
-  let signedIn = false;
+  let authToken = '';
+
+  function readStoredToken() {
+    try {
+      return sessionStorage.getItem(TOKEN_KEY) || '';
+    } catch {
+      return '';
+    }
+  }
+
+  function storeToken(token) {
+    authToken = token || '';
+    try {
+      if (authToken) sessionStorage.setItem(TOKEN_KEY, authToken);
+      else sessionStorage.removeItem(TOKEN_KEY);
+    } catch {
+      /* private mode / blocked storage */
+    }
+  }
 
   function setLoginBusy(busy) {
     if (!loginBtn) return;
@@ -38,6 +52,27 @@
     if (!loginError) return;
     loginError.hidden = !message;
     loginError.textContent = message || '';
+  }
+
+  function showLogin() {
+    if (loginEl) loginEl.hidden = false;
+    if (appEl) appEl.hidden = true;
+  }
+
+  function showApp() {
+    if (loginEl) loginEl.hidden = true;
+    if (appEl) appEl.hidden = false;
+  }
+
+  function setStatus(message) {
+    if (!statusEl) return;
+    if (!message) {
+      statusEl.hidden = true;
+      statusEl.textContent = '';
+      return;
+    }
+    statusEl.hidden = false;
+    statusEl.textContent = message;
   }
 
   function roleTitle(slug) {
@@ -77,34 +112,19 @@
       .replace(/"/g, '&quot;');
   }
 
-  function showLogin() {
-    loginEl.hidden = false;
-    appEl.hidden = true;
-  }
-
-  function showApp() {
-    loginEl.hidden = true;
-    appEl.hidden = false;
-  }
-
-  function setStatus(message) {
-    if (!message) {
-      statusEl.hidden = true;
-      statusEl.textContent = '';
-      return;
-    }
-    statusEl.hidden = false;
-    statusEl.textContent = message;
-  }
-
   async function api(path, options = {}) {
+    const headers = { ...(options.headers || {}) };
+    if (options.body && !headers['Content-Type']) {
+      headers['Content-Type'] = 'application/json';
+    }
+    if (authToken) {
+      headers.Authorization = `Bearer ${authToken}`;
+    }
+
     const res = await fetch(path, {
       credentials: 'same-origin',
       ...options,
-      headers: {
-        ...(options.body ? { 'Content-Type': 'application/json' } : {}),
-        ...(options.headers || {}),
-      },
+      headers,
     });
 
     let data = null;
@@ -117,7 +137,17 @@
     return { res, data };
   }
 
+  function applicationsUrl() {
+    const params = new URLSearchParams();
+    if (filterRole?.value) params.set('role', filterRole.value);
+    if (filterStatus?.value) params.set('status', filterStatus.value);
+    const qs = params.toString();
+    return qs ? `${API.applications}?${qs}` : API.applications;
+  }
+
   function renderTable() {
+    if (!tableBody || !countEl) return;
+
     if (!applications.length) {
       tableBody.innerHTML = '<tr><td colspan="6" class="admin-empty">No applications yet.</td></tr>';
       countEl.textContent = '0 results';
@@ -125,7 +155,6 @@
     }
 
     countEl.textContent = `${applications.length} result${applications.length === 1 ? '' : 's'}`;
-
     tableBody.innerHTML = applications.map((row, idx) => `
       <tr>
         <td>${escapeHtml(fmtDate(row.created_at))}</td>
@@ -139,8 +168,7 @@
 
     tableBody.querySelectorAll('[data-view-index]').forEach((btn) => {
       btn.addEventListener('click', () => {
-        const index = Number(btn.getAttribute('data-view-index'));
-        openDetail(applications[index]);
+        openDetail(applications[Number(btn.getAttribute('data-view-index'))]);
       });
     });
   }
@@ -160,7 +188,11 @@
   }
 
   function openDetail(row) {
-    if (!row) return;
+    const detailDialog = document.getElementById('admin-detail-dialog');
+    const detailTitle = document.getElementById('admin-detail-title');
+    const detailBody = document.getElementById('admin-detail-body');
+    if (!row || !detailDialog || !detailTitle || !detailBody) return;
+
     detailTitle.textContent = row.applicant_full_name || 'Application';
     detailBody.innerHTML = [
       detailField('Submitted', fmtDate(row.created_at)),
@@ -177,70 +209,59 @@
     detailDialog.showModal();
   }
 
-  async function loadApplications(options = {}) {
-    const { allowLoginRedirect = true } = options;
-    const seq = ++loadSeq;
+  async function loadApplications() {
+    if (!authToken) {
+      showLogin();
+      return false;
+    }
 
     setStatus('');
     if (refreshBtn) refreshBtn.disabled = true;
 
-    let res;
-    let data;
     try {
-      const params = new URLSearchParams();
-      if (filterRole?.value) params.set('role', filterRole.value);
-      if (filterStatus?.value) params.set('status', filterStatus.value);
+      const { res, data } = await api(applicationsUrl());
 
-      ({ res, data } = await api(`${API.applications}?${params.toString()}`));
-    } catch (err) {
-      if (seq !== loadSeq) return;
-      if (refreshBtn) refreshBtn.disabled = false;
-      if (signedIn) {
-        setStatus('Network error. Check your connection and try again.');
-      } else if (allowLoginRedirect) {
-        showLoginError('Could not reach admin API. Is this deploy on Vercel?');
-      }
-      console.warn('[adminsak]', err);
-      return;
-    }
-
-    if (seq !== loadSeq) return;
-    if (refreshBtn) refreshBtn.disabled = false;
-
-    if (res.status === 401) {
-      signedIn = false;
-      if (allowLoginRedirect) showLogin();
-      return;
-    }
-
-    if (res.status === 503) {
-      const message = data?.error || 'Admin is not configured on this deploy.';
-      if (!signedIn && allowLoginRedirect) {
-        showLoginError(message);
+      if (res.status === 401) {
+        storeToken('');
         showLogin();
-      } else {
-        setStatus(message);
+        showLoginError('Session expired. Sign in again.');
+        return false;
       }
-      return;
-    }
 
-    if (!res.ok) {
-      setStatus(data?.error || 'Could not load applications.');
-      return;
-    }
+      if (res.status === 503) {
+        const message = data?.error || 'Admin is not configured on this deploy.';
+        showLogin();
+        showLoginError(message);
+        return false;
+      }
 
-    signedIn = true;
-    showApp();
-    applications = Array.isArray(data?.applications) ? data.applications : [];
-    renderTable();
+      if (!res.ok) {
+        setStatus(data?.error || `Could not load applications (${res.status}).`);
+        showApp();
+        return false;
+      }
+
+      showApp();
+      applications = Array.isArray(data?.applications) ? data.applications : [];
+      renderTable();
+      return true;
+    } catch (err) {
+      console.warn('[adminsak]', err);
+      showLoginError('Network error reaching admin API.');
+      showLogin();
+      return false;
+    } finally {
+      if (refreshBtn) refreshBtn.disabled = false;
+    }
   }
 
-  loginForm?.addEventListener('submit', async (e) => {
-    e.preventDefault();
+  async function handleLoginSubmit(event) {
+    if (event) event.preventDefault();
     showLoginError('');
     setLoginBusy(true);
 
-    const password = document.getElementById('admin-password')?.value?.trim() || '';
+    const passwordInput = document.getElementById('admin-password');
+    const password = passwordInput?.value?.trim() || '';
     if (!password) {
       showLoginError('Enter your password.');
       setLoginBusy(false);
@@ -258,41 +279,66 @@
         return;
       }
 
-      signedIn = true;
-      loginForm.reset();
-      showApp();
-      await loadApplications({ allowLoginRedirect: false });
+      const token = typeof data?.token === 'string' ? data.token.trim() : '';
+      if (!token) {
+        showLoginError('Login succeeded but no session token was returned. Redeploy the site.');
+        return;
+      }
 
-      if (!signedIn) {
-        showLogin();
-        showLoginError('Signed in but session did not stick. Try again or use a private window.');
+      storeToken(token);
+      if (loginForm) loginForm.reset();
+      const ok = await loadApplications();
+      if (!ok) {
+        storeToken('');
       }
     } catch (err) {
-      showLoginError('Network error. Check your connection and try again.');
       console.warn('[adminsak login]', err);
+      showLoginError('Network error. Check your connection and try again.');
     } finally {
       setLoginBusy(false);
     }
-  });
+  }
 
-  logoutBtn?.addEventListener('click', async () => {
-    signedIn = false;
-    loadSeq += 1;
+  async function handleLogout() {
+    storeToken('');
     try {
       await api(API.logout, { method: 'POST' });
     } catch (err) {
       console.warn('[adminsak logout]', err);
     }
-    showLogin();
     applications = [];
     renderTable();
-  });
+    showLogin();
+  }
 
-  refreshBtn?.addEventListener('click', () => loadApplications({ allowLoginRedirect: false }));
-  filterRole?.addEventListener('change', () => loadApplications({ allowLoginRedirect: false }));
-  filterStatus?.addEventListener('change', () => loadApplications({ allowLoginRedirect: false }));
+  function boot() {
+    if (!loginForm || !loginBtn) {
+      document.body.insertAdjacentHTML(
+        'beforeend',
+        '<p style="color:#ff7a7a;text-align:center;padding:2rem;">Admin UI failed to load. Hard refresh the page.</p>',
+      );
+      return;
+    }
 
-  populateRoleFilter();
-  showLogin();
-  loadApplications();
+    populateRoleFilter();
+    authToken = readStoredToken();
+    showLogin();
+
+    loginForm.addEventListener('submit', handleLoginSubmit);
+
+    logoutBtn?.addEventListener('click', handleLogout);
+    refreshBtn?.addEventListener('click', loadApplications);
+    filterRole?.addEventListener('change', loadApplications);
+    filterStatus?.addEventListener('change', loadApplications);
+
+    if (authToken) {
+      loadApplications();
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
 })();

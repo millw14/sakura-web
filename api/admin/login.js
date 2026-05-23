@@ -38,7 +38,7 @@ module.exports = async function handler(req, res) {
   try {
     const token = createSessionToken();
     res.setHeader('Set-Cookie', buildSessionCookie(token));
-    return sendJson(res, 200, { ok: true });
+    return sendJson(res, 200, { ok: true, token });
   } catch (err) {
     console.error('[admin/login]', err);
     return sendJson(res, 503, { error: 'Session could not be created' });
