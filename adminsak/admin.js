@@ -25,6 +25,20 @@
   };
 
   let applications = [];
+  let loadSeq = 0;
+  let signedIn = false;
+
+  function setLoginBusy(busy) {
+    if (!loginBtn) return;
+    loginBtn.disabled = busy;
+    loginBtn.textContent = busy ? 'Signing in…' : 'Sign in';
+  }
+
+  function showLoginError(message) {
+    if (!loginError) return;
+    loginError.hidden = !message;
+    loginError.textContent = message || '';
+  }
 
   function roleTitle(slug) {
     if (window.SAKURA_JOBS_META?.bySlug) {
@@ -163,28 +177,46 @@
     detailDialog.showModal();
   }
 
-  async function loadApplications() {
+  async function loadApplications(options = {}) {
+    const { allowLoginRedirect = true } = options;
+    const seq = ++loadSeq;
+
     setStatus('');
-    refreshBtn.disabled = true;
+    if (refreshBtn) refreshBtn.disabled = true;
 
-    const params = new URLSearchParams();
-    if (filterRole.value) params.set('role', filterRole.value);
-    if (filterStatus.value) params.set('status', filterStatus.value);
+    let res;
+    let data;
+    try {
+      const params = new URLSearchParams();
+      if (filterRole?.value) params.set('role', filterRole.value);
+      if (filterStatus?.value) params.set('status', filterStatus.value);
 
-    const { res, data } = await api(`${API.applications}?${params.toString()}`);
+      ({ res, data } = await api(`${API.applications}?${params.toString()}`));
+    } catch (err) {
+      if (seq !== loadSeq) return;
+      if (refreshBtn) refreshBtn.disabled = false;
+      if (signedIn) {
+        setStatus('Network error. Check your connection and try again.');
+      } else if (allowLoginRedirect) {
+        showLoginError('Could not reach admin API. Is this deploy on Vercel?');
+      }
+      console.warn('[adminsak]', err);
+      return;
+    }
 
-    refreshBtn.disabled = false;
+    if (seq !== loadSeq) return;
+    if (refreshBtn) refreshBtn.disabled = false;
 
     if (res.status === 401) {
-      showLogin();
+      signedIn = false;
+      if (allowLoginRedirect) showLogin();
       return;
     }
 
     if (res.status === 503) {
       const message = data?.error || 'Admin is not configured on this deploy.';
-      if (appEl.hidden) {
-        loginError.hidden = false;
-        loginError.textContent = message;
+      if (!signedIn && allowLoginRedirect) {
+        showLoginError(message);
         showLogin();
       } else {
         setStatus(message);
@@ -197,6 +229,7 @@
       return;
     }
 
+    signedIn = true;
     showApp();
     applications = Array.isArray(data?.applications) ? data.applications : [];
     renderTable();
@@ -204,39 +237,62 @@
 
   loginForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    loginError.hidden = true;
-    loginBtn.disabled = true;
+    showLoginError('');
+    setLoginBusy(true);
 
-    const password = document.getElementById('admin-password')?.value || '';
-    const { res, data } = await api(API.login, {
-      method: 'POST',
-      body: JSON.stringify({ password }),
-    });
-
-    loginBtn.disabled = false;
-
-    if (!res.ok) {
-      loginError.hidden = false;
-      loginError.textContent = data?.error || 'Sign in failed.';
+    const password = document.getElementById('admin-password')?.value?.trim() || '';
+    if (!password) {
+      showLoginError('Enter your password.');
+      setLoginBusy(false);
       return;
     }
 
-    loginForm.reset();
-    showApp();
-    await loadApplications();
+    try {
+      const { res, data } = await api(API.login, {
+        method: 'POST',
+        body: JSON.stringify({ password }),
+      });
+
+      if (!res.ok) {
+        showLoginError(data?.error || `Sign in failed (${res.status}).`);
+        return;
+      }
+
+      signedIn = true;
+      loginForm.reset();
+      showApp();
+      await loadApplications({ allowLoginRedirect: false });
+
+      if (!signedIn) {
+        showLogin();
+        showLoginError('Signed in but session did not stick. Try again or use a private window.');
+      }
+    } catch (err) {
+      showLoginError('Network error. Check your connection and try again.');
+      console.warn('[adminsak login]', err);
+    } finally {
+      setLoginBusy(false);
+    }
   });
 
   logoutBtn?.addEventListener('click', async () => {
-    await api(API.logout, { method: 'POST' });
+    signedIn = false;
+    loadSeq += 1;
+    try {
+      await api(API.logout, { method: 'POST' });
+    } catch (err) {
+      console.warn('[adminsak logout]', err);
+    }
     showLogin();
     applications = [];
     renderTable();
   });
 
-  refreshBtn?.addEventListener('click', loadApplications);
-  filterRole?.addEventListener('change', loadApplications);
-  filterStatus?.addEventListener('change', loadApplications);
+  refreshBtn?.addEventListener('click', () => loadApplications({ allowLoginRedirect: false }));
+  filterRole?.addEventListener('change', () => loadApplications({ allowLoginRedirect: false }));
+  filterStatus?.addEventListener('change', () => loadApplications({ allowLoginRedirect: false }));
 
   populateRoleFilter();
+  showLogin();
   loadApplications();
 })();
