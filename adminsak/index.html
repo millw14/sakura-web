@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Careers admin · Sakura</title>
+  <link rel="icon" type="image/png" href="/sakuraicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/adminsak/admin.css" />
+</head>
+
+<body class="admin-body">
+  <div id="admin-login" class="admin-login">
+    <form id="admin-login-form" class="admin-login-card" autocomplete="off">
+      <p class="admin-kicker">Sakura careers</p>
+      <h1>Admin</h1>
+      <p class="admin-hint">Job applications — server-side only. Not indexed.</p>
+      <label for="admin-password">Password</label>
+      <input id="admin-password" name="password" type="password" required autocomplete="current-password"
+        spellcheck="false" />
+      <button type="submit" id="admin-login-btn">Sign in</button>
+      <p id="admin-login-error" class="admin-error" hidden></p>
+    </form>
+  </div>
+
+  <div id="admin-app" class="admin-app" hidden>
+    <header class="admin-header">
+      <div>
+        <p class="admin-kicker">Careers inbox</p>
+        <h1>Applications</h1>
+      </div>
+      <div class="admin-header-actions">
+        <button type="button" id="admin-refresh-btn" class="admin-btn admin-btn--ghost">Refresh</button>
+        <button type="button" id="admin-logout-btn" class="admin-btn admin-btn--ghost">Sign out</button>
+      </div>
+    </header>
+
+    <div class="admin-toolbar">
+      <label>
+        Role
+        <select id="admin-filter-role">
+          <option value="">All roles</option>
+        </select>
+      </label>
+      <label>
+        Status
+        <select id="admin-filter-status">
+          <option value="">All statuses</option>
+          <option value="new">new</option>
+          <option value="review">review</option>
+          <option value="shortlisted">shortlisted</option>
+          <option value="rejected">rejected</option>
+          <option value="hired">hired</option>
+          <option value="archived">archived</option>
+        </select>
+      </label>
+      <p id="admin-count" class="admin-count"></p>
+    </div>
+
+    <p id="admin-status" class="admin-status" hidden></p>
+
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>When</th>
+            <th>Role</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="admin-table-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <dialog id="admin-detail-dialog" class="admin-dialog">
+    <form method="dialog" class="admin-dialog-inner">
+      <header class="admin-dialog-head">
+        <h2 id="admin-detail-title">Application</h2>
+        <button type="submit" class="admin-dialog-close" aria-label="Close">✕</button>
+      </header>
+      <div id="admin-detail-body" class="admin-detail-body"></div>
+    </form>
+  </dialog>
+
+  <script src="/jobs/roles-meta.js"></script>
+  <script src="/adminsak/admin.js"></script>
+</body>
+
+</html>

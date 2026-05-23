@@ -1,3 +1,8 @@
 # Careers form: inject at deploy (GitHub Secrets + Pages workflow, OR Vercel env + vercel.json build).
 # Keep real values out of git.
 jobs/supabase-config.js
+
+# Local / Vercel secrets — never commit
+.env
+.env.*
+!.env.example
