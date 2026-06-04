@@ -141,6 +141,82 @@
   margin-bottom: 0;
 }
 
+/* Support page */
+.support-channels {
+  display: grid;
+  gap: 16px;
+  margin: 28px 0 36px;
+}
+
+.support-channel {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 22px 24px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: rgba(255, 62, 141, 0.04);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.support-channel:hover {
+  border-color: rgba(255, 62, 141, 0.45);
+  background: rgba(255, 62, 141, 0.08);
+  transform: translateY(-2px);
+}
+
+.support-channel-icon {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: rgba(255, 62, 141, 0.12);
+  color: var(--sakura-light);
+}
+
+.support-channel--discord .support-channel-icon {
+  color: #aab2ff;
+  background: rgba(88, 101, 242, 0.18);
+}
+
+.support-channel-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.support-channel-title {
+  font-family: var(--font-tech);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.support-channel-meta {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.support-channel-cta {
+  margin-top: 6px;
+  font-family: var(--font-tech);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sakura-pink);
+}
+
+.support-channel:hover .support-channel-cta {
+  color: var(--sakura-light);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .legal-page {
