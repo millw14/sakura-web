@@ -4,6 +4,16 @@
   "buildCommand": "npm run build",
   "outputDirectory": ".",
   "trailingSlash": true,
+  "rewrites": [
+    {
+      "source": "/app",
+      "destination": "/app/index.html"
+    },
+    {
+      "source": "/app/:path*",
+      "destination": "/app/index.html"
+    }
+  ],
   "headers": [
     {
       "source": "/adminsak/(.*)",

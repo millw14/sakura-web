@@ -1810,10 +1810,10 @@ body {
 
 .download-platform-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
   margin: 0 auto 24px;
-  max-width: 560px;
+  max-width: 820px;
 }
 
 .download-platform-card {
@@ -2008,6 +2008,61 @@ a.footer-sol:hover {
 .sai-band-detail strong {
   color: var(--sakura-pink);
   font-weight: 600;
+}
+
+/* ========== WEB APP BAND ========== */
+.web-app-band {
+  position: relative;
+  z-index: 2;
+  padding: clamp(56px, 9vw, 88px) 24px;
+  background:
+    radial-gradient(ellipse 80% 60% at 80% 0%, rgba(255, 62, 141, 0.12), transparent 55%),
+    linear-gradient(180deg, rgba(7, 5, 14, 0.4), rgba(11, 8, 20, 0.95));
+}
+
+.web-app-band-inner {
+  max-width: 980px;
+  margin: 0 auto;
+  display: grid;
+  gap: 28px;
+  align-items: center;
+  padding: clamp(28px, 5vw, 40px);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  background: rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(12px);
+}
+
+@media (min-width: 820px) {
+  .web-app-band-inner {
+    grid-template-columns: minmax(0, 1.2fr) auto;
+    gap: 40px;
+  }
+}
+
+.web-app-band-copy .section-subtitle {
+  max-width: 52ch;
+}
+
+.web-app-band-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.web-app-band-note {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .download-platform-grid {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+  }
 }
 
 /* ========== RESPONSIVE ========== */
