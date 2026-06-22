@@ -1827,6 +1827,18 @@ body {
   background: rgba(0, 0, 0, 0.28);
 }
 
+.download-platform-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(255, 62, 141, 0.1);
+  color: var(--sakura-light);
+  margin-bottom: 2px;
+}
+
 .download-platform-name {
   font-family: var(--font-tech);
   font-size: 11px;
@@ -1845,6 +1857,15 @@ body {
 .download-platform-btn {
   width: 100%;
   justify-content: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.web-app-band-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .download-platforms {

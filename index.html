@@ -92,21 +92,16 @@
           <div class="hero-cta-row">
             <a href="https://github.com/Sakura-11488/Sakura/releases/download/v1.7.9/sakura-1.7.9-release.apk" id="heroApkBtn"
               class="btn-hero-primary js-sakura-release-apk">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="7 10 12 15 17 10" />
-                <line x1="12" y1="15" x2="12" y2="3" />
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85-.29-.15-.65-.06-.83.22l-1.88 3.24a11.43 11.43 0 0 0-8.45 0L5.5 5.67c-.19-.29-.58-.38-.87-.22-.3.16-.42.54-.26.85l1.84 3.18C3.81 10.92 2.5 12.9 2.5 15h19c0-2.1-1.31-4.08-3.9-5.52zM7 14.25c-.41 0-.75-.34-.75-.75s.34-.75.75-.75.75.34.75.75-.34.75-.75.75zm10 0c-.41 0-.75-.34-.75-.75s.34-.75.75-.75.75.34.75.75-.34.75-.75.75z" />
               </svg>
               <span id="heroApkLabel">Android v1.7.9</span>
             </a>
             <a href="https://github.com/Sakura-11488/Sakura-pc/releases/download/v1.5.3/Sakura-Setup-1.5.3.exe" id="heroPcBtn"
               class="btn-hero-primary btn-hero-primary-outline js-sakura-release-pc">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="7 10 12 15 17 10" />
-                <line x1="12" y1="15" x2="12" y2="3" />
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M3 5.5h7v7H3v-7zm11 0h7v7h-7v-7zM3 16.5h7v7H3v-7zm11 0h7v7h-7v-7z" />
               </svg>
               <span id="heroPcLabel">Windows v1.5.3</span>
             </a>
@@ -651,7 +646,15 @@ pub struct ChapterRecord {
         </p>
       </div>
       <div class="web-app-band-actions">
-        <a href="/app/" class="btn btn-glow btn-lg">Open Web App</a>
+        <a href="/app/" class="btn btn-glow btn-lg">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="2" y1="12" x2="22" y2="12" />
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+          </svg>
+          Open Web App
+        </a>
         <p class="web-app-band-note">Works on desktop and mobile browsers · v1.9.9</p>
       </div>
     </div>
@@ -723,6 +726,14 @@ pub struct ChapterRecord {
 
           <div class="download-platform-grid">
             <div class="download-platform-card">
+              <span class="download-platform-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="2" y1="12" x2="22" y2="12" />
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                </svg>
+              </span>
               <span class="download-platform-name">Web</span>
               <span class="download-platform-meta">v1.9.9 · Browser</span>
               <a href="/app/" id="webPlatformBtn" class="btn btn-glow btn-lg download-platform-btn">
@@ -736,29 +747,35 @@ pub struct ChapterRecord {
               </a>
             </div>
             <div class="download-platform-card">
+              <span class="download-platform-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M3 5.5h7v7H3v-7zm11 0h7v7h-7v-7zM3 16.5h7v7H3v-7zm11 0h7v7h-7v-7z" />
+                </svg>
+              </span>
               <span class="download-platform-name">Windows</span>
               <span class="download-platform-meta" id="metaPcDl">v1.5.3 · Setup (.exe)</span>
               <a href="https://github.com/Sakura-11488/Sakura-pc/releases/download/v1.5.3/Sakura-Setup-1.5.3.exe" id="pcPlatformBtn"
                 class="btn btn-ghost btn-lg download-platform-btn js-sakura-release-pc">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                  <polyline points="7 10 12 15 17 10" />
-                  <line x1="12" y1="15" x2="12" y2="3" />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M3 5.5h7v7H3v-7zm11 0h7v7h-7v-7zM3 16.5h7v7H3v-7zm11 0h7v7h-7v-7z" />
                 </svg>
                 Download
               </a>
             </div>
             <div class="download-platform-card">
+              <span class="download-platform-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85-.29-.15-.65-.06-.83.22l-1.88 3.24a11.43 11.43 0 0 0-8.45 0L5.5 5.67c-.19-.29-.58-.38-.87-.22-.3.16-.42.54-.26.85l1.84 3.18C3.81 10.92 2.5 12.9 2.5 15h19c0-2.1-1.31-4.08-3.9-5.52zM7 14.25c-.41 0-.75-.34-.75-.75s.34-.75.75-.75.75.34.75.75-.34.75-.75.75zm10 0c-.41 0-.75-.34-.75-.75s.34-.75.75-.75.75.34.75.75-.34.75-.75.75z" />
+                </svg>
+              </span>
               <span class="download-platform-name">Android</span>
               <span class="download-platform-meta" id="metaAndroidDl">v1.7.9 · APK</span>
               <a href="https://github.com/Sakura-11488/Sakura/releases/download/v1.7.9/sakura-1.7.9-release.apk" id="downloadBtn"
                 class="btn btn-glow btn-lg download-platform-btn js-sakura-release-apk">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                  <polyline points="7 10 12 15 17 10" />
-                  <line x1="12" y1="15" x2="12" y2="3" />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path
+                    d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85-.29-.15-.65-.06-.83.22l-1.88 3.24a11.43 11.43 0 0 0-8.45 0L5.5 5.67c-.19-.29-.58-.38-.87-.22-.3.16-.42.54-.26.85l1.84 3.18C3.81 10.92 2.5 12.9 2.5 15h19c0-2.1-1.31-4.08-3.9-5.52zM7 14.25c-.41 0-.75-.34-.75-.75s.34-.75.75-.75.75.34.75.75-.34.75-.75.75zm10 0c-.41 0-.75-.34-.75-.75s.34-.75.75-.75.75.34.75.75-.34.75-.75.75z" />
                 </svg>
                 Download
               </a>
