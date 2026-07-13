@@ -8,6 +8,8 @@ const ALLOWED_PATHS = [
   // just needs to reach it over HTTPS to avoid mixed-content on the web build.
   /^\/comics\/v1\/img\?u=https?:\/\/\S+$/i,
   /^\/hentai\/v1\/img\?u=https?:\/\/\S+$/i,
+  // Creator anime episodes (droplet-hosted). Wallet/uuid/file path only.
+  /^\/creator-media\/[1-9A-HJ-NP-Za-km-z]{32,44}\/[0-9a-f-]{36}\/[A-Za-z0-9._-]+\.(?:mp4|mov|webm|jpg|jpeg|png)$/i,
 ];
 
 function cors(res) {
