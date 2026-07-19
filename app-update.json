@@ -1,0 +1,9 @@
+{
+  "version": "2.0.2",
+  "versionCode": 20002,
+  "apkUrl": "https://github.com/Sakura-11488/Sakura/releases/download/v2.0.2/sakura-2.0.2-seeker-release.apk",
+  "releaseNotes": "• Downloads fixed — encrypted anime downloads and plays with working seek; comics & 18+ save for offline reading; interrupted downloads resume with a Retry option.\n• Comics opened from Continue Reading no longer show an empty reader.\n• New update prompt, auto-refreshing fan-art, pull-to-refresh in Library, and a faster splash.",
+  "forceUpdate": false,
+  "minVersion": "0.0.0",
+  "publishedAt": "2026-07-19"
+}
