@@ -1,8 +1,12 @@
 const MEDIA_BASE = 'http://165-232-83-159.nip.io';
+// `(?:\?[\w.=&%-]*)?$` allows an optional trailing cache-buster query (?v= / ?t=)
+// on the file-path routes — the app appends these to covers/thumbnails and the
+// degegen manifest, which the old `$`-after-extension anchors rejected (400).
+const Q = '(?:\\?[\\w.=&%-]*)?$';
 const ALLOWED_PATHS = [
-  /^\/psyopanime\/(?:videos|thumbs)\/[A-Za-z0-9_-]+\.(?:mp4|jpg|jpeg|png)$/i,
-  /^\/2heanime\/videos\/[A-Za-z0-9_.-]+\.(?:mp4|mov)$/i,
-  /^\/sakura-originals\/degegen-files\/(?:episodes\/)?[A-Za-z0-9_.-]+\.(?:mp4|mov|jpg|jpeg|png|json)$/i,
+  new RegExp('^\\/psyopanime\\/(?:videos|thumbs)\\/[A-Za-z0-9_-]+\\.(?:mp4|jpg|jpeg|png)' + Q, 'i'),
+  new RegExp('^\\/2heanime\\/videos\\/[A-Za-z0-9_.-]+\\.(?:mp4|mov)' + Q, 'i'),
+  new RegExp('^\\/sakura-originals\\/degegen-files\\/(?:episodes\\/)?[A-Za-z0-9_.-]+\\.(?:mp4|mov|jpg|jpeg|png|json)' + Q, 'i'),
   // Comics/Hentai scraper image proxy. The droplet's /img endpoint validates
   // its own `u` target (blocks private hosts) and streams image bytes, so this
   // just needs to reach it over HTTPS to avoid mixed-content on the web build.
