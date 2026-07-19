@@ -23,7 +23,26 @@
         flex: 1;
       }
     </style>
-  <link rel="icon" href="/app/favicon.ico" /></head>
+  <link rel="icon" href="/app/favicon.ico" />
+    <link rel="manifest" href="/app/manifest.json" />
+    <meta name="theme-color" content="#0F0F13" />
+    <meta name="application-name" content="Sakura" />
+    <meta name="description" content="Watch anime and read manga, comics and novels — with offline downloads and rewards." />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="Sakura" />
+    <link rel="apple-touch-icon" href="/app/icons/apple-touch-icon-180.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/app/icons/apple-touch-icon-180.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/app/icons/icon-192.png" />
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+          navigator.serviceWorker.register('/app/sw.js', { scope: '/app/' }).catch(function () {});
+        });
+      }
+    </script>
+  </head>
 
   <body>
     <!-- Use static rendering with Expo Router to support running without JavaScript. -->
@@ -32,6 +51,6 @@
     </noscript>
     <!-- The root element for your Expo app. -->
     <div id="root"></div>
-  <script src="/app/_expo/static/js/web/index-6010af0e3c5ecbe84ab4aa8eddd6cd07.js" defer></script>
+  <script src="/app/_expo/static/js/web/index-8b0a097508a2f1f29e8813cf092cbb5b.js" defer></script>
 </body>
 </html>
