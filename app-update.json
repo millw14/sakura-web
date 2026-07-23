@@ -1,9 +1,9 @@
 {
-  "version": "2.0.2",
-  "versionCode": 20002,
-  "apkUrl": "https://github.com/Sakura-11488/Sakura/releases/download/v2.0.2/sakura-2.0.2-seeker-release.apk",
-  "releaseNotes": "• Downloads fixed — encrypted anime downloads and plays with working seek; comics & 18+ save for offline reading; interrupted downloads resume with a Retry option.\n• Comics opened from Continue Reading no longer show an empty reader.\n• New update prompt, auto-refreshing fan-art, pull-to-refresh in Library, and a faster splash.",
+  "version": "2.0.3",
+  "versionCode": 20003,
+  "apkUrl": "https://github.com/Sakura-11488/Sakura/releases/download/v2.0.3/sakura-2.0.3-seeker-release.apk",
+  "releaseNotes": "• Creator uploads fixed — cover art and manga pages now upload reliably (images are optimized on-device), and failures are shown instead of vanishing.\n• New posts notify your followers; the feed loads older posts as you scroll.\n• Chats sort by most recent and older messages no longer disappear.\n• Manhwa/webtoon pages render in full instead of being cropped.",
   "forceUpdate": false,
   "minVersion": "0.0.0",
-  "publishedAt": "2026-07-19"
+  "publishedAt": "2026-07-23"
 }
