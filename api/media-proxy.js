@@ -7,11 +7,14 @@ const ALLOWED_PATHS = [
   new RegExp('^\\/psyopanime\\/(?:videos|thumbs)\\/[A-Za-z0-9_-]+\\.(?:mp4|jpg|jpeg|png)' + Q, 'i'),
   new RegExp('^\\/2heanime\\/videos\\/[A-Za-z0-9_.-]+\\.(?:mp4|mov)' + Q, 'i'),
   new RegExp('^\\/sakura-originals\\/degegen-files\\/(?:episodes\\/)?[A-Za-z0-9_.-]+\\.(?:mp4|mov|jpg|jpeg|png|json)' + Q, 'i'),
-  // Comics/Hentai scraper image proxy. The droplet's /img endpoint validates
-  // its own `u` target (blocks private hosts) and streams image bytes, so this
-  // just needs to reach it over HTTPS to avoid mixed-content on the web build.
+  // Comics/Hentai/Manhwa scraper image proxy. The droplet's /img endpoint
+  // validates its own `u` target (blocks private hosts) and streams image
+  // bytes, so this just needs to reach it over HTTPS to avoid mixed-content on
+  // the web build. Every new scraper needs a line here or its covers and pages
+  // 400 on web while working perfectly on native.
   /^\/comics\/v1\/img\?u=https?:\/\/\S+$/i,
   /^\/hentai\/v1\/img\?u=https?:\/\/\S+$/i,
+  /^\/manhwa\/v1\/img\?u=https?:\/\/\S+$/i,
   // Creator anime episodes (droplet-hosted). Wallet/uuid/file path only.
   /^\/creator-media\/[1-9A-HJ-NP-Za-km-z]{32,44}\/[0-9a-f-]{36}\/[A-Za-z0-9._-]+\.(?:mp4|mov|webm|jpg|jpeg|png)$/i,
 ];
