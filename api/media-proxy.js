@@ -6,7 +6,12 @@ const Q = '(?:\\?[\\w.=&%-]*)?$';
 const ALLOWED_PATHS = [
   new RegExp('^\\/psyopanime\\/(?:videos|thumbs)\\/[A-Za-z0-9_-]+\\.(?:mp4|jpg|jpeg|png)' + Q, 'i'),
   new RegExp('^\\/2heanime\\/videos\\/[A-Za-z0-9_.-]+\\.(?:mp4|mov)' + Q, 'i'),
-  new RegExp('^\\/sakura-originals\\/degegen-files\\/(?:episodes\\/)?[A-Za-z0-9_.-]+\\.(?:mp4|mov|jpg|jpeg|png|json)' + Q, 'i'),
+  // Any Sakura Original slug, not one named show. This was pinned to
+  // `degegen-files`, so publishing burnie-senders served fine on native and
+  // 400'd on web with "Invalid Sakura media path" — a failure that shows up
+  // only after the episode is uploaded and looks like a broken video. The slug
+  // segment excludes `/` and `.`, so it cannot escape the directory.
+  new RegExp('^\\/sakura-originals\\/[a-z0-9][a-z0-9-]*\\/(?:episodes\\/)?[A-Za-z0-9_.-]+\\.(?:mp4|mov|jpg|jpeg|png|json)' + Q, 'i'),
   // Comics/Hentai/Manhwa scraper image proxy. The droplet's /img endpoint
   // validates its own `u` target (blocks private hosts) and streams image
   // bytes, so this just needs to reach it over HTTPS to avoid mixed-content on
