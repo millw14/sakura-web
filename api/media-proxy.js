@@ -5,7 +5,13 @@ const MEDIA_BASE = 'http://165-232-83-159.nip.io';
 const Q = '(?:\\?[\\w.=&%-]*)?$';
 const ALLOWED_PATHS = [
   new RegExp('^\\/psyopanime\\/(?:videos|thumbs)\\/[A-Za-z0-9_-]+\\.(?:mp4|jpg|jpeg|png)' + Q, 'i'),
-  new RegExp('^\\/2heanime\\/videos\\/[A-Za-z0-9_.-]+\\.(?:mp4|mov)' + Q, 'i'),
+  new RegExp('^\\/2heanime\\/(?:videos|thumbs)\\/[A-Za-z0-9_.-]+\\.(?:mp4|mov|jpg|jpeg|png)' + Q, 'i'),
+  // Show manifests. Without these the web build's manifest fetch 400s and the
+  // app silently falls back to its hardcoded episode list — so new episodes,
+  // descriptions and thumbnails appear on native but never on web, with no
+  // error anywhere. Native hits the droplet directly and is unaffected, which
+  // is exactly why this asymmetry is easy to miss.
+  new RegExp('^\\/(?:2heanime|psyopanime)\\/manifest\\.json' + Q, 'i'),
   // Any Sakura Original slug, not one named show. This was pinned to
   // `degegen-files`, so publishing burnie-senders served fine on native and
   // 400'd on web with "Invalid Sakura media path" — a failure that shows up
