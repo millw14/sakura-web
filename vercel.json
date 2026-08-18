@@ -16,32 +16,60 @@
   ],
   "headers": [
     {
-      "comment": "Content-hashed build output. Safe by construction: the hash is in the filename, so a given URL's bytes can never change, and a stale hit is impossible. Everything here shipped max-age=0, must-revalidate, which meant a conditional request for the 8.5MB bundle on every single launch and — more importantly — no usable copy offline, so the service worker's cached shell loaded a dead script tag and the PWA could not boot without a network at all.",
       "source": "/app/_expo/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     },
     {
       "source": "/app/assets/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     },
     {
-      "comment": "NOT immutable: index.html, version.json, manifest.json and sw.js are how the app discovers a new build. Caching them is how a PWA pins itself to an old release with no way out.",
       "source": "/app/(index\\.html|version\\.json|manifest\\.json|sw\\.js)",
-      "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
+      ]
     },
     {
       "source": "/adminsak/(.*)",
       "headers": [
-        { "key": "X-Robots-Tag", "value": "noindex, nofollow" },
-        { "key": "Cache-Control", "value": "no-store" },
-        { "key": "X-Frame-Options", "value": "DENY" }
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        }
       ]
     },
     {
       "source": "/api/admin/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "no-store" },
-        { "key": "X-Content-Type-Options", "value": "nosniff" }
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
       ]
     }
   ]
