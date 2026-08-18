@@ -35,6 +35,29 @@
     <link rel="apple-touch-icon" href="/app/icons/apple-touch-icon-180.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/app/icons/apple-touch-icon-180.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/app/icons/icon-192.png" />
+    <link rel="preload" as="font" type="font/ttf" crossorigin="anonymous" href="/app/assets/_sakura-mobile/node_modules/@expo-google-fonts/nunito/400Regular/Nunito_400Regular.f04f0e9ff969fd52a75deade3a9761cd.ttf" />
+    <link rel="preload" as="font" type="font/ttf" crossorigin="anonymous" href="/app/assets/_sakura-mobile/node_modules/@expo-google-fonts/nunito/600SemiBold/Nunito_600SemiBold.b1364260246b29fd9393a1a071f3af61.ttf" />
+    <link rel="preload" as="font" type="font/ttf" crossorigin="anonymous" href="/app/assets/_sakura-mobile/node_modules/@expo-google-fonts/nunito/700Bold/Nunito_700Bold.c133c0b8cd169e7798d0cd239477cf32.ttf" />
+    <link rel="preload" as="font" type="font/ttf" crossorigin="anonymous" href="/app/assets/_sakura-mobile/node_modules/@expo-google-fonts/nunito/800ExtraBold/Nunito_800ExtraBold.2b1bb82750274fc2d1043bf3891cb531.ttf" />
+    <style>
+      /*
+       * Mobile browsers zoom the page in when a text field with a computed
+       * font-size under 16px is focused, and do not zoom back out on blur.
+       * Page scale is a layout change, and react-native-web's Dimensions
+       * reports Math.round(visualViewport.width * scale) — a width that no
+       * longer matches the layout width — which 25 components then convert
+       * straight into explicit pixel widths and heights. So one tap on a
+       * search box can leave the whole app laid out to the wrong width.
+       *
+       * The app's default body size is 14 (constants/theme.ts FontSize.md), so
+       * this fires on real screens. The guard lives here rather than in
+       * app/+html.tsx because that file is dead under web.output: 'single'.
+       *
+       * Deliberately NOT paired with user-scalable=no: taking pinch-zoom away
+       * from people who need it is not an acceptable way to fix our own bug.
+       */
+      input, textarea, select { font-size: 16px; }
+    </style>
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function () {
@@ -43,7 +66,7 @@
       }
     </script>
   
-    <script>window.__SAKURA_BUILD__="d461e92923ab796f6d39a246f370784c";</script>
+    <script>window.__SAKURA_BUILD__="0ccd9f50ac5de9ff3561e45577e46e59";</script>
   </head>
 
   <body>
@@ -53,6 +76,6 @@
     </noscript>
     <!-- The root element for your Expo app. -->
     <div id="root"></div>
-  <script src="/app/_expo/static/js/web/index-d461e92923ab796f6d39a246f370784c.js" defer></script>
+  <script src="/app/_expo/static/js/web/index-0ccd9f50ac5de9ff3561e45577e46e59.js" defer></script>
 </body>
 </html>
