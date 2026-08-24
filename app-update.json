@@ -1,9 +1,9 @@
 {
-  "version": "2.0.8",
-  "versionCode": 20008,
-  "apkUrl": "https://github.com/Sakura-11488/Sakura/releases/download/v2.0.8/sakura-2.0.8-seeker-release.apk",
-  "releaseNotes": "• Ads are gone from anime. The player was sending a request the video host rejected, so it silently fell back to an ad-carrying page — it now plays the stream directly.\n• Anime works again: search had been returning nothing, and playback pointed at a host that went dark. Both fixed, with better results (searching \"naruto\" gives you Naruto, not a movie).\n• A real offline library — manga, novels and anime episodes, kept for good.\n• Ask Sakura about the chapter you're reading without leaving it; it knows where you are and won't spoil ahead.\n• Reader: page seek bar with chapter jumps, and back returns to the series instead of a blank screen.\n• Novels: the reader now finds the novels that were there all along.\n• The app no longer shifts and resizes on its own while you're using it.\n• Security: fake \"you received SAKURA\" notifications and unauthorised profile edits are both closed.",
+  "version": "2.0.9",
+  "versionCode": 20009,
+  "apkUrl": "https://github.com/Sakura-11488/Sakura/releases/download/v2.0.9/sakura-2.0.9-seeker-release.apk",
+  "releaseNotes": "• XP leaderboard — see where you stand against every other reader, ranked by lifetime XP.\n• Opens on the top 100, with a \"Show more\" button for the rest.\n• Your own rank sits pinned at the top, so you see your position straight away instead of paging to find yourself.\n• Search the whole board by name or wallet address, not just the rows on screen.\n• Readers who never set a username show a shortened wallet address, so every row stays distinguishable.\n\nFind it under Daily Quests → XP leaderboard.",
   "forceUpdate": false,
   "minVersion": "0.0.0",
-  "publishedAt": "2026-08-23"
+  "publishedAt": "2026-08-24"
 }
