@@ -1,9 +1,9 @@
 {
-  "version": "2.0.9",
-  "versionCode": 20009,
-  "apkUrl": "https://github.com/Sakura-11488/Sakura/releases/download/v2.0.9/sakura-2.0.9-seeker-release.apk",
-  "releaseNotes": "• XP leaderboard — see where you stand against every other reader, ranked by lifetime XP.\n• Opens on the top 100, with a \"Show more\" button for the rest.\n• Your own rank sits pinned at the top, so you see your position straight away instead of paging to find yourself.\n• Search the whole board by name or wallet address, not just the rows on screen.\n• Readers who never set a username show a shortened wallet address, so every row stays distinguishable.\n\nFind it under Daily Quests → XP leaderboard.",
+  "version": "2.0.10",
+  "versionCode": 20010,
+  "apkUrl": "https://github.com/Sakura-11488/Sakura/releases/download/v2.0.10/sakura-2.0.10-seeker-release.apk",
+  "releaseNotes": "• Sakura Originals now stream from a CDN. Episodes used to come from the single small server that runs everything else on Sakura — video now comes from Cloudflare R2 instead, so playback starts faster, holds up better under load, and seeks more smoothly on longer episodes.\n• Thumbnails and series info are unchanged, and nothing you've downloaded offline is affected.\n• Also includes the XP leaderboard from 2.0.9 if you're coming from 2.0.8 or earlier — see where you rank, search the board, and find your own position pinned at the top.",
   "forceUpdate": false,
   "minVersion": "0.0.0",
-  "publishedAt": "2026-08-24"
+  "publishedAt": "2026-08-26"
 }
