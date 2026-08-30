@@ -1,9 +1,9 @@
 {
-  "version": "2.0.10",
-  "versionCode": 20010,
-  "apkUrl": "https://github.com/Sakura-11488/Sakura/releases/download/v2.0.10/sakura-2.0.10-seeker-release.apk",
-  "releaseNotes": "• Sakura Originals now stream from a CDN. Episodes used to come from the single small server that runs everything else on Sakura — video now comes from Cloudflare R2 instead, so playback starts faster, holds up better under load, and seeks more smoothly on longer episodes.\n• Thumbnails and series info are unchanged, and nothing you've downloaded offline is affected.\n• Also includes the XP leaderboard from 2.0.9 if you're coming from 2.0.8 or earlier — see where you rank, search the board, and find your own position pinned at the top.",
+  "version": "2.0.11",
+  "versionCode": 20011,
+  "apkUrl": "https://github.com/Sakura-11488/Sakura/releases/download/v2.0.11/sakura-2.0.11-seeker-release.apk",
+  "releaseNotes": "• Anime pages that showed \"0 eps\" and \"No streaming source found\" now load their episodes. The metadata service intermittently fails for individual titles, and the offline backup we fall back to was dropping the episode count it already had — so the page went blank for a series that was perfectly fine. Every affected title is fixed, not just the one that was reported.\n• The bottom tab bar's icons now always render at full size instead of being clipped.",
   "forceUpdate": false,
   "minVersion": "0.0.0",
-  "publishedAt": "2026-08-26"
+  "publishedAt": "2026-08-30"
 }
