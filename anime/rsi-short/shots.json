@@ -1,0 +1,59 @@
+{
+  "title": "Damare, Roger",
+  "fps": 24,
+  "size": [
+    1080,
+    1920
+  ],
+  "total": 30.0,
+  "cast": {
+    "RSI_BOY": "late-20s Japanese man, ethereal bishonen doom-prophet, ankle-length white lab coat worn like a cape billowing in wind, pale lavender hair swept over one eye, luminous pale-blue eyes, thin wire-frame glasses, black turtleneck, lanyard ID badge",
+    "ENGINEER": "mid-30s man, dark messy hair, heavy dark eye-bags, three-day stubble, black zip hoodie over faded band t-shirt, dead-eyed exhausted thousand-yard stare, chipped white coffee mug",
+    "PROFESSOR": "man in his 60s, wild pale-yellow and silver hair, round glasses, enormous theatrical eyebrows, brown tweed jacket with elbow patches over a rumpled shirt"
+  },
+  "style": "1990s cel-animation anime, hand-painted backgrounds, visible ink linework, limited-animation aesthetic, film grain, cinematic key lighting, 9:16 vertical composition",
+  "shots": [
+    {
+      "id": 1,
+      "dur": 5.5,
+      "image": "late-20s Japanese man, ethereal bishonen doom-prophet, ankle-length white lab coat worn like a cape billowing in wind, pale lavender hair swept over one eye, luminous pale-blue eyes, thin wire-frame glasses, black turtleneck, lanyard ID badge, standing on a rooftop helipad at blood-orange sunset, arms spread wide, backlit rim light, towering cumulus clouds, low heroic angle from below, city far beneath. 1990s cel-animation anime, hand-painted backgrounds, visible ink linework, limited-animation aesthetic, film grain, cinematic key lighting, 9:16 vertical composition",
+      "video": "very slow steady camera push-in. Only the coat hem, hair and clouds move. Face and body held still. No lip flap beyond a slight mouth movement.",
+      "note": "Establish absurd grandeur. Play it 100% straight."
+    },
+    {
+      "id": 2,
+      "dur": 5.0,
+      "image": "mid-30s man, dark messy hair, heavy dark eye-bags, three-day stubble, black zip hoodie over faded band t-shirt, dead-eyed exhausted thousand-yard stare, chipped white coffee mug, slumped in an office chair in a dark room lit only by three monitors, cyan screen glow on his face, cluttered desk, cable spaghetti, medium close-up, dead flat expression. 1990s cel-animation anime, hand-painted backgrounds, visible ink linework, limited-animation aesthetic, film grain, cinematic key lighting, 9:16 vertical composition",
+      "video": "locked-off static camera. Only monitor flicker, rising steam from the mug, and one slow blink. Absolutely no camera move.",
+      "note": "The hard cut from S1's grandeur to this stillness IS the joke."
+    },
+    {
+      "id": 3,
+      "dur": 4.5,
+      "image": "man in his 60s, wild pale-yellow and silver hair, round glasses, enormous theatrical eyebrows, brown tweed jacket with elbow patches over a rumpled shirt, bursting through an office door, mouth open mid-shout, one finger raised, round glasses flashing opaque blazing white, dramatic radial speed lines, sakura petals blowing in, low angle. 1990s cel-animation anime, hand-painted backgrounds, visible ink linework, limited-animation aesthetic, film grain, cinematic key lighting, 9:16 vertical composition",
+      "video": "fast 3-frame slam-in zoom, then a dead HOLD on the flashing glasses for the rest of the shot. Petals drift. Nothing else moves.",
+      "note": "Peak wounded academic pride."
+    },
+    {
+      "id": 4,
+      "dur": 5.5,
+      "image": "man in his 60s, wild pale-yellow and silver hair, round glasses, enormous theatrical eyebrows, brown tweed jacket with elbow patches over a rumpled shirt, extreme close-up on a genuinely bewildered face, eyebrows knotted, single sweat bead on temple, glasses now transparent showing confused eyes, vertical zoom-lines background, teal-and-amber lighting. 1990s cel-animation anime, hand-painted backgrounds, visible ink linework, limited-animation aesthetic, film grain, cinematic key lighting, 9:16 vertical composition",
+      "video": "steady dolly-in on the face. Sweat bead slides down. Background zoom-lines scroll. Head completely still.",
+      "note": "Melodrama drains out. He is asking sincerely. This is the heart of the bit."
+    },
+    {
+      "id": 5,
+      "dur": 3.5,
+      "image": "wide two-shot, mid-30s man, dark messy hair, heavy dark eye-bags, three-day stubble, black zip hoodie over faded band t-shirt, dead-eyed exhausted thousand-yard stare, chipped white coffee mug at left still facing his monitors, man in his 60s, wild pale-yellow and silver hair, round glasses, enormous theatrical eyebrows, brown tweed jacket with elbow patches over a rumpled shirt at right frozen with finger still raised, dead silent office, one single sakura petal falling through the middle of frame. 1990s cel-animation anime, hand-painted backgrounds, visible ink linework, limited-animation aesthetic, film grain, cinematic key lighting, 9:16 vertical composition",
+      "video": "COMPLETELY frozen frame. The only motion in the entire shot is one sakura petal falling slowly. No camera move.",
+      "note": "The comedy beat. Silence + one cricket in the sound design."
+    },
+    {
+      "id": 6,
+      "dur": 6.0,
+      "image": "mid-30s man, dark messy hair, heavy dark eye-bags, three-day stubble, black zip hoodie over faded band t-shirt, dead-eyed exhausted thousand-yard stare, chipped white coffee mug turning his head slowly toward camera, eyes shadowed, ultra-dramatic finishing-move framing, explosive white radial speed lines, harsh red-and-black impact background, mug still in hand. 1990s cel-animation anime, hand-painted backgrounds, visible ink linework, limited-animation aesthetic, film grain, cinematic key lighting, 9:16 vertical composition",
+      "video": "hard whip-pan onto his face, then a violent impact HOLD with shuddering speed lines. Ends frozen for the title card.",
+      "note": "Deadpan delivery over apocalyptic visuals. Impact kanji 黙れ slams on at the cut."
+    }
+  ]
+}
