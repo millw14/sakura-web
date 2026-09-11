@@ -25,8 +25,10 @@ Each step skips work that already exists in `build/`, so a failed run resumes ch
       CJK glyphs and burned subtitles confirmed correct on extracted frames
 - [x] Animatic (placeholder art) rendering from the real timeline
 - [ ] Keyframes + clips — **blocked: no Higgsfield credentials in this environment**
-- [ ] Japanese VO — **blocked: needs a TTS provider** (Higgsfield covers image and
-      video; it does not supply the Japanese voice track)
+- [ ] Japanese VO — **blocked: no voice provider confirmed yet**. Higgsfield covers
+      image and video here; whether its Speak product can produce Japanese TTS was
+      not verifiable from the client-rendered docs, so this is the first thing to
+      probe once keys exist. If it cannot, any TTS key (OpenAI, ElevenLabs) fills it.
 
 Endpoint paths default to `/higgsfield-ai/soul/v2/standard` and
 `/higgsfield-ai/dop/v2/standard` and are overridable with `HF_T2I_PATH` / `HF_I2V_PATH`,
