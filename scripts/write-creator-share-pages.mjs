@@ -5,10 +5,10 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const appDir = path.join(root, 'app');
 const baseHtml = fs.readFileSync(path.join(appDir, 'index.html'), 'utf8');
-const imagePath = path.join(appDir, 'share', 'creator-preview.png');
+const imagePath = path.join(appDir, 'share', 'creator-preview.jpg');
 if (!fs.existsSync(imagePath)) throw new Error(`Missing creator preview image: ${imagePath}`);
 
-const imageUrl = 'https://sakuraonseeker.com/app/share/creator-preview.png';
+const imageUrl = 'https://sakuraonseeker.com/app/share/creator-preview.jpg';
 const imageAlt = 'Sakura drawing in a sketchbook among cherry blossoms';
 
 function escapeAttribute(value) {
@@ -25,9 +25,9 @@ function createSharePage({ route, title, description }) {
     `<meta property="og:description" content="${escapeAttribute(description)}" />`,
     `<meta property="og:url" content="${url}" />`,
     `<meta property="og:image" content="${imageUrl}" />`,
-    '<meta property="og:image:type" content="image/png" />',
-    '<meta property="og:image:width" content="1734" />',
-    '<meta property="og:image:height" content="907" />',
+    '<meta property="og:image:type" content="image/jpeg" />',
+    '<meta property="og:image:width" content="1200" />',
+    '<meta property="og:image:height" content="630" />',
     `<meta property="og:image:alt" content="${escapeAttribute(imageAlt)}" />`,
     '<meta name="twitter:card" content="summary_large_image" />',
     `<meta name="twitter:title" content="${escapeAttribute(title)}" />`,
@@ -43,6 +43,8 @@ function createSharePage({ route, title, description }) {
   }
 
   const html = baseHtml
+    .replace(/^\s*<link rel="canonical"[^>]*\/>\r?\n/gm, '')
+    .replace(/^\s*<meta (?:property="og:[^"]+"|name="twitter:[^"]+")[^>]*\/>\r?\n/gm, '')
     .replace(/<title>[^<]*<\/title>/, `<title>${escapeAttribute(title)}</title>`)
     .replace(/<meta name="description" content="[^"]*"\s*\/?>/,
       `<meta name="description" content="${escapeAttribute(description)}" />`)
