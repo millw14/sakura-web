@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Become a Sakura Creator | Share your story</title>
+    <!-- The `react-native-web` recommended style reset: https://necolas.github.io/react-native-web/docs/setup/#root-element -->
+    <style id="expo-reset">
+      /* These styles make the body full-height */
+      html,
+      body {
+        height: 100%;
+      }
+      /* These styles disable body scrolling if you are using <ScrollView> */
+      body {
+        overflow: hidden;
+      }
+      /* These styles make the root element full-height */
+      #root {
+        display: flex;
+        height: 100%;
+        flex: 1;
+      }
+    </style>
+  <link rel="icon" href="/app/favicon.ico" />
+    <link rel="manifest" href="/app/manifest.json" />
+    <meta name="theme-color" content="#0F0F13" />
+    <meta name="application-name" content="Sakura" />
+    <meta name="description" content="Create your Sakura profile, publish novels, manga, and anime, and grow a community around the stories you love to make." />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="Sakura" />
+    <link rel="apple-touch-icon" href="/app/icons/apple-touch-icon-180.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/app/icons/apple-touch-icon-180.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/app/icons/icon-192.png" />
+    <link rel="preload" as="font" type="font/ttf" crossorigin="anonymous" href="/app/assets/_sakura-mobile/node_modules/@expo-google-fonts/nunito/400Regular/Nunito_400Regular.f04f0e9ff969fd52a75deade3a9761cd.ttf" />
+    <link rel="preload" as="font" type="font/ttf" crossorigin="anonymous" href="/app/assets/_sakura-mobile/node_modules/@expo-google-fonts/nunito/600SemiBold/Nunito_600SemiBold.b1364260246b29fd9393a1a071f3af61.ttf" />
+    <link rel="preload" as="font" type="font/ttf" crossorigin="anonymous" href="/app/assets/_sakura-mobile/node_modules/@expo-google-fonts/nunito/700Bold/Nunito_700Bold.c133c0b8cd169e7798d0cd239477cf32.ttf" />
+    <link rel="preload" as="font" type="font/ttf" crossorigin="anonymous" href="/app/assets/_sakura-mobile/node_modules/@expo-google-fonts/nunito/800ExtraBold/Nunito_800ExtraBold.2b1bb82750274fc2d1043bf3891cb531.ttf" />
+    <style>
+      /*
+       * Mobile browsers zoom the page in when a text field with a computed
+       * font-size under 16px is focused, and do not zoom back out on blur.
+       * Page scale is a layout change, and react-native-web's Dimensions
+       * reports Math.round(visualViewport.width * scale) — a width that no
+       * longer matches the layout width — which 25 components then convert
+       * straight into explicit pixel widths and heights. So one tap on a
+       * search box can leave the whole app laid out to the wrong width.
+       *
+       * The app's default body size is 14 (constants/theme.ts FontSize.md), so
+       * this fires on real screens. The guard lives here rather than in
+       * app/+html.tsx because that file is dead under web.output: 'single'.
+       *
+       * Deliberately NOT paired with user-scalable=no: taking pinch-zoom away
+       * from people who need it is not an acceptable way to fix our own bug.
+       */
+      input, textarea, select { font-size: 16px; }
+    </style>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+          navigator.serviceWorker.register('/app/sw.js', { scope: '/app/' }).catch(function () {});
+        });
+      }
+    </script>
+  
+    <script>window.__SAKURA_BUILD__="1c33a5e64e4fde75036fa3fc45ffde42";</script>
+      <link rel="canonical" href="https://sakuraonseeker.com/app/become-creator/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Sakura" />
+    <meta property="og:title" content="Become a Sakura Creator | Share your story" />
+    <meta property="og:description" content="Create your Sakura profile, publish novels, manga, and anime, and grow a community around the stories you love to make." />
+    <meta property="og:url" content="https://sakuraonseeker.com/app/become-creator/" />
+    <meta property="og:image" content="https://sakuraonseeker.com/app/share/creator-preview.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1734" />
+    <meta property="og:image:height" content="907" />
+    <meta property="og:image:alt" content="Sakura drawing in a sketchbook among cherry blossoms" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Become a Sakura Creator | Share your story" />
+    <meta name="twitter:description" content="Create your Sakura profile, publish novels, manga, and anime, and grow a community around the stories you love to make." />
+    <meta name="twitter:image" content="https://sakuraonseeker.com/app/share/creator-preview.png" />
+    <meta name="twitter:image:alt" content="Sakura drawing in a sketchbook among cherry blossoms" />
+  </head>
+
+  <body>
+    <!-- Use static rendering with Expo Router to support running without JavaScript. -->
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <!-- The root element for your Expo app. -->
+    <div id="root"></div>
+  <script src="/app/_expo/static/js/web/index-1c33a5e64e4fde75036fa3fc45ffde42.js" defer></script>
+</body>
+</html>

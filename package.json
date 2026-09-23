@@ -5,7 +5,7 @@
     "node": ">=18"
   },
   "scripts": {
-    "build": "node scripts/write-jobs-supabase-config.js",
+    "build": "node scripts/write-jobs-supabase-config.js && node scripts/write-creator-share-pages.mjs",
     "sync:webapp": "node scripts/sync-sakura-webapp.mjs",
     "gen:jobs": "node scripts/generate-job-pages.js",
     "crop:og": "python scripts/crop-jobs-og.py"
