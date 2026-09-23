@@ -1,9 +1,9 @@
 {
-  "version": "2.0.14",
-  "versionCode": 20014,
-  "apkUrl": "https://github.com/Sakura-11488/Sakura/releases/download/v2.0.14/sakura-2.0.14-seeker-release.apk",
-  "releaseNotes": "Upload up to ten manga chapters at once, with up to 60 pages each. Add new chapters to an existing published manga from the creator dashboard. Includes creator upload and payment improvements.",
+  "version": "2.0.15",
+  "versionCode": 20015,
+  "apkUrl": "https://github.com/Sakura-11488/Sakura/releases/download/v2.0.15/sakura-2.0.15-seeker-release.apk",
+  "releaseNotes": "Meet the Sakura character on the creator signup and upload pages, with a new description that welcomes creators. Includes the multi-chapter manga upload flow from 2.0.14.",
   "forceUpdate": true,
-  "minVersion": "2.0.14",
+  "minVersion": "2.0.15",
   "publishedAt": "2026-09-23"
 }
