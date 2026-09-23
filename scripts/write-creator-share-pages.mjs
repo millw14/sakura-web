@@ -104,7 +104,7 @@ const createHtml = `<!doctype html>
     p { max-width: 480px; font-size: 1.15rem; color: #6d5968; margin: 0 0 28px; }
     a.button { display: inline-block; padding: 14px 26px; border-radius: 999px; color: white; background: #d83e74; font-weight: 750; text-decoration: none; }
     a.button:hover { background: #b92d60; }
-    img { display: block; width: 100%; border-radius: 28px; box-shadow: 0 24px 70px #9c44752e; }
+    img { display: block; width: 100%; height: auto; border-radius: 28px; box-shadow: 0 24px 70px #9c44752e; }
     @media (max-width: 720px) { main { grid-template-columns: 1fr; gap: 28px; padding-top: 10px; } }
   </style>
 </head>
