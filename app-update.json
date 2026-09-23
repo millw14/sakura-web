@@ -1,9 +1,9 @@
 {
-  "version": "2.0.13",
-  "versionCode": 20013,
-  "apkUrl": "https://github.com/Sakura-11488/Sakura/releases/download/v2.0.13/sakura-2.0.13-seeker-release.apk",
-  "releaseNotes": "Create, resume, and publish novels, manga, and anime. Add private file attachments. Set a free or one-time SAKURA price, with payments going directly to the creator wallet. Paid content now unlocks after verified payment, and creator video uploads are more reliable.",
+  "version": "2.0.14",
+  "versionCode": 20014,
+  "apkUrl": "https://github.com/Sakura-11488/Sakura/releases/download/v2.0.14/sakura-2.0.14-seeker-release.apk",
+  "releaseNotes": "Upload up to ten manga chapters at once, with up to 60 pages each. Add new chapters to an existing published manga from the creator dashboard. Includes creator upload and payment improvements.",
   "forceUpdate": true,
-  "minVersion": "2.0.13",
+  "minVersion": "2.0.14",
   "publishedAt": "2026-09-23"
 }
