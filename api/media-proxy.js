@@ -1,4 +1,4 @@
-const MEDIA_BASE = 'http://165-232-83-159.nip.io';
+const MEDIA_BASE = 'https://165-232-83-159.nip.io';
 // `(?:\?[\w.=&%-]*)?$` allows an optional trailing cache-buster query (?v= / ?t=)
 // on the file-path routes — the app appends these to covers/thumbnails and the
 // degegen manifest, which the old `$`-after-extension anchors rejected (400).
@@ -28,6 +28,7 @@ const ALLOWED_PATHS = [
   /^\/manhwa\/v1\/img\?u=https?:\/\/\S+$/i,
   // Creator anime episodes (droplet-hosted). Wallet/uuid/file path only.
   /^\/creator-media\/[1-9A-HJ-NP-Za-km-z]{32,44}\/[0-9a-f-]{36}\/[A-Za-z0-9._-]+\.(?:mp4|mov|webm|jpg|jpeg|png)$/i,
+  /^\/media\/v1\/creator\/private\/[1-9A-HJ-NP-Za-km-z]{32,44}\/[0-9a-f-]{36}\/[A-Za-z0-9._-]+\.(?:mp4|mov|webm|m4v)\?token=[0-9a-f-]{72}$/i,
 ];
 
 function cors(res) {
@@ -82,7 +83,8 @@ module.exports = async function mediaProxy(req, res) {
   res.status(upstream.status);
   res.setHeader('Content-Type', upstream.headers.get('content-type') || contentTypeForPath(path));
   res.setHeader('Accept-Ranges', upstream.headers.get('accept-ranges') || 'bytes');
-  res.setHeader('Cache-Control', 'public, max-age=3600');
+  res.setHeader('Cache-Control', path.startsWith('/media/v1/creator/private/')
+    ? 'private, no-store' : 'public, max-age=3600');
 
   const contentLength = upstream.headers.get('content-length');
   if (contentLength) res.setHeader('Content-Length', contentLength);

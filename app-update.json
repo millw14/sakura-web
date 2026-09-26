@@ -1,9 +1,9 @@
 {
-  "version": "2.0.11",
-  "versionCode": 20011,
-  "apkUrl": "https://github.com/Sakura-11488/Sakura/releases/download/v2.0.11/sakura-2.0.11-seeker-release.apk",
-  "releaseNotes": "• Anime pages that showed \"0 eps\" and \"No streaming source found\" now load their episodes. The metadata service intermittently fails for individual titles, and the offline backup we fall back to was dropping the episode count it already had — so the page went blank for a series that was perfectly fine. Every affected title is fixed, not just the one that was reported.\n• The bottom tab bar's icons now always render at full size instead of being clipped.",
-  "forceUpdate": false,
-  "minVersion": "0.0.0",
-  "publishedAt": "2026-08-30"
+  "version": "2.0.16",
+  "versionCode": 20016,
+  "apkUrl": "https://github.com/Sakura-11488/Sakura/releases/download/v2.0.16/sakura-2.0.16-seeker-release.apk",
+  "releaseNotes": "Creator token setup is now called Japanese Stock, with clearer steps, a scrollable form, and checks before wallet approval. Link previews and the creator sharing page have been refreshed.",
+  "forceUpdate": true,
+  "minVersion": "2.0.16",
+  "publishedAt": "2026-09-24"
 }
