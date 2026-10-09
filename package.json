@@ -2,12 +2,15 @@
   "name": "sakura-web",
   "private": true,
   "engines": {
-    "node": ">=18"
+    "node": ">=20.9.0"
   },
   "scripts": {
     "build": "node scripts/write-jobs-supabase-config.js && node scripts/write-creator-share-pages.mjs",
     "sync:webapp": "node scripts/sync-sakura-webapp.mjs",
     "gen:jobs": "node scripts/generate-job-pages.js",
     "crop:og": "python scripts/crop-jobs-og.py"
+  },
+  "dependencies": {
+    "sharp": "0.35.5"
   }
 }
