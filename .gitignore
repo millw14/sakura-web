@@ -9,3 +9,5 @@ jobs/supabase-config.js
 
 .vercel
 .env*.local
+
+node_modules/
