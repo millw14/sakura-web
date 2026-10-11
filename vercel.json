@@ -10,7 +10,7 @@
       "destination": "/app/index.html"
     },
     {
-      "source": "/app/:path((?!_expo/|assets/|favicon\\.ico|metadata\\.json).*)",
+      "source": "/app/:path((?!_expo/|assets/|__offline/|favicon\\.ico|metadata\\.json).*)",
       "destination": "/app/index.html"
     }
   ],
