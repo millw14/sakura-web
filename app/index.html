@@ -73,14 +73,21 @@
       input, textarea, select { font-size: 16px; }
     </style>
     <script>
+      /*
+       * Register at parse time, not on window 'load'. 'load' waits for the
+       * whole ~7.5MB bundle to download and run, so on a first visit the
+       * worker — and with it the offline copy of the app, which it now
+       * precaches at install (public/sw.js) — started only after that, or
+       * never if the tab was closed first. Until the worker activates the tab
+       * is uncontrolled, and an uncontrolled tab cannot show anything the user
+       * downloads: /app/__offline/* is served by the worker alone.
+       */
       if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function () {
-          navigator.serviceWorker.register('/app/sw.js', { scope: '/app/' }).catch(function () {});
-        });
+        navigator.serviceWorker.register('/app/sw.js', { scope: '/app/' }).catch(function () {});
       }
     </script>
   
-    <script>window.__SAKURA_BUILD__="6fcc1abed3d4621866ae184d4d6ca301";</script>
+    <script>window.__SAKURA_BUILD__="e520ff2a4bc7bd445f107e3031b49361";</script>
   </head>
 
   <body>
@@ -90,6 +97,6 @@
     </noscript>
     <!-- The root element for your Expo app. -->
     <div id="root"></div>
-  <script src="/app/_expo/static/js/web/index-6fcc1abed3d4621866ae184d4d6ca301.js" defer></script>
+  <script src="/app/_expo/static/js/web/index-e520ff2a4bc7bd445f107e3031b49361.js" defer></script>
 </body>
 </html>
