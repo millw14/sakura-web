@@ -48,6 +48,66 @@ test('valid covers become small WebP with bounded dimensions and success caching
   assert.equal(meta.exif, undefined);
 });
 
+test('public Sakura artwork is allowlisted by exact origin and cover path only', () => {
+  const original = 'https://165-232-83-159.nip.io/sakura-originals/degegen-files/cover.png';
+  const editorial = 'https://sakuraonseeker.com/creator-covers/editorial-2026-09-25/about-me-32464873.jpg';
+  const creator = 'https://aofzomovaozcwcozokll.supabase.co/storage/v1/object/public/creator-covers/7qbVgic2wbcYwTekXmrtU5be6zeXREeFnKEWiBDDtiAv/957200a4-d1ad-409c-ae57-74dc2f30e4b7/work/cover-000-2eae232e.jpg';
+  for (const url of [original, `${original}?v=20260608-3eps`, `${original}?t=123`, editorial, creator,
+    original.replace('/cover.png', '/ep1-thumb.jpeg'), 'https://165-232-83-159.nip.io/2heanime/thumbs/episode1.jpg']) {
+    assert.equal(validateCoverUrl(url).href, url);
+  }
+  for (const url of [
+    original.replace('165-232-83-159', '127-0-0-1'), original.replace('.nip.io', '.nip.io.evil.test'),
+    original.replace('/cover.png', '/pages/page001.jpg'), original.replace('/cover.png', '/episode.mp4'),
+    original.replace('/cover.png', '/cover.svg'), original.replace('https:', 'http:'),
+    `${original}?url=https://localhost`, `${original}?v=1&token=2`, `${original}?v=`, `${original}?v=%2e%2e`,
+    `${original}?v=${'x'.repeat(65)}`, `${original}#hash`,
+    editorial.replace('/editorial-2026-09-25/', '/private/'), `${editorial}?v=1`,
+    creator.replace('/public/', '/sign/'), creator.replace('/creator-covers/', '/private-bucket/'),
+    creator.replace('.supabase.co', '.supabase.co.evil.test'), `${creator}?token=x`,
+    'https://sakuraonseeker.com/api/media-proxy/?path=/private/cover.jpg',
+  ]) assert.throws(() => validateCoverUrl(url), (e) => e.status === 400);
+});
+
+test('versioned Originals thumbnails keep the version and stay bounded', async () => {
+  const url = 'https://165-232-83-159.nip.io/sakura-originals/degegen-files/cover.png?v=20260608-3eps';
+  const calls = [];
+  const result = await runHandler({ url, width: '256' }, { fetchImpl: async (value) => {
+    calls.push(value);
+    return response(await png(1800, 2400));
+  } });
+  assert.equal(calls.length, 1);
+  const cachedSource = new URL(calls[0]);
+  assert.equal(cachedSource.origin + cachedSource.pathname, 'https://sakuraonseeker.com/api/media-proxy/');
+  assert.deepEqual([...cachedSource.searchParams], [['path', '/sakura-originals/degegen-files/cover.png?v=20260608-3eps']]);
+  assert.equal(result.status, 200);
+  const meta = await sharp(result.body).metadata();
+  assert.equal(meta.width, 256);
+  assert.equal(meta.height, 341);
+});
+
+test('Originals cache requests preserve denial and cannot redirect into a generic proxy', async () => {
+  const url = 'https://165-232-83-159.nip.io/sakura-originals/degegen-files/cover.png?v=1';
+  for (const location of ['/api/media-proxy/?path=/private/page.jpg', 'https://127.0.0.1/private.jpg']) {
+    let calls = 0;
+    await assert.rejects(createThumbnail(url, 256, { fetchImpl: async () => {
+      calls++;
+      return new Response(null, { status: 302, headers: { Location: location } });
+    } }), (e) => e.status === 502 && e.code === 'COVER_REDIRECT');
+    assert.equal(calls, 1);
+  }
+  for (const status of [403, 404, 429]) {
+    const calls = [];
+    const result = await runHandler({ url }, { fetchImpl: async (value) => {
+      calls.push(value);
+      return new Response('Unavailable', { status });
+    } });
+    assert.equal(result.status, status);
+    assert.equal(calls.length, 1);
+    assert.equal(result.headers['Cache-Control'], 'no-store');
+  }
+});
+
 test('small and narrow covers are never enlarged; tall output is bounded', async () => {
   for (const [width, height] of [[30, 50], [1, 5000]]) {
     const bytes = await createThumbnail(source, 512, { fetchImpl: async () => response(await png(width, height)) });
