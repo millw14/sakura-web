@@ -46,13 +46,29 @@ function contentTypeForPath(path) {
   return 'video/mp4';
 }
 
-module.exports = async function mediaProxy(req, res) {
+// Only a successful upstream answer may be cached. This used to send
+// `public, max-age=3600` on every response, so one droplet 404 or 5xx (a
+// scraper miss, a restart) was pinned in Vercel's edge cache — seen live as a
+// 404 with x-vercel-cache: HIT — and in browsers for an hour, for every user of
+// that URL, long after the droplet recovered.
+const SUCCESS_CACHE = 'public, max-age=3600';
+
+function cacheControlFor(path, upstream) {
+  if (!upstream.ok) return 'no-store';
+  return path.startsWith('/media/v1/creator/private/') ? 'private, no-store' : SUCCESS_CACHE;
+}
+
+async function mediaProxy(req, res, fetchImpl) {
   cors(res);
 
   if (req.method === 'OPTIONS') {
     res.status(204).end();
     return;
   }
+
+  // Replaced only once a 2xx upstream answer is in hand: every exit before
+  // that is an error and must not be cached.
+  res.setHeader('Cache-Control', 'no-store');
 
   if (req.method !== 'GET' && req.method !== 'HEAD') {
     res.status(405).json({ error: 'Method not allowed.' });
@@ -72,19 +88,27 @@ module.exports = async function mediaProxy(req, res) {
     return;
   }
 
-  const upstream = await fetch(`${MEDIA_BASE}${path}`, {
-    method: req.method,
-    headers: {
-      'User-Agent': 'Sakura-Web-Media-Proxy/1.0',
-      ...(req.headers.range ? { Range: req.headers.range } : {}),
-    },
-  });
+  let upstream;
+  try {
+    upstream = await fetchImpl(`${MEDIA_BASE}${path}`, {
+      method: req.method,
+      headers: {
+        'User-Agent': 'Sakura-Web-Media-Proxy/1.0',
+        ...(req.headers.range ? { Range: req.headers.range } : {}),
+      },
+    });
+  } catch {
+    // The droplet is unreachable (down, restarting, DNS). Answer that here,
+    // uncached, instead of letting the rejection escape the handler as
+    // Vercel's opaque function-crash 500.
+    res.status(502).json({ error: 'Sakura media is unavailable.' });
+    return;
+  }
 
   res.status(upstream.status);
   res.setHeader('Content-Type', upstream.headers.get('content-type') || contentTypeForPath(path));
   res.setHeader('Accept-Ranges', upstream.headers.get('accept-ranges') || 'bytes');
-  res.setHeader('Cache-Control', path.startsWith('/media/v1/creator/private/')
-    ? 'private, no-store' : 'public, max-age=3600');
+  res.setHeader('Cache-Control', cacheControlFor(path, upstream));
 
   const contentLength = upstream.headers.get('content-length');
   if (contentLength) res.setHeader('Content-Length', contentLength);
@@ -102,10 +126,34 @@ module.exports = async function mediaProxy(req, res) {
   }
 
   const reader = upstream.body.getReader();
-  while (true) {
-    const { value, done } = await reader.read();
-    if (done) break;
-    res.write(Buffer.from(value));
+  try {
+    while (!res.destroyed) {
+      const { value, done } = await reader.read();
+      if (done) {
+        res.end();
+        return;
+      }
+      res.write(Buffer.from(value));
+    }
+    // The client went away mid-body (a player seeking, a closed tab): stop
+    // pulling the rest of the file off the droplet for nobody.
+    void reader.cancel().catch(() => {});
+  } catch {
+    // The status, length and (for a 2xx) the hour-long public Cache-Control
+    // were set for the whole file, and part of it may already be out, so an
+    // error body is no longer possible. Dropping the connection makes the edge
+    // and the browser see a failed response, rather than a cleanly ended
+    // truncated file they would cache as complete.
+    void reader.cancel().catch(() => {});
+    res.destroy?.();
   }
-  res.end();
-};
+}
+
+// `fetchImpl` is injectable for scripts/media-proxy.test.cjs. The default
+// export is the handler Vercel has always run.
+function createHandler({ fetchImpl = fetch } = {}) {
+  return (req, res) => mediaProxy(req, res, fetchImpl);
+}
+
+module.exports = createHandler();
+module.exports.createHandler = createHandler;

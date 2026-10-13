@@ -5,6 +5,7 @@ const { validateMangaPageUrl, MAX_BYTES } = require('../lib/manga-page.js');
 const { createHandler } = require('../api/manga-page.js');
 
 const page = 'https://cdn.atsu.moe/static/pages/WfNS4/3ZJkaVrj/0.webp';
+const chapterOnlyPage = 'https://cdn.atsu.moe/static/pages/SL3w0r/bf205ee5cbeab517.avif';
 const webp = (size = 2048) => {
   const bytes = Buffer.alloc(size);
   bytes.write('RIFF', 0, 'ascii');
@@ -45,14 +46,24 @@ test('only canonical cdn.atsu.moe page paths are accepted; atsu.moe maps to the 
   for (const ext of ['jpg', 'jpeg', 'png', 'gif', 'AVIF']) {
     assert.doesNotThrow(() => validateMangaPageUrl(`https://cdn.atsu.moe/static/pages/a/b/1.${ext}`));
   }
+  // The <chapterId>/<file> shape atsu returns for many Manwha-typed titles.
+  assert.equal(validateMangaPageUrl(chapterOnlyPage).href, chapterOnlyPage);
+  assert.equal(validateMangaPageUrl('https://atsu.moe/static/pages/SL3w0r/bf205ee5cbeab517.avif').href, chapterOnlyPage);
+  assert.doesNotThrow(() => validateMangaPageUrl('https://cdn.atsu.moe/static/pages/a/0.webp'));
   for (const url of [undefined, '', [page], 42, 'http://cdn.atsu.moe/static/pages/a/b/0.webp',
     'https://CDN.atsu.moe/static/pages/a/b/0.webp', 'https://cdn.atsu.moe.evil.test/static/pages/a/b/0.webp',
     'https://evil.test/static/pages/a/b/0.webp', 'https://www.atsu.moe/static/pages/a/b/0.webp',
     'https://cdn.atsu.moe:443/static/pages/a/b/0.webp', 'https://cdn.atsu.moe:8443/static/pages/a/b/0.webp',
     'https://user:pass@cdn.atsu.moe/static/pages/a/b/0.webp', `${page}?x=1`, `${page}?`, `${page}#frag`,
     'https://cdn.atsu.moe/static/pages/a/b/../../../posters/x.webp', 'https://cdn.atsu.moe/static/pages/a/%2e%2e/b/0.webp',
-    'https://cdn.atsu.moe/static/pages/a/b/c/0.webp', 'https://cdn.atsu.moe/static/pages/a/0.webp',
-    'https://cdn.atsu.moe/static/posters/a.webp', 'https://cdn.atsu.moe/static/pages/a/b/x.svg',
+    'https://cdn.atsu.moe/static/pages/a/b/c/0.webp', 'https://cdn.atsu.moe/static/pages/a/b/c/d/0.webp',
+    'https://cdn.atsu.moe/static/pages/0.webp', 'https://cdn.atsu.moe/static/pages//0.webp',
+    'https://cdn.atsu.moe/static/pages/a//0.webp', 'https://cdn.atsu.moe/static/pages/a/../0.webp',
+    'https://cdn.atsu.moe/static/pages/../posters/x.webp', 'https://cdn.atsu.moe/static/pages/%2e%2e/0.webp',
+    'https://cdn.atsu.moe/static/pages/a/x.svg', 'https://cdn.atsu.moe/static/pages/a/.webp',
+    `${chapterOnlyPage}?x=1`, `${chapterOnlyPage}#frag`, 'https://cdn.atsu.moe:8443/static/pages/a/0.webp',
+    'https://evil.test/static/pages/a/0.webp', 'https://cdn.atsu.moe/static/posters/a.webp',
+    'https://cdn.atsu.moe/static/pages/a/b/x.svg',
     'https://cdn.atsu.moe/static/pages/a/b/.webp', 'https://cdn.atsu.moe/static/pages/a/b/0.webp ',
     'https://cdn.atsu.moe\\static/pages/a/b/0.webp', `https://cdn.atsu.moe/static/pages/a/b/${'x'.repeat(2100)}.webp`]) {
     assert.throws(() => validateMangaPageUrl(url), (e) => e.status === 400 && e.code === 'INVALID_PAGE_URL', String(url).slice(0, 80));
@@ -90,6 +101,21 @@ test('atsu.moe page URLs are fetched from the CDN', async () => {
   assert.equal(result.status, 200);
   assert.equal(fetched, page);
   assert.equal(result.headers['Content-Type'], 'image/avif');
+});
+
+test('chapter-only page URLs (/static/pages/<chapterId>/<file>) are served like the deeper shape', async () => {
+  let fetched;
+  const result = await run({ u: chapterOnlyPage }, async (url) => {
+    fetched = url;
+    return image(avif(), 'image/avif');
+  });
+  assert.equal(result.status, 200);
+  assert.equal(fetched, chapterOnlyPage);
+  assert.equal(result.headers['Content-Type'], 'image/avif');
+  assert.equal(result.headers['Cache-Control'], 'public, max-age=31536000, s-maxage=31536000, immutable');
+  const deeper = await run({ u: 'https://cdn.atsu.moe/static/pages/a/b/c/0.webp' }, async () => { throw new Error('must not fetch'); });
+  assert.equal(deeper.status, 400);
+  assert.equal(deeper.headers['Cache-Control'], 'no-store');
 });
 
 test('HEAD answers headers only; OPTIONS, other methods and other parameters never fetch', async () => {
