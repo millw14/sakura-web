@@ -23,7 +23,10 @@
         flex: 1;
       }
     </style>
-  <link rel="icon" href="/app/favicon.ico" />
+  <link rel="preload" href="/app/_expo/static/css/anime-discovery.web-71d9270b1291aa0d5f7e48712d5f5fa1.css" as="style">
+<link rel="stylesheet" href="/app/_expo/static/css/anime-discovery.web-71d9270b1291aa0d5f7e48712d5f5fa1.css"><link rel="preload" href="/app/_expo/static/css/novel-discovery.web-053e858682585e077412d631a1f53a48.css" as="style">
+<link rel="stylesheet" href="/app/_expo/static/css/novel-discovery.web-053e858682585e077412d631a1f53a48.css"><link rel="preload" href="/app/_expo/static/css/manga-catalog.web-9435da89858765f29ea641430a2e38d4.css" as="style">
+<link rel="stylesheet" href="/app/_expo/static/css/manga-catalog.web-9435da89858765f29ea641430a2e38d4.css"><link rel="icon" href="/app/favicon.ico" />
     <link rel="manifest" href="/app/manifest.json" />
     <meta name="theme-color" content="#0F0F13" />
     <meta name="application-name" content="Sakura" />
@@ -59,14 +62,21 @@
       input, textarea, select { font-size: 16px; }
     </style>
     <script>
+      /*
+       * Register at parse time, not on window 'load'. 'load' waits for the
+       * whole ~7.5MB bundle to download and run, so on a first visit the
+       * worker — and with it the offline copy of the app, which it now
+       * precaches at install (public/sw.js) — started only after that, or
+       * never if the tab was closed first. Until the worker activates the tab
+       * is uncontrolled, and an uncontrolled tab cannot show anything the user
+       * downloads: /app/__offline/* is served by the worker alone.
+       */
       if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function () {
-          navigator.serviceWorker.register('/app/sw.js', { scope: '/app/' }).catch(function () {});
-        });
+        navigator.serviceWorker.register('/app/sw.js', { scope: '/app/' }).catch(function () {});
       }
     </script>
   
-    <script>window.__SAKURA_BUILD__="558a6b02c5100f3a6dd902001b0018d2";</script>
+    <script>window.__SAKURA_BUILD__="d2b47ec8ab442be22394cbe98699ce4c";</script>
       <link rel="canonical" href="https://sakuraonseeker.com/app/become-creator/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Sakura" />
@@ -92,6 +102,6 @@
     </noscript>
     <!-- The root element for your Expo app. -->
     <div id="root"></div>
-  <script src="/app/_expo/static/js/web/index-558a6b02c5100f3a6dd902001b0018d2.js" defer></script>
+  <script src="/app/_expo/static/js/web/index-d2b47ec8ab442be22394cbe98699ce4c.js" defer></script>
 </body>
 </html>
