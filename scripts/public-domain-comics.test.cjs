@@ -25,9 +25,11 @@ async function request(query, method = 'GET', run = handler) {
 
 test('catalogue is curated and search preserves legitimate empty results', async () => {
   global.fetch = async () => { throw new Error('catalogue must not fetch'); };
+  const { ARCHIVE_CATALOG } = await import('../lib/public-domain-comics.mjs');
   const popular = await request({ path: '/popular' });
   assert.equal(popular.status, 200);
-  assert.equal(popular.body.items.length, 3);
+  // Every curated title, in catalogue order, and nothing else.
+  assert.deepEqual(popular.body.items.map((item) => item.id), ARCHIVE_CATALOG.map((entry) => `ia-${entry.identifier}`));
   assert.match(popular.headers['Cache-Control'], /s-maxage=3600/);
   assert.equal((await request({ path: '/search', q: 'buster brown' })).body.items.length, 2);
   assert.deepEqual((await request({ path: '/search', q: 'unknown title' })).body.items, []);
