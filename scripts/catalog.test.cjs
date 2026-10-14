@@ -37,6 +37,11 @@ const SEARCH_TAIL = 'query_by=title%2CenglishTitle%2CotherNames%2Cauthors&query_
   + '%2Ctype%2CisAdult%2Cstatus%2Cyear%2CmbRating%2Cpopularity&filter_by=hidden%3A%21%3Dtrue+%26%26+isAdult%3A%3Dfalse'
   + '+%26%26+type%3A%3D%5BManga%2CManwha%2CManhua%2COEL%5D&infix=off%2Coff%2Cfallback%2Coff';
 
+// Browse always carries the adult and light-novel exclusions, whatever is asked.
+const BROWSE_BASE = 'hidden%3A%21%3Dtrue+%26%26+isAdult%3A%3Dfalse+%26%26+medium%3A%3DComic'
+  + '+%26%26+type%3A%3D%5BManga%2CManwha%2CManhua%2COEL%5D+%26%26+genreIds%3A%21%3D%5B10%2C41%2C46%5D';
+const BROWSE_TAIL = 'include_fields=id%2Ctitle%2CenglishTitle%2Cposter%2CposterSmall%2CposterMedium%2Ctype%2CmbRating';
+
 // The app (sakura-mobile/lib/catalog-client.ts) builds these exact strings;
 // its test pins the same list, so the two sides cannot drift apart silently.
 const CANONICAL = [
@@ -50,6 +55,16 @@ const CANONICAL = [
     'https://atsu.moe/api/read/chapter?mangaId=sVC2A&chapterId=YrFZ5', 'pages'],
   ['/api/catalog/?s=atsu&op=search&q=solo+leveling&limit=24',
     `https://atsu.moe/collections/manga/documents/search?q=solo+leveling&${SEARCH_TAIL}&page=1&per_page=24`, 'list'],
+  ['/api/catalog/?s=atsu&op=browse&genre=29&status=Ongoing&sort=popular&page=1&limit=30',
+    `https://atsu.moe/collections/manga/documents/search?q=*&filter_by=${BROWSE_BASE}`
+      + '+%26%26+genreWeightKeys%3A%3D%5B%6029%3Acore%60%2C%6029%3Adefining%60%5D+%26%26+status%3A%3DOngoing'
+      + `&sort_by=views%3Adesc&${BROWSE_TAIL}&page=1&per_page=30`, 'list'],
+  ['/api/catalog/?s=atsu&op=browse&genre=&status=&sort=added&page=500&limit=60',
+    `https://atsu.moe/collections/manga/documents/search?q=*&filter_by=${BROWSE_BASE}&sort_by=dateAdded%3Adesc&${BROWSE_TAIL}&page=500&per_page=60`, 'list'],
+  ['/api/catalog/?s=atsu&op=recentlyUpdated&offset=40&limit=40',
+    'https://atsu.moe/api/home2/recentlyUpdated?offset=40&limit=40&types=Manga%2CManwha%2CManhua%2COEL&mediums=Comic', 'updates'],
+  ['/api/catalog/?s=atsu&op=hotUpdates&offset=0&limit=20',
+    'https://atsu.moe/api/home2/hotUpdates?offset=0&limit=20&types=Manga%2CManwha%2CManhua%2COEL&mediums=Comic', 'updates'],
   ['/api/catalog/?s=manhwa&op=popular&limit=60', 'http://165.232.83.159/manhwa/v1/popular?limit=60', 'list'],
   ['/api/catalog/?s=manhwa&op=search&q=martial&limit=48&offset=0',
     'http://165.232.83.159/manhwa/v1/search?q=martial&limit=48&offset=0', 'list'],
@@ -106,6 +121,19 @@ test('anything but the canonical form of a known operation is refused before any
     '/api/catalog/?s=atsu&op=search&q=&limit=24', '/api/catalog/?s=atsu&op=search&q=+solo&limit=24',
     '/api/catalog/?s=atsu&op=search&q=solo+&limit=24', `/api/catalog/?s=atsu&op=search&q=${'a'.repeat(201)}&limit=24`,
     '/api/catalog/?s=manhwa&op=search&q=a%0Ab&limit=24&offset=0',
+    // Browse: every parameter present (empty for none), known sorts and
+    // statuses only, numbers canonical; no filter text from the caller.
+    '/api/catalog/?s=atsu&op=browse&genre=29&sort=popular&page=1&limit=30',
+    '/api/catalog/?s=atsu&op=browse&genre=29&status=ongoing&sort=popular&page=1&limit=30',
+    '/api/catalog/?s=atsu&op=browse&genre=29&status=&sort=views%3Adesc&page=1&limit=30',
+    '/api/catalog/?s=atsu&op=browse&genre=029&status=&sort=popular&page=1&limit=30',
+    '/api/catalog/?s=atsu&op=browse&genre=0&status=&sort=popular&page=1&limit=30',
+    '/api/catalog/?s=atsu&op=browse&genre=29%2C10&status=&sort=popular&page=1&limit=30',
+    '/api/catalog/?s=atsu&op=browse&genre=&status=&sort=popular&page=0&limit=30',
+    '/api/catalog/?s=atsu&op=browse&genre=&status=&sort=popular&page=1&limit=61',
+    '/api/catalog/?s=atsu&op=browse&genre=&status=&sort=popular&page=1&limit=30&filter_by=isAdult%3A%3Dtrue',
+    '/api/catalog/?s=atsu&op=recentlyUpdated&offset=0', '/api/catalog/?s=atsu&op=recentlyUpdated&offset=0&limit=61',
+    '/api/catalog/?s=atsu&op=hotUpdates&limit=20&offset=0',
   ];
   for (const url of refused) {
     assert.throws(() => parse(url), (e) => e.status === 400 && e.code === 'CATALOG_INVALID_REQUEST', url);
@@ -117,11 +145,12 @@ test('anything but the canonical form of a known operation is refused before any
 });
 
 test('a good answer is the upstream JSON byte for byte, with per-operation edge caching', async () => {
-  const lifetimes = { list: 300, detail: 1800, chapters: 300, pages: 86400 };
+  const lifetimes = { list: 300, detail: 1800, chapters: 300, pages: 86400, updates: 60 };
   // Chapter lists are the one answer a day-old copy gets visibly wrong (the
   // newest chapter missing for whoever a new-chapter push sent first), so the
-  // edge may serve one at most 10 minutes old; everything else a day.
-  const stale = { list: 86400, detail: 86400, chapters: 300, pages: 86400 };
+  // edge may serve one at most 10 minutes old; "latest updates" at most 6;
+  // everything else a day.
+  const stale = { list: 86400, detail: 86400, chapters: 300, pages: 86400, updates: 300 };
   assert.deepEqual(S_MAXAGE, lifetimes);
   assert.deepEqual(SWR, stale);
   for (const [url, upstream, ttl] of CANONICAL) {
@@ -284,9 +313,12 @@ test('media-proxy keeps immutable droplet images at the edge for a week, everyth
     headers: { 'Content-Type': 'image/jpeg', 'Cache-Control': 'public, max-age=86400, s-maxage=86400, immutable', ...extra },
   });
   const WEEK = 'public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400';
-  for (const source of ['manhwa', 'comics', 'hentai']) {
+  for (const source of ['manhwa', 'comics']) {
     assert.equal((await send(image.replace('manhwa', source), droplet())).headers['Cache-Control'], WEEK, source);
   }
+  // 18+ pages: the same week at the edge, but the browser keeps its hour.
+  assert.equal((await send(image.replace('manhwa', 'hentai'), droplet())).headers['Cache-Control'],
+    'public, max-age=3600, s-maxage=604800, stale-while-revalidate=86400');
   assert.equal((await send(image, droplet(), 'HEAD')).headers['Cache-Control'], WEEK);
   // Not marked immutable by the droplet, not an image, a partial body, or not
   // a scraper image at all: the hour-long cache stays.
