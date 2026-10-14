@@ -191,3 +191,18 @@ test('a missing upstream content type falls back to one inferred from the path',
     assert.equal(result.headers['Content-Type'], type, path);
   }
 });
+
+test('scraper images the droplet marks immutable stay a week at the edge; 18+ pages keep the browser hour', async () => {
+  const immutable = (type = 'image/avif') => async () => new Response('x', {
+    headers: { 'Content-Type': type, 'Cache-Control': 'public, max-age=31536000, immutable' },
+  });
+  const week = 'public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400';
+  assert.equal((await run({ path: cover }, immutable())).headers['Cache-Control'], week);
+  assert.equal((await run({ path: '/comics/v1/img?u=https://archive.org/a.jpg' }, immutable('image/jpeg'))).headers['Cache-Control'], week);
+  assert.equal((await run({ path: '/hentai/v1/img?u=https://x.test/a.webp' }, immutable('image/webp'))).headers['Cache-Control'],
+    'public, max-age=3600, s-maxage=604800, stale-while-revalidate=86400');
+  // Anything the droplet does not vouch for, or that is not an image, keeps the hour.
+  assert.equal((await run({ path: cover }, async () => new Response('x', { headers: { 'Content-Type': 'image/avif' } }))).headers['Cache-Control'],
+    'public, max-age=3600');
+  assert.equal((await run({ path: cover }, immutable('text/html'))).headers['Cache-Control'], 'public, max-age=3600');
+});

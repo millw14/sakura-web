@@ -53,9 +53,31 @@ function contentTypeForPath(path) {
 // that URL, long after the droplet recovered.
 const SUCCESS_CACHE = 'public, max-age=3600';
 
+// A scraper image is the bytes behind one upstream image URL, which never
+// change, and the droplet says so (`immutable`) on every good answer. An hour
+// at the edge meant manhwa, comics and 18+ reader pages missed often and paid
+// 1.2–1.5 s each through the one-worker droplet. Keep them a week at the edge
+// and a day in the browser, like api/reader-image.js. Keyed on the droplet's
+// own `immutable`, so any answer it does not vouch for keeps the hour.
+// 18+ pages get the same week at the edge but keep the browser's hour: that
+// section leaves as little as it can on the reader's device.
+const SCRAPER_IMAGE = /^\/(?:comics|hentai|manhwa)\/v1\/img\?/i;
+const ADULT_IMAGE = /^\/hentai\//i;
+const IMMUTABLE_IMAGE_CACHE = 'public, max-age=86400, s-maxage=604800, stale-while-revalidate=86400';
+const IMMUTABLE_ADULT_IMAGE_CACHE = 'public, max-age=3600, s-maxage=604800, stale-while-revalidate=86400';
+
 function cacheControlFor(path, upstream) {
   if (!upstream.ok) return 'no-store';
-  return path.startsWith('/media/v1/creator/private/') ? 'private, no-store' : SUCCESS_CACHE;
+  if (path.startsWith('/media/v1/creator/private/')) return 'private, no-store';
+  if (
+    upstream.status === 200 &&
+    SCRAPER_IMAGE.test(path) &&
+    /(?:^|,)\s*immutable\s*(?:,|$)/i.test(upstream.headers.get('cache-control') || '') &&
+    (upstream.headers.get('content-type') || '').toLowerCase().startsWith('image/')
+  ) {
+    return ADULT_IMAGE.test(path) ? IMMUTABLE_ADULT_IMAGE_CACHE : IMMUTABLE_IMAGE_CACHE;
+  }
+  return SUCCESS_CACHE;
 }
 
 async function mediaProxy(req, res, fetchImpl) {
@@ -139,7 +161,7 @@ async function mediaProxy(req, res, fetchImpl) {
     // pulling the rest of the file off the droplet for nobody.
     void reader.cancel().catch(() => {});
   } catch {
-    // The status, length and (for a 2xx) the hour-long public Cache-Control
+    // The status, length and (for a 2xx) the public, long-lived Cache-Control
     // were set for the whole file, and part of it may already be out, so an
     // error body is no longer possible. Dropping the connection makes the edge
     // and the browser see a failed response, rather than a cleanly ended
