@@ -1,0 +1,32 @@
+name: Hosting bug
+description: Report an ordinary website hosting or routing problem.
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For possible vulnerabilities, follow SECURITY.md. Do not include exploit details, credentials, invitation codes, or other users' data here.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Include the route, expected behavior, and actual result. Redact private information.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Use your own account and test data only.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser, device, and version or commit if known.
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Supporting evidence
+      description: Sanitized screenshots or logs, if useful. Do not paste tokens or session data.

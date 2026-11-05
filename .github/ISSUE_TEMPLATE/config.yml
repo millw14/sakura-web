@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security reporting guidance
+    url: https://github.com/millw14/sakura-web/blob/main/SECURITY.md
+    about: Keep possible vulnerabilities and exploit details out of public issues.
+  - name: Sakura application source
+    url: https://github.com/Sakura-11488/Sakura
+    about: Shared Expo UI and application changes belong in the application repository.
+  - name: Sakura Perps
+    url: https://github.com/Sakura-11488/sakura-perps
+    about: Paper engine and community-service development belongs in sakura-perps.
