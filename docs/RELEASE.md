@@ -17,6 +17,12 @@ and release preservation have been reconciled and a new deployment policy is
 explicitly reviewed. Disconnection does not remove the existing deployment or
 prevent the authorized CLI release process.
 
+GitHub Pages also has a repository-level publication setting independent of
+workflow files. It is set to `workflow`, with no publishing workflow installed.
+The legacy mirror has no custom domain. Keep both this setting and the Vercel
+Git connection under review before enabling any future automatic publication;
+removing a workflow file alone does not disable branch-based Pages publishing.
+
 ## What a release must preserve
 
 | Surface | Requirement |
