@@ -1,0 +1,67 @@
+name: Hosting validation
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hosting-validation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Public snapshot checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+
+      - name: Check source syntax and root configuration
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const { execFileSync } = require('node:child_process');
+          const files = execFileSync('git', ['ls-files', '-z', '--', 'api', 'lib', 'scripts'], { encoding: 'utf8' }).split('\0');
+          for (const file of files.filter(file => /\.(m?js)$/.test(file))) {
+            execFileSync(process.execPath, ['--check', file], { stdio: 'inherit' });
+          }
+          for (const file of ['package.json', 'vercel.json']) JSON.parse(fs.readFileSync(file, 'utf8'));
+          NODE
+
+      - name: Exercise the existing configuration generator without credentials
+        run: |
+          node <<'NODE'
+          const assert = require('node:assert/strict');
+          const fs = require('node:fs');
+          const vm = require('node:vm');
+          const { execFileSync } = require('node:child_process');
+          for (const expected of [
+            { url: '', anonKey: '' },
+            { url: 'https://example.invalid', anonKey: 'ci-placeholder-not-a-secret' },
+          ]) {
+            execFileSync(process.execPath, ['scripts/write-jobs-supabase-config.js'], {
+              env: { SAKURA_SUPABASE_URL: expected.url, SAKURA_SUPABASE_ANON_KEY: expected.anonKey },
+              stdio: 'inherit',
+            });
+            const context = { window: {} };
+            vm.runInNewContext(fs.readFileSync('jobs/supabase-config.js', 'utf8'), context, { timeout: 1000 });
+            assert.deepEqual(JSON.parse(JSON.stringify(context.window.SAKURA_JOBS_SB)), expected);
+          }
+          fs.unlinkSync('jobs/supabase-config.js');
+          NODE
+
+      - name: Check whitespace and tracked-file cleanliness
+        run: |
+          git diff --check
+          git diff --exit-code

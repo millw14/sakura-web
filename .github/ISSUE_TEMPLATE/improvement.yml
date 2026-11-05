@@ -1,0 +1,30 @@
+name: Hosting improvement
+description: Propose a focused change to hosting, documentation, or the contributor workflow.
+title: "[Proposal]: "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem to solve
+      description: Who is affected, and what becomes easier or more reliable?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Explain the smallest useful change and which repository should own it.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Describe an observable result and how it can be verified.
+    validations:
+      required: true
+  - type: textarea
+    id: release
+    attributes:
+      label: Release or preservation impact
+      description: Consider Studio, ATSU, Rooms, existing sessions, and whether a separate web release is needed.
